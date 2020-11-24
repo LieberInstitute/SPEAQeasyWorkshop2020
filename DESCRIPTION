@@ -32,3 +32,22 @@ biocViews: Workshop, DifferentialExpression, GeneExpression,
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 DockerImage: lcollado/speaqeasyworkshop2020:latest
+Suggests: 
+    knitr,
+    knitcitations,
+    rmarkdown
+VignetteBuilder: knitr
+Imports: 
+    SummarizedExperiment,
+    recount,
+    edgeR,
+    limma,
+    jaffelab,
+    RColorBrewer,
+    clusterProfiler,
+    org.Hs.eg.db,
+    pheatmap,
+    here,
+    BiocStyle,
+    sessioninfo
+remotes: LieberInstitute/jaffelab

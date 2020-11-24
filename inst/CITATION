@@ -1,0 +1,42 @@
+pkgVer <- function(pkg) {
+    if (!exists("meta") || is.null(meta)) meta <- packageDescription(pkg)
+    ver <- meta$Version
+    paste0('https://github.com/LieberInstitute/', pkg, ' - R package version ', ver)
+}
+
+c(
+
+    bibentry(bibtype="manual",
+        title = "EuroBioc2020 SPEAQeasy workshop",
+        author = personList(
+            as.person("Nicholas J. Eagles"),
+            as.person("Joshua M. Stolz"),
+            as.person("Leonardo Collado-Torres")
+        ),
+        year = format(Sys.Date(), "%Y"),
+        url = "http://www.bioconductor.org/packages/SPEAQeasyWorkshop2020",
+        note = pkgVer('SPEAQeasyWorkshop2020'),
+        doi = '10.18129/B9.bioc.SPEAQeasyWorkshop2020'
+    ),
+    bibentry(bibtype="article",
+        title = "SPEAQeasy: a Scalable Pipeline for Expression Analysis and Quantification for R/Bioconductor-powered RNA-seq analyses",
+        author = personList(
+            as.person("Nicholas J. Eagles"),
+            as.person("Emily E. Burke"),
+            as.person("Jacob Leonard"),
+            as.person("Brianna K. Barry"),
+            as.person("Joshua M. Stolz"),
+            as.person("Louise Huuki"),
+            as.person("BaDoi N. Phan"),
+            as.person("Violeta Larrios Serrato"),
+            as.person("Everardo Gutiérrez-Millán"),
+            as.person("Israel Aguilar-Ordoñez"),
+            as.person("Andrew E. Jaffe"),
+            as.person("Leonardo Collado-Torres")
+        ),
+        year = 2020,
+        journal = "bioRxiv",
+        doi = "10.1101/TODO",
+        url = "https://www.biorxiv.org/content/10.1101/TODO"
+    )
+)

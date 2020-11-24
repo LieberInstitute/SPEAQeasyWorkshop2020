@@ -71,10 +71,10 @@ devtools::build_readme()
 
 ## Add a vignette template
 pkg <- basename(usethis::proj_get())
-biocthis::use_bioc_vignette(pkg, paste("Introduction to", pkg))
+biocthis::use_bioc_vignette(pkg, "SPEAQeasy: a Scalable Pipeline for Expression Analysis and Quantification for R/Bioconductor-powered RNA-seq analyses")
 
 ## Add a Bioconductor-friendly GitHub actions workflow to check your package
-biocthis::use_bioc_github_action()
+biocthis::use_bioc_github_action(testthat = FALSE, covr = FALSE)
 ## If:
 ## * your package doesn't have testthat tests, change to: has_testthat = 'false'
 ## * you don't want to run the covr step, change to: run_covr = 'false'

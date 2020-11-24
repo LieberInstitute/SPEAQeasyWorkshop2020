@@ -1,0 +1,258 @@
+---
+title: "SPEAQeasy: a Scalable Pipeline for Expression Analysis and Quantification for R/Bioconductor-powered RNA-seq analyses"
+author: 
+  - name: Nicholas J. Eagles
+    affiliation:
+    - &libd Lieber Institute for Brain Development, Johns Hopkins Medical Campus
+  - name: Joshua M. Stolz
+    affiliation:
+    - *libd
+  - name: Leonardo Collado-Torres
+    affiliation:
+    - *libd
+    - &ccb Center for Computational Biology, Johns Hopkins University
+    email: lcolladotor@gmail.com
+output: 
+  BiocStyle::html_document:
+    self_contained: yes
+    toc: true
+    toc_float: true
+    toc_depth: 2
+    code_folding: show
+date: "`r doc_date()`"
+package: "`r pkg_ver('SPEAQeasyWorkshop2020')`"
+vignette: >
+  %\VignetteIndexEntry{SPEAQeasy: a Scalable Pipeline for Expression Analysis and Quantification for R/Bioconductor-powered RNA-seq analyses}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}  
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+    collapse = TRUE,
+    comment = "#>",
+    crop = NULL ## Related to https://stat.ethz.ch/pipermail/bioc-devel/2020-April/016656.html
+)
+```
+
+
+```{r vignetteSetup, echo=FALSE, message=FALSE, warning = FALSE}
+## Track time spent on making the vignette
+startTime <- Sys.time()
+
+## Bib setup
+library("knitcitations")
+
+## Load knitcitations with a clean bibliography
+cleanbib()
+cite_options(hyperlink = "to.doc", citation_format = "text", style = "html")
+
+## Write bibliography information
+bib <- c(
+    R = citation(),
+    BiocStyle = citation("BiocStyle")[1],
+    knitcitations = citation("knitcitations")[1],
+    knitr = citation("knitr")[1],
+    rmarkdown = citation("rmarkdown")[1],
+    sessioninfo = citation("sessioninfo")[1],
+    SPEAQeasyWorkshop2020 = citation("SPEAQeasyWorkshop2020")[1],
+    SPEAQeasy = citation("SPEAQeasyWorkshop2020")[2],
+    clusterProfiler = citation("clusterProfiler"),
+    edgeR = citation("edgeR"),
+    here = citation("here"),
+    jaffelab = citation("jaffelab"),
+    knitcitations = citation("knitcitations"),
+    limma = citation("limma"),
+    org.Hs.eg.db = citation("org.Hs.eg.db"),
+    pheatmap = citation("pheatmap"),
+    R = citation(),
+    RColorBrewer = citation("RColorBrewer"),
+    rmarkdown = citation("rmarkdown"),
+    recount = citation("recount"),
+    SummarizedExperiment = citation("SummarizedExperiment"),
+    voom = RefManageR::BibEntry(
+        "article",
+        key = "voom",
+        author = "CW Law and Y Chen and W Shi and GK Smyth",
+        year = "2014",
+        title = "Voom: precision weights unlock linear model analysis tools for RNA-seq read counts",
+        journal = "Genome Biology",
+        volume = "15",
+        pages = "R29"
+    )
+)
+
+write.bibtex(bib, file = "SPEAQeasyWorkshop2020.bib")
+```
+
+# Overview
+
+This workshop aims to describe the `SPEAQeasy` `r citep(bib[["SPEAQeasy"]])` RNA-seq processing pipeline, show how to use it, and then illustrate how the results can be analyzed using Bioconductor R packages for differential expression analyses.
+
+## Instructors
+
+* [Nick Eagles](https://github.com/Nick-Eagles)
+* [Josh Stolz](https://github.com/joshstolz)
+
+## Workshop Description
+
+TODO
+
+## Pre-requisits
+
+* TODO
+* TODO
+
+## Workshop Participation
+
+TODO
+
+You can download a Docker image with all the workshop files using:
+
+```bash
+docker run -e PASSWORD=bioc2020 -p 8787:8787 -d --rm lcollado/speaqeasyworkshop2020
+```
+
+Then, log in to RStudio at [http://localhost:8787](http://localhost:8787) using username `rstudio` and password `bioc2020`. Note that on Windows you need to provide your localhost IP address like `http://191.163.92.108:8787/` - find it using `docker-machine ip default` in Docker's terminal.
+
+To see the vignette on RStudio's window (from the docker image), run `browseVignettes(package = "SPEAQeasyWorkshop2020")`. Click on one of the links, "HTML", "source", "R code". In case of `The requested page was not found` error, add `help/` to the URL right after the hostname, e.g., [http://localhost:8787/help/library/SPEAQeasyWorkshop2020/doc/SPEAQeasyWorkshop2020.html](http://localhost:8787/help/library/SPEAQeasyWorkshop2020/doc/SPEAQeasyWorkshop2020.html). This is a [known bug](https://github.com/rocker-org/rocker-versioned/issues/178).
+
+
+## Time outline
+
+| Activity                     | Time |
+|------------------------------|------|
+| TODO                    | 10m  |
+| TODO                    | 10m  |
+
+Total: a 90 minute session.
+
+## Workshop goals and objects
+
+### Learning goals
+
+### Learning objectives
+
+
+## Citing `SPEAQeasy`
+
+We hope that `SPEAQeasy` `r citep(bib[["SPEAQeasy"]])` will be useful for your research. Please use the following information to cite the package and the overall approach. Thank you!
+
+```{r "citation"}
+## Citation info
+citation("SPEAQeasyWorkshop2020")[2]
+```
+
+
+# Workshop
+
+## Introduction
+
+## DE Analysis
+
+```{r "start", message=FALSE, warning=FALSE}
+# library("SPEAQeasyWorkshop2020")
+
+library("BiocStyle")
+library("clusterProfiler")
+library("edgeR")
+library("here")
+library("jaffelab") # GitHub: LieberInstitute/jaffelab
+library("limma")
+library("pheatmap")
+library("org.Hs.eg.db")
+library("RColorBrewer")
+library("recount")
+library("sessioninfo")
+library("SummarizedExperiment")
+```
+
+Edit this as you see fit =)
+
+Here is an example of you can cite your package inside the vignette:
+
+* `r Biocpkg("SPEAQeasyWorkshop2020")` `r citep(bib[["SPEAQeasyWorkshop2020"]])`
+
+# Acknowledgements
+
+TODO
+
+# Reproducibility
+
+The `r Biocpkg("SPEAQeasyWorkshop2020")` package `r citep(bib[["SPEAQeasyWorkshop2020"]])` was made possible thanks to:
+
+* R `r citep(bib[["R"]])`
+* `r Biocpkg("BiocStyle")` `r citep(bib[["BiocStyle"]])`
+* `r Biocpkg('clusterProfiler')` `r citep(bib[['clusterProfiler']])`
+* `r Biocpkg('edgeR')` `r citep(bib[['edgeR']])`
+* `r CRANpkg('here')` `r citep(bib[['here']])`
+* `r Githubpkg('LieberInstitute/jaffelab')` `r citep(bib[['jaffelab']])`
+* `r Biocpkg('limma')` `r citep(bib[['limma']])`
+* `r CRANpkg("knitcitations")` `r citep(bib[["knitcitations"]])`
+* `r CRANpkg("knitr")` `r citep(bib[["knitr"]])`
+* `r Biocpkg('org.Hs.eg.db')` `r citep(bib[['org.Hs.eg.db']])`
+* `r CRANpkg('pheatmap')` `r citep(bib[['pheatmap']])`
+* `r CRANpkg('RColorBrewer')` `r citep(bib[['RColorBrewer']])`
+* `r Biocpkg('recount')` `r citep(bib[['recount']])`
+* `r CRANpkg("rmarkdown")` `r citep(bib[["rmarkdown"]])`
+* `r CRANpkg("sessioninfo")` `r citep(bib[["sessioninfo"]])`
+* `r Biocpkg('SummarizedExperiment')` `r citep(bib[['SummarizedExperiment']])`
+* `r Biocpkg('voom')` `r citep(bib[['voom']])`
+
+This package was developed using `r BiocStyle::Githubpkg("lcolladotor/biocthis")`.
+
+
+Code for creating the vignette
+
+```{r createVignette, eval=FALSE}
+## Create the vignette
+library("rmarkdown")
+system.time(render("SPEAQeasyWorkshop2020.Rmd", "BiocStyle::html_document"))
+
+## Extract the R code
+library("knitr")
+knit("SPEAQeasyWorkshop2020.Rmd", tangle = TRUE)
+```
+
+```{r createVignette2}
+## Clean up
+file.remove("SPEAQeasyWorkshop2020.bib")
+```
+
+Date the vignette was generated.
+
+```{r reproduce1, echo=FALSE}
+## Date the vignette was generated
+Sys.time()
+```
+
+Wallclock time spent generating the vignette.
+
+```{r reproduce2, echo=FALSE}
+## Processing time in seconds
+totalTime <- diff(c(startTime, Sys.time()))
+round(totalTime, digits = 3)
+```
+
+`R` session information.
+
+```{r reproduce3, echo=FALSE}
+## Session info
+library("sessioninfo")
+options(width = 120)
+session_info()
+```
+
+
+
+# Bibliography
+
+This vignette was generated using `r Biocpkg("BiocStyle")` `r citep(bib[["BiocStyle"]])`
+with `r CRANpkg("knitr")` `r citep(bib[["knitr"]])` and `r CRANpkg("rmarkdown")` `r citep(bib[["rmarkdown"]])` running behind the scenes.
+
+Citations made with `r CRANpkg("knitcitations")` `r citep(bib[["knitcitations"]])`.
+
+```{r vignetteBiblio, results = "asis", echo = FALSE, warning = FALSE, message = FALSE}
+## Print bibliography
+bibliography()
+```

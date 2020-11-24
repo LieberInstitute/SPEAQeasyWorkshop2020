@@ -7,7 +7,7 @@ rstudioapi::navigateToFile(usethis::proj_path("dev", "01_create_pkg.R"))
 
 ## Note that Bioconductor doesn't allow *.Rproj files
 ## So we have to ignore it before anything else
-usethis::use_git_ignore("*.Rproj")
+# usethis::use_git_ignore("*.Rproj")
 usethis::use_git() ## Choose the option to make the commit, then to restart RStudio
 
 ## After the restart, continue by connecting your local git repository to
@@ -31,7 +31,7 @@ usethis::edit_r_profile()
 rstudioapi::restartSession()
 
 ## Now run use_github()
-usethis::use_github()
+usethis::use_github(organisation = "LieberInstitute")
 ## Follow any prompts, such as running on the terminal:
 ## git push --set-upstream origin master
 
