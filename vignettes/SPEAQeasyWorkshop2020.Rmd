@@ -122,14 +122,21 @@ To see the vignette on RStudio's window (from the docker image), run `browseVign
 
 | Activity                     | Time |
 |------------------------------|------|
-| TODO                    | 10m  |
-| TODO                    | 10m  |
+| General overview of SPEAQeasy                   | 25m  |
+| Hands-on: running SPEAQeasy on real data        | 15m  |
+| Understanding SPEAQeasy outputs                 | 15m  |
+| Differential expression analysis                | 35m  |
 
 Total: a 90 minute session.
 
 ## Workshop goals and objects
 
 ### Learning goals
+
+- Understand what SPEAQeasy is and how it can fit into a complete RNA-seq processing workflow
+- Become familiar with running SPEAQeasy on real input data
+- Understand SPEAQeasy outputs and the Bioconductor packages available for different analysis goals
+- Get concrete experience with an example differential expression analysis given SPEAQeasy output data
 
 ### Learning objectives
 
