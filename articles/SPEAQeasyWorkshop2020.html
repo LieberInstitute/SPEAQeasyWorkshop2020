@@ -77,7 +77,7 @@
       Lieber Institute for Brain Development, Johns Hopkins Medical Campus<br><a class="author_email" href="mailto:#"></a><a href="mailto:lcolladotor@gmail.com" class="email">lcolladotor@gmail.com</a>
       </address>
                   
-            <h4 class="date">1 December 2020</h4>
+            <h4 class="date">4 December 2020</h4>
       
       
       <div class="hidden name"><code>SPEAQeasyWorkshop2020.Rmd</code></div>
@@ -105,12 +105,12 @@
 <a href="#workshop-description" class="anchor"></a>Workshop Description</h2>
 <p>TODO</p>
 </div>
-<div id="pre-requisits" class="section level2">
+<div id="pre-requisites" class="section level2">
 <h2 class="hasAnchor">
-<a href="#pre-requisits" class="anchor"></a>Pre-requisits</h2>
+<a href="#pre-requisites" class="anchor"></a>Pre-requisites</h2>
 <ul>
-<li>TODO</li>
-<li>TODO</li>
+<li>Basic understanding of RNA-seq</li>
+<li>Basic familiarity with the <code>SummarizedExperiment</code> and <code>GenomicRanges</code> packages</li>
 </ul>
 </div>
 <div id="workshop-participation" class="section level2">
@@ -204,11 +204,91 @@
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
+<div id="speaqeasy-overview" class="section level3">
+<h3 class="hasAnchor">
+<a href="#speaqeasy-overview" class="anchor"></a>SPEAQeasy Overview</h3>
+<p>We introduce <a href="https://github.com/LieberInstitute/SPEAQeasy">SPEAQeasy</a>, a <strong>S</strong>calable RNA-seq processing <strong>P</strong>ipeline for <strong>E</strong>xpression <strong>A</strong>nd <strong>Q</strong>uantification, that is <strong>easy</strong> to install, use, and share with others. More detailed documentation is <a href="http://research.libd.org/SPEAQeasy/">here</a>.</p>
+<p>TODO: image of pipeline workflow here</p>
+</div>
+<div id="speaqeasy-outputs" class="section level3">
+<h3 class="hasAnchor">
+<a href="#speaqeasy-outputs" class="anchor"></a>SPEAQeasy Outputs</h3>
+<p>SPEAQeasy produces <a href="https://bioconductor.org/packages/release/bioc/html/SummarizedExperiment.html">RangedSummarizedExperiment</a> objects with raw and normalized counts for each feature type: genes, exons, exon-exon junctions, and transcripts.</p>
+<p>For human samples, variant calling is performed at a list of highly variables sites. A single <a href="https://www.internationalgenome.org/wiki/Analysis/Variant%20Call%20Format/vcf-variant-call-format-version-40/">VCF file</a> is generated, containing genotype calls for all samples. This estalishes a sufficiently unique profile for each sample which can be compared against pre-sequencing genotype calls to resolve potential identity issues.</p>
+<p>Optionally, <a href="https://genome.ucsc.edu/goldenPath/help/bigWig.html">BigWig</a> coverage files by strand, and averaged across strands, are produced. An additional step utilizes the <a href="https://bioconductor.org/packages/release/bioc/html/derfinder.html">derfinder</a> package to compute expressed regions, a precursor to analyses finding differentially expressed regions (DERs).</p>
+<p>TODO: figure of output files here</p>
+</div>
+<div id="installation-and-set-up" class="section level3">
+<h3 class="hasAnchor">
+<a href="#installation-and-set-up" class="anchor"></a>Installation and Set-up</h3>
+<p>First, clone the SPEAQeasy repository.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">git</span> clone git@github.com:LieberInstitute/SPEAQeasy.git</span></code></pre></div>
+<p>SPEAQeasy dependencies can be managed with docker, involving a fairly quick installation that is reproducible regardless of the computing environment. For those who are able to use docker, SPEAQeasy can be installed with:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="co">#  From within the SPEAQeasy repository:</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="fu">bash</span> install_software.sh <span class="st">"docker"</span></span></code></pre></div>
+<p>If you do not have access to docker on your machine, SPEAQeasy can be installed with:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="co">#  From within the SPEAQeasy repository:</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="fu">bash</span> install_software.sh <span class="st">"local"</span></span></code></pre></div>
+<p>Please note that installation with docker is recommended if available, and that “local” installation can take quite some time, as all dependencies are built from source. <strong>Installing and running SPEAQeasy is not required for this workshop</strong>, but is demonstrated to familiarize participants with the process. The workshop files include outputs from SPEAQeasy, which can be used later for the example differential expression analysis.</p>
+<p>Choose a “main” script as appropriate for your particular set-up. “Main” scripts and associated configuration files exist for SLURM-managed computing clusters, SGE-managed clusters, local machines, and the <a href="https://jhpce.jhu.edu/">JHPCE</a> cluster.</p>
+<table class="table">
+<colgroup>
+<col width="23%">
+<col width="30%">
+<col width="45%">
+</colgroup>
+<thead><tr class="header">
+<th>Environment</th>
+<th>“Main” script</th>
+<th>Config file</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>SLURM cluster</td>
+<td>run_pipeline_slurm.sh</td>
+<td>conf/slurm.config or conf/docker_slurm.config</td>
+</tr>
+<tr class="even">
+<td>SGE cluster</td>
+<td>run_pipeline_sge.sh</td>
+<td>conf/sge.config or conf/docker_sge.config</td>
+</tr>
+<tr class="odd">
+<td>Local machine</td>
+<td>run_pipeline_local.sh</td>
+<td>conf/local.config or conf/docker_local.config</td>
+</tr>
+<tr class="even">
+<td>JHPCE cluster</td>
+<td>run_pipeline_jhpce.sh</td>
+<td>conf/jhpce.config</td>
+</tr>
+</tbody>
+</table>
+<p>Within the main script, you can configure arguments specific to the experiment, such as the reference organism, pairing of samples, and where to place output files, among other specifications.</p>
+<p>When running SPEAQeasy on a cluster (i.e. SLURM, SGE, or JHPCE users), it is recommended you submit the pipeline as a job, using the command appropriate for your cluster. For those running SPEAQeasy locally, the main script can be executed directly.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="co">#  SLURM-managed clusters</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="ex">sbatch</span> run_pipeline_slurm.sh</span>
+<span id="cb6-3"><a href="#cb6-3"></a></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="co">#  SGE-managed clusters</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="ex">qsub</span> run_pipeline_sge.sh</span>
+<span id="cb6-6"><a href="#cb6-6"></a></span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="co">#  local machines</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a><span class="fu">bash</span> run_pipeline_local.sh</span>
+<span id="cb6-9"><a href="#cb6-9"></a></span>
+<span id="cb6-10"><a href="#cb6-10"></a><span class="co">#  The JHPCE cluster</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a><span class="ex">qsub</span> run_pipeline_jhpce.sh</span></code></pre></div>
+</div>
+<div id="examining-speaqeasy-outputs" class="section level3">
+<h3 class="hasAnchor">
+<a href="#examining-speaqeasy-outputs" class="anchor"></a>Examining SPEAQeasy outputs</h3>
+<p>TODO</p>
+</div>
 </div>
 <div id="de-analysis" class="section level2">
 <h2 class="hasAnchor">
 <a href="#de-analysis" class="anchor"></a>DE Analysis</h2>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># library("SPEAQeasyWorkshop2020")</span>
 
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/Bioconductor/BiocStyle">"BiocStyle"</a></span><span class="op">)</span>
@@ -275,7 +355,7 @@
 </ul>
 <p>This package was developed using <em><a href="https://github.com/lcolladotor/biocthis">biocthis</a></em>.</p>
 <p>Code for creating the vignette</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Create the vignette</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/rstudio/rmarkdown">"rmarkdown"</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/rmarkdown/man/render.html">render</a></span><span class="op">(</span><span class="st">"SPEAQeasyWorkshop2020.Rmd"</span>, <span class="st">"BiocStyle::html_document"</span><span class="op">)</span><span class="op">)</span>
@@ -283,14 +363,14 @@
 <span class="co">## Extract the R code</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://yihui.org/knitr/">"knitr"</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/knit.html">knit</a></span><span class="op">(</span><span class="st">"SPEAQeasyWorkshop2020.Rmd"</span>, tangle <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Clean up</span>
 <span class="fu"><a href="https://rdrr.io/r/base/files.html">file.remove</a></span><span class="op">(</span><span class="st">"SPEAQeasyWorkshop2020.bib"</span><span class="op">)</span>
 <span class="co">#&gt; [1] TRUE</span></code></pre></div>
 <p>Date the vignette was generated.</p>
-<pre><code>#&gt; [1] "2020-12-01 20:16:10 UTC"</code></pre>
+<pre><code>#&gt; [1] "2020-12-04 20:05:05 UTC"</code></pre>
 <p>Wallclock time spent generating the vignette.</p>
-<pre><code>#&gt; Time difference of 18.854 secs</code></pre>
+<pre><code>#&gt; Time difference of 17.122 secs</code></pre>
 <p><code>R</code> session information.</p>
 <pre><code>#&gt; ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
 #&gt;  setting  value                       
@@ -302,7 +382,7 @@
 #&gt;  collate  en_US.UTF-8                 
 #&gt;  ctype    en_US.UTF-8                 
 #&gt;  tz       Etc/UTC                     
-#&gt;  date     2020-12-01                  
+#&gt;  date     2020-12-04                  
 #&gt; 
 #&gt; ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
 #&gt;  package              * version  date       lib source                                   
