@@ -98,10 +98,10 @@ This workshop aims to describe the `SPEAQeasy` `r citep(bib[["SPEAQeasy"]])` RNA
 
 TODO
 
-## Pre-requisits
+## Pre-requisites
 
-* TODO
-* TODO
+* Basic understanding of RNA-seq
+* Basic familiarity with the `SummarizedExperiment` and `GenomicRanges` packages
 
 ## Workshop Participation
 
@@ -154,6 +154,77 @@ citation("SPEAQeasyWorkshop2020")[2]
 # Workshop
 
 ## Introduction
+
+### SPEAQeasy Overview
+
+We introduce [SPEAQeasy](https://github.com/LieberInstitute/SPEAQeasy), a **S**calable RNA-seq processing **P**ipeline for **E**xpression **A**nd **Q**uantification, that is **easy** to install, use, and share with others. More detailed documentation is [here](http://research.libd.org/SPEAQeasy/).
+
+TODO: image of pipeline workflow here
+
+### SPEAQeasy Outputs
+
+SPEAQeasy produces [RangedSummarizedExperiment](https://bioconductor.org/packages/release/bioc/html/SummarizedExperiment.html) objects with raw and normalized counts for each feature type: genes, exons, exon-exon junctions, and transcripts.
+
+For human samples, variant calling is performed at a list of highly variables sites. A single [VCF file](https://www.internationalgenome.org/wiki/Analysis/Variant%20Call%20Format/vcf-variant-call-format-version-40/) is generated, containing genotype calls for all samples. This estalishes a sufficiently unique profile for each sample which can be compared against pre-sequencing genotype calls to resolve potential identity issues.
+
+Optionally, [BigWig](https://genome.ucsc.edu/goldenPath/help/bigWig.html) coverage files by strand, and averaged across strands, are produced. An additional step utilizes the [derfinder](https://bioconductor.org/packages/release/bioc/html/derfinder.html) package to compute expressed regions, a precursor to analyses finding differentially expressed regions (DERs).
+
+TODO: figure of output files here
+
+### Installation and Set-up
+
+First, clone the SPEAQeasy repository.
+
+```{bash, eval=FALSE}
+git clone git@github.com:LieberInstitute/SPEAQeasy.git
+```
+
+SPEAQeasy dependencies can be managed with docker, involving a fairly quick installation that is reproducible regardless of the computing environment. For those who are able to use docker, SPEAQeasy can be installed with:
+
+```{bash, eval=FALSE}
+#  From within the SPEAQeasy repository:
+bash install_software.sh "docker"
+```
+
+If you do not have access to docker on your machine, SPEAQeasy can be installed with:
+
+```{bash, eval=FALSE}
+#  From within the SPEAQeasy repository:
+bash install_software.sh "local"
+```
+
+Please note that installation with docker is recommended if available, and that "local" installation can take quite some time, as all dependencies are built from source. **Installing and running SPEAQeasy is not required for this workshop**, but is demonstrated to familiarize participants with the process. The workshop files include outputs from SPEAQeasy, which can be used later for the example differential expression analysis.
+
+Choose a "main" script as appropriate for your particular set-up. "Main" scripts and associated configuration files exist for SLURM-managed computing clusters, SGE-managed clusters, local machines, and the [JHPCE](https://jhpce.jhu.edu/) cluster.
+
+| Environment  | "Main" script | Config file |
+|----------|-------------|-------------------|
+| SLURM cluster   | run_pipeline_slurm.sh      | conf/slurm.config or conf/docker_slurm.config  |
+| SGE cluster     | run_pipeline_sge.sh        | conf/sge.config or conf/docker_sge.config      |
+| Local machine   | run_pipeline_local.sh      | conf/local.config or conf/docker_local.config  |
+| JHPCE cluster   | run_pipeline_jhpce.sh      | conf/jhpce.config                              |
+
+Within the main script, you can configure arguments specific to the experiment, such as the reference organism, pairing of samples, and where to place output files, among other specifications.
+
+When running SPEAQeasy on a cluster (i.e. SLURM, SGE, or JHPCE users), it is recommended you submit the pipeline as a job, using the command appropriate for your cluster. For those running SPEAQeasy locally, the main script can be executed directly.
+
+```{bash, eval=FALSE}
+#  SLURM-managed clusters
+sbatch run_pipeline_slurm.sh
+
+#  SGE-managed clusters
+qsub run_pipeline_sge.sh
+
+#  local machines
+bash run_pipeline_local.sh
+
+#  The JHPCE cluster
+qsub run_pipeline_jhpce.sh
+```
+
+### Examining SPEAQeasy outputs
+
+TODO
 
 ## DE Analysis
 
