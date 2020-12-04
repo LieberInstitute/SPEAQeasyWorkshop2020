@@ -224,25 +224,44 @@ qsub run_pipeline_jhpce.sh
 
 ### Examining SPEAQeasy outputs
 
-TODO
+Let's take a look at one of the major outputs from SPEAQeasy- the `RangedSummarizedExperiment` containing gene counts.
+
+```{r "examine_outputs"}
+library("SPEAQeasyWorkshop2020")
+library("here")
+library("SummarizedExperiment")
+library("jaffelab") # GitHub: LieberInstitute/jaffelab
+
+#  Load the RSE containing gene counts
+load(here('pipeline_outputs', 'rse_gene_Jlab_experiment_n42.Rdata'), verbose=TRUE)
+
+#  Print an overview
+rse_gene
+
+#  Check out the metrics SPEAQeasy collected for each sample, including stats
+#  from FastQC, trimming, and alignment
+colnames(colData(rse_gene))
+
+#  View the "top left corner" of the counts assay, containing counts for a few
+#  genes and a few samples
+corner(assays(rse_gene)$counts)
+
+#  Examine what data is provided in the RSE object for each gene ("row")
+head(rowData(rse_gene))
+```
 
 ## DE Analysis
 
 ```{r "start", message=FALSE, warning=FALSE}
-# library("SPEAQeasyWorkshop2020")
-
 library("BiocStyle")
 library("clusterProfiler")
 library("edgeR")
-library("here")
-library("jaffelab") # GitHub: LieberInstitute/jaffelab
 library("limma")
 library("pheatmap")
 library("org.Hs.eg.db")
 library("RColorBrewer")
 library("recount")
 library("sessioninfo")
-library("SummarizedExperiment")
 ```
 
 Edit this as you see fit =)
