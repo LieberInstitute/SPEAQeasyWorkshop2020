@@ -165,7 +165,7 @@ citation("SPEAQeasyWorkshop2020")[2]
 
 We introduce [SPEAQeasy](https://github.com/LieberInstitute/SPEAQeasy), a **S**calable RNA-seq processing **P**ipeline for **E**xpression **A**nalysis and **Q**uantification, that is **easy** to install, use, and share with others. More detailed documentation is [here](http://research.libd.org/SPEAQeasy/).
 
-![images/workflow.png]
+![Functional workflow. Yellow coloring denotes steps which are optional or not always performed.](images/workflow.png)
 
 ### SPEAQeasy Outputs
 
@@ -175,7 +175,7 @@ For human samples, variant calling is performed at a list of highly variables si
 
 Optionally, [BigWig](https://genome.ucsc.edu/goldenPath/help/bigWig.html) coverage files by strand, and averaged across strands, are produced. An additional step utilizes the [derfinder](https://bioconductor.org/packages/release/bioc/html/derfinder.html) package to compute expressed regions, a precursor to analyses finding differentially expressed regions (DERs).
 
-![images/main_outputs.png]
+![Main SPEAQeasy outputs of interest.](images/main_outputs.png)
 
 ### Installation and Set-up
 
