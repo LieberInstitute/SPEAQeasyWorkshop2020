@@ -228,7 +228,7 @@ qsub run_pipeline_jhpce.sh
 
 Let's take a look at one of the major outputs from SPEAQeasy- the `RangedSummarizedExperiment` containing gene counts.
 
-```{r "examine_outputs"}
+```{r "examine_outputs", eval=FALSE}
 library("SPEAQeasyWorkshop2020")
 library("here")
 library("SummarizedExperiment")
