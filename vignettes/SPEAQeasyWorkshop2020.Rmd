@@ -107,9 +107,13 @@ TODO
 
 ## Workshop Participation
 
-TODO
+This workshop makes use of two sets of files: the [SPEAQeasy GitHub repository](https://github.com/LieberInstitute/SPEAQeasy) and the workshop-specific files. You can clone the SPEAQeasy repository with:
 
-You can download a Docker image with all the workshop files using:
+```{bash, "clone", eval=FALSE}
+git clone git@github.com:LieberInstitute/SPEAQeasy.git
+```
+
+The workshop-specific files include example outputs from SPEAQeasy, for performing a differential expression analysis. You can download a Docker image with these files using:
 
 ```bash
 docker run -e PASSWORD=bioc2020 -p 8787:8787 -d --rm lcollado/speaqeasyworkshop2020
