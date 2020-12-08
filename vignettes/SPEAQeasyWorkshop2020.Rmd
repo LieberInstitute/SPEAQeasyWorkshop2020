@@ -89,6 +89,8 @@ write.bibtex(bib, file = "SPEAQeasyWorkshop2020.bib")
 
 This workshop aims to describe the `SPEAQeasy` `r citep(bib[["SPEAQeasy"]])` RNA-seq processing pipeline, show how to use it, and then illustrate how the results can be analyzed using Bioconductor R packages for differential expression analyses.
 
+SPEAQeasy is a [Nextflow](https://www.nextflow.io/)-based **S**calable RNA-seq processing **P**ipeline for **E**xpression **A**nalysis and **Q**uantification that produces R objects ready for analysis with Bioconductor tools. Partipants will become familiar with SPEAQeasy set-up, execution on real data, and practice configuring some common settings. We will walk through a complete differential expression analysis, utilizing popular packages such as [limma](https://www.bioconductor.org/packages/release/bioc/html/limma.html), [edgeR](http://bioconductor.org/packages/release/bioc/html/edgeR.html), and [clusterProfiler](https://bioconductor.org/packages/release/bioc/html/clusterProfiler.html).
+
 ## Instructors
 
 * [Nick Eagles](https://github.com/Nick-Eagles)
@@ -157,7 +159,7 @@ citation("SPEAQeasyWorkshop2020")[2]
 
 ### SPEAQeasy Overview
 
-We introduce [SPEAQeasy](https://github.com/LieberInstitute/SPEAQeasy), a **S**calable RNA-seq processing **P**ipeline for **E**xpression **A**nd **Q**uantification, that is **easy** to install, use, and share with others. More detailed documentation is [here](http://research.libd.org/SPEAQeasy/).
+We introduce [SPEAQeasy](https://github.com/LieberInstitute/SPEAQeasy), a **S**calable RNA-seq processing **P**ipeline for **E**xpression **A**nalysis and **Q**uantification, that is **easy** to install, use, and share with others. More detailed documentation is [here](http://research.libd.org/SPEAQeasy/).
 
 TODO: image of pipeline workflow here
 
