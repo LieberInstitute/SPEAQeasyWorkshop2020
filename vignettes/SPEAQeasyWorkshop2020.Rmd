@@ -128,10 +128,10 @@ To see the vignette on RStudio's window (from the docker image), run `browseVign
 
 | Activity                     | Time |
 |------------------------------|------|
-| General overview of SPEAQeasy                   | 25m  |
-| Hands-on: running SPEAQeasy on real data        | 15m  |
-| Understanding SPEAQeasy outputs                 | 15m  |
-| Differential expression analysis                | 35m  |
+| General overview of SPEAQeasy                                   | 20m  |
+| Hands-on: configuring and running SPEAQeasy on real data        | 25m  |
+| Understanding SPEAQeasy outputs                                 | 15m  |
+| Differential expression analysis                                | 30m  |
 
 Total: a 90 minute session.
 
