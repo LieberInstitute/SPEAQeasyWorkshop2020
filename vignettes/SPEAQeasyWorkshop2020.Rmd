@@ -14,7 +14,7 @@ author:
     email: lcolladotor@gmail.com
 output: 
   BiocStyle::html_document:
-    self_contained: yes
+    self_contained: false
     toc: true
     toc_float: true
     toc_depth: 2
