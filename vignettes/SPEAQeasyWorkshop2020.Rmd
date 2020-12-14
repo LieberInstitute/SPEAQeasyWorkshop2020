@@ -293,9 +293,6 @@ Estlabished a foundation for the Nextflow-port (now SPEAQeasy) of the RNA-seq pi
 
 - Jacob Leonard
 - Violeta Larios Serrato
-- Everardo Gutiérrez-Millán
-- Israel Aguilar-Ordoñez
-
 
 # Reproducibility
 
