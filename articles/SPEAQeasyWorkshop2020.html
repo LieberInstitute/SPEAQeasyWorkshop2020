@@ -77,7 +77,7 @@
       Lieber Institute for Brain Development, Johns Hopkins Medical Campus<br><a class="author_email" href="mailto:#"></a><a href="mailto:lcolladotor@gmail.com" class="email">lcolladotor@gmail.com</a>
       </address>
                   
-            <h4 class="date">8 December 2020</h4>
+            <h4 class="date">14 December 2020</h4>
       
       
       <div class="hidden name"><code>SPEAQeasyWorkshop2020.Rmd</code></div>
@@ -91,7 +91,7 @@
 <div id="overview" class="section level1">
 <h1 class="hasAnchor">
 <a href="#overview" class="anchor"></a>Overview</h1>
-<p>This workshop aims to describe the <code>SPEAQeasy</code> <a id="cite-Eagles_2020"></a>(<a href="https://www.biorxiv.org/content/10.1101/TODO">Eagles, Burke, Leonard, Barry, et al., 2020</a>) RNA-seq processing pipeline, show how to use it, and then illustrate how the results can be analyzed using Bioconductor R packages for differential expression analyses.</p>
+<p>This workshop aims to describe the <code>SPEAQeasy</code> <a id="cite-Eagles_2020"></a>(<a href="https://www.biorxiv.org/content/10.1101/2020.12.11.386789v1">Eagles, Burke, Leonard, Barry, et al., 2020</a>) RNA-seq processing pipeline, show how to use it, and then illustrate how the results can be analyzed using Bioconductor R packages for differential expression analyses.</p>
 <p>SPEAQeasy is a <a href="https://www.nextflow.io/">Nextflow</a>-based <strong>S</strong>calable RNA-seq processing <strong>P</strong>ipeline for <strong>E</strong>xpression <strong>A</strong>nalysis and <strong>Q</strong>uantification that produces R objects ready for analysis with Bioconductor tools. Partipants will become familiar with SPEAQeasy set-up, execution on real data, and practice configuring some common settings. We will walk through a complete differential expression analysis, utilizing popular packages such as <a href="https://www.bioconductor.org/packages/release/bioc/html/limma.html">limma</a>, <a href="http://bioconductor.org/packages/release/bioc/html/edgeR.html">edgeR</a>, and <a href="https://bioconductor.org/packages/release/bioc/html/clusterProfiler.html">clusterProfiler</a>.</p>
 <div id="instructors" class="section level2">
 <h2 class="hasAnchor">
@@ -117,9 +117,10 @@
 <div id="workshop-participation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#workshop-participation" class="anchor"></a>Workshop Participation</h2>
-<p>TODO</p>
-<p>You can download a Docker image with all the workshop files using:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="ex">docker</span> run -e PASSWORD=bioc2020 -p 8787:8787 -d --rm lcollado/speaqeasyworkshop2020</span></code></pre></div>
+<p>This workshop makes use of two sets of files: the <a href="https://github.com/LieberInstitute/SPEAQeasy">SPEAQeasy GitHub repository</a> and the workshop-specific files. You can clone the SPEAQeasy repository with:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">git</span> clone git@github.com:LieberInstitute/SPEAQeasy.git</span></code></pre></div>
+<p>The workshop-specific files include example outputs from SPEAQeasy, for performing a differential expression analysis. You can download a Docker image with these files using:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="ex">docker</span> run -e PASSWORD=bioc2020 -p 8787:8787 -d --rm lcollado/speaqeasyworkshop2020</span></code></pre></div>
 <p>Then, log in to RStudio at <a href="http://localhost:8787">http://localhost:8787</a> using username <code>rstudio</code> and password <code>bioc2020</code>. Note that on Windows you need to provide your localhost IP address like <code>http://191.163.92.108:8787/</code> - find it using <code>docker-machine ip default</code> in Docker’s terminal.</p>
 <p>To see the vignette on RStudio’s window (from the docker image), run <code><a href="https://rdrr.io/r/utils/browseVignettes.html">browseVignettes(package = "SPEAQeasyWorkshop2020")</a></code>. Click on one of the links, “HTML”, “source”, “R code”. In case of <code>The requested page was not found</code> error, add <code>help/</code> to the URL right after the hostname, e.g., <a href="http://localhost:8787/help/library/SPEAQeasyWorkshop2020/doc/SPEAQeasyWorkshop2020.html">http://localhost:8787/help/library/SPEAQeasyWorkshop2020/doc/SPEAQeasyWorkshop2020.html</a>. This is a <a href="https://github.com/rocker-org/rocker-versioned/issues/178">known bug</a>.</p>
 </div>
@@ -134,11 +135,11 @@
 <tbody>
 <tr class="odd">
 <td>General overview of SPEAQeasy</td>
-<td>25m</td>
+<td>20m</td>
 </tr>
 <tr class="even">
-<td>Hands-on: running SPEAQeasy on real data</td>
-<td>15m</td>
+<td>Hands-on: configuring and running SPEAQeasy on real data</td>
+<td>25m</td>
 </tr>
 <tr class="odd">
 <td>Understanding SPEAQeasy outputs</td>
@@ -146,7 +147,7 @@
 </tr>
 <tr class="even">
 <td>Differential expression analysis</td>
-<td>35m</td>
+<td>30m</td>
 </tr>
 </tbody>
 </table>
@@ -174,8 +175,8 @@
 <h2 class="hasAnchor">
 <a href="#citing-speaqeasy" class="anchor"></a>Citing <code>SPEAQeasy</code>
 </h2>
-<p>We hope that <code>SPEAQeasy</code> (<a href="https://www.biorxiv.org/content/10.1101/TODO">Eagles, Burke, Leonard, Barry, et al., 2020</a>) will be useful for your research. Please use the following information to cite the package and the overall approach. Thank you!</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<p>We hope that <code>SPEAQeasy</code> (<a href="https://www.biorxiv.org/content/10.1101/2020.12.11.386789v1">Eagles, Burke, Leonard, Barry, et al., 2020</a>) will be useful for your research. Please use the following information to cite the package and the overall approach. Thank you!</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Citation info</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/citation.html">citation</a></span><span class="op">(</span><span class="st">"SPEAQeasyWorkshop2020"</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>
 <span class="co">#&gt; </span>
@@ -183,9 +184,9 @@
 <span class="co">#&gt; Serrato VL, Gutiérrez-Millán E, Aguilar-Ordoñez I, Jaffe AE,</span>
 <span class="co">#&gt; Collado-Torres L (2020). "SPEAQeasy: a Scalable Pipeline for Expression</span>
 <span class="co">#&gt; Analysis and Quantification for R/Bioconductor-powered RNA-seq</span>
-<span class="co">#&gt; analyses." _bioRxiv_. doi: 10.1101/TODO (URL:</span>
-<span class="co">#&gt; https://doi.org/10.1101/TODO), &lt;URL:</span>
-<span class="co">#&gt; https://www.biorxiv.org/content/10.1101/TODO&gt;.</span>
+<span class="co">#&gt; analyses." _bioRxiv_. doi: 10.1101/2020.12.11.386789 (URL:</span>
+<span class="co">#&gt; https://doi.org/10.1101/2020.12.11.386789), &lt;URL:</span>
+<span class="co">#&gt; https://www.biorxiv.org/content/10.1101/2020.12.11.386789v1&gt;.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; A BibTeX entry for LaTeX users is</span>
 <span class="co">#&gt; </span>
@@ -194,8 +195,8 @@
 <span class="co">#&gt;     author = {Nicholas J. Eagles and Emily E. Burke and Jacob Leonard and Brianna K. Barry and Joshua M. Stolz and Louise Huuki and BaDoi N. Phan and Violeta Larrios Serrato and Everardo Gutiérrez-Millán and Israel Aguilar-Ordoñez and Andrew E. Jaffe and Leonardo Collado-Torres},</span>
 <span class="co">#&gt;     year = {2020},</span>
 <span class="co">#&gt;     journal = {bioRxiv},</span>
-<span class="co">#&gt;     doi = {10.1101/TODO},</span>
-<span class="co">#&gt;     url = {https://www.biorxiv.org/content/10.1101/TODO},</span>
+<span class="co">#&gt;     doi = {10.1101/2020.12.11.386789},</span>
+<span class="co">#&gt;     url = {https://www.biorxiv.org/content/10.1101/2020.12.11.386789v1},</span>
 <span class="co">#&gt;   }</span></code></pre></div>
 </div>
 </div>
@@ -209,7 +210,9 @@
 <h3 class="hasAnchor">
 <a href="#speaqeasy-overview" class="anchor"></a>SPEAQeasy Overview</h3>
 <p>We introduce <a href="https://github.com/LieberInstitute/SPEAQeasy">SPEAQeasy</a>, a <strong>S</strong>calable RNA-seq processing <strong>P</strong>ipeline for <strong>E</strong>xpression <strong>A</strong>nalysis and <strong>Q</strong>uantification, that is <strong>easy</strong> to install, use, and share with others. More detailed documentation is <a href="http://research.libd.org/SPEAQeasy/">here</a>.</p>
-<p>TODO: image of pipeline workflow here</p>
+<div class="figure">
+<img src="images/workflow.png" alt=""><p class="caption">Functional workflow. Yellow coloring denotes steps which are optional or not always performed.</p>
+</div>
 </div>
 <div id="speaqeasy-outputs" class="section level3">
 <h3 class="hasAnchor">
@@ -217,19 +220,21 @@
 <p>SPEAQeasy produces <a href="https://bioconductor.org/packages/release/bioc/html/SummarizedExperiment.html">RangedSummarizedExperiment</a> objects with raw and normalized counts for each feature type: genes, exons, exon-exon junctions, and transcripts.</p>
 <p>For human samples, variant calling is performed at a list of highly variables sites. A single <a href="https://www.internationalgenome.org/wiki/Analysis/Variant%20Call%20Format/vcf-variant-call-format-version-40/">VCF file</a> is generated, containing genotype calls for all samples. This estalishes a sufficiently unique profile for each sample which can be compared against pre-sequencing genotype calls to resolve potential identity issues.</p>
 <p>Optionally, <a href="https://genome.ucsc.edu/goldenPath/help/bigWig.html">BigWig</a> coverage files by strand, and averaged across strands, are produced. An additional step utilizes the <a href="https://bioconductor.org/packages/release/bioc/html/derfinder.html">derfinder</a> package to compute expressed regions, a precursor to analyses finding differentially expressed regions (DERs).</p>
-<p>TODO: figure of output files here</p>
+<div class="figure">
+<img src="images/main_outputs.png" alt=""><p class="caption">Main SPEAQeasy outputs of interest.</p>
+</div>
 </div>
 <div id="installation-and-set-up" class="section level3">
 <h3 class="hasAnchor">
 <a href="#installation-and-set-up" class="anchor"></a>Installation and Set-up</h3>
 <p>First, clone the SPEAQeasy repository.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">git</span> clone git@github.com:LieberInstitute/SPEAQeasy.git</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">git</span> clone git@github.com:LieberInstitute/SPEAQeasy.git</span></code></pre></div>
 <p>SPEAQeasy dependencies can be managed with docker, involving a fairly quick installation that is reproducible regardless of the computing environment. For those who are able to use docker, SPEAQeasy can be installed with:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="co">#  From within the SPEAQeasy repository:</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="fu">bash</span> install_software.sh <span class="st">"docker"</span></span></code></pre></div>
-<p>If you do not have access to docker on your machine, SPEAQeasy can be installed with:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="co">#  From within the SPEAQeasy repository:</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="fu">bash</span> install_software.sh <span class="st">"local"</span></span></code></pre></div>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="fu">bash</span> install_software.sh <span class="st">"docker"</span></span></code></pre></div>
+<p>If you do not have access to docker on your machine, SPEAQeasy can be installed with:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="co">#  From within the SPEAQeasy repository:</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="fu">bash</span> install_software.sh <span class="st">"local"</span></span></code></pre></div>
 <p>Please note that installation with docker is recommended if available, and that “local” installation can take quite some time, as all dependencies are built from source. <strong>Installing and running SPEAQeasy is not required for this workshop</strong>, but is demonstrated to familiarize participants with the process. The workshop files include outputs from SPEAQeasy, which can be used later for the example differential expression analysis.</p>
 <p>Choose a “main” script as appropriate for your particular set-up. “Main” scripts and associated configuration files exist for SLURM-managed computing clusters, SGE-managed clusters, local machines, and the <a href="https://jhpce.jhu.edu/">JHPCE</a> cluster.</p>
 <table class="table">
@@ -268,23 +273,23 @@
 </table>
 <p>Within the main script, you can configure arguments specific to the experiment, such as the reference organism, pairing of samples, and where to place output files, among other specifications.</p>
 <p>When running SPEAQeasy on a cluster (i.e. SLURM, SGE, or JHPCE users), it is recommended you submit the pipeline as a job, using the command appropriate for your cluster. For those running SPEAQeasy locally, the main script can be executed directly.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="co">#  SLURM-managed clusters</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="ex">sbatch</span> run_pipeline_slurm.sh</span>
-<span id="cb6-3"><a href="#cb6-3"></a></span>
-<span id="cb6-4"><a href="#cb6-4"></a><span class="co">#  SGE-managed clusters</span></span>
-<span id="cb6-5"><a href="#cb6-5"></a><span class="ex">qsub</span> run_pipeline_sge.sh</span>
-<span id="cb6-6"><a href="#cb6-6"></a></span>
-<span id="cb6-7"><a href="#cb6-7"></a><span class="co">#  local machines</span></span>
-<span id="cb6-8"><a href="#cb6-8"></a><span class="fu">bash</span> run_pipeline_local.sh</span>
-<span id="cb6-9"><a href="#cb6-9"></a></span>
-<span id="cb6-10"><a href="#cb6-10"></a><span class="co">#  The JHPCE cluster</span></span>
-<span id="cb6-11"><a href="#cb6-11"></a><span class="ex">qsub</span> run_pipeline_jhpce.sh</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a><span class="co">#  SLURM-managed clusters</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="ex">sbatch</span> run_pipeline_slurm.sh</span>
+<span id="cb7-3"><a href="#cb7-3"></a></span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="co">#  SGE-managed clusters</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="ex">qsub</span> run_pipeline_sge.sh</span>
+<span id="cb7-6"><a href="#cb7-6"></a></span>
+<span id="cb7-7"><a href="#cb7-7"></a><span class="co">#  local machines</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a><span class="fu">bash</span> run_pipeline_local.sh</span>
+<span id="cb7-9"><a href="#cb7-9"></a></span>
+<span id="cb7-10"><a href="#cb7-10"></a><span class="co">#  The JHPCE cluster</span></span>
+<span id="cb7-11"><a href="#cb7-11"></a><span class="ex">qsub</span> run_pipeline_jhpce.sh</span></code></pre></div>
 </div>
 <div id="examining-speaqeasy-outputs" class="section level3">
 <h3 class="hasAnchor">
 <a href="#examining-speaqeasy-outputs" class="anchor"></a>Examining SPEAQeasy outputs</h3>
 <p>Let’s take a look at one of the major outputs from SPEAQeasy- the <code>RangedSummarizedExperiment</code> containing gene counts.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://LieberInstitute.github.io/SPEAQeasyWorkshop2020/">"SPEAQeasyWorkshop2020"</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://here.r-lib.org/">"here"</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://bioconductor.org/packages/SummarizedExperiment">"SummarizedExperiment"</a></span><span class="op">)</span>
@@ -311,7 +316,7 @@
 <div id="de-analysis" class="section level2">
 <h2 class="hasAnchor">
 <a href="#de-analysis" class="anchor"></a>DE Analysis</h2>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/Bioconductor/BiocStyle">"BiocStyle"</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://yulab-smu.top/biomedical-knowledge-mining-book/">"clusterProfiler"</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://bioinf.wehi.edu.au/edgeR">"edgeR"</a></span><span class="op">)</span>
@@ -332,7 +337,27 @@
 <div id="acknowledgements" class="section level1">
 <h1 class="hasAnchor">
 <a href="#acknowledgements" class="anchor"></a>Acknowledgements</h1>
-<p>TODO</p>
+<div id="members-of-the-former-jaffe-lab" class="section level2">
+<h2 class="hasAnchor">
+<a href="#members-of-the-former-jaffe-lab" class="anchor"></a>Members of the (former) Jaffe Lab</h2>
+<ul>
+<li>Emily Burke: much of the code for SPEAQeasy before it was re-built with Nextflow, including a great portion of the R scripts still used now</li>
+<li>Brianna Barry: guidance, naming, and testing SPEAQeasy, leading to features such as per-sample logs and automatic strand inference, among others</li>
+<li>Louise Huuki: help with our guide involving resolving sample swaps from SPEAQeasy outputs</li>
+<li>BaDoi Phan: development of the pipeline before using Nextflow</li>
+<li>Andrew Jaffe: principal investigator, leading and overseeing the SPEAQeasy project</li>
+<li>Leonardo Collado Torres: development, guidance, and help throughout the SPEAQeasy project; development of this workshop package and website</li>
+</ul>
+</div>
+<div id="winter-genomics-team" class="section level2">
+<h2 class="hasAnchor">
+<a href="#winter-genomics-team" class="anchor"></a>Winter Genomics Team</h2>
+<p>Estlabished a foundation for the Nextflow-port (now SPEAQeasy) of the RNA-seq pipeline internally used by the Jaffe Lab.</p>
+<ul>
+<li>Jacob Leonard</li>
+<li>Violeta Larios Serrato</li>
+</ul>
+</div>
 </div>
 <div id="reproducibility" class="section level1">
 <h1 class="hasAnchor">
@@ -373,7 +398,7 @@
 </ul>
 <p>This package was developed using <em><a href="https://github.com/lcolladotor/biocthis">biocthis</a></em>.</p>
 <p>Code for creating the vignette</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Create the vignette</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/rstudio/rmarkdown">"rmarkdown"</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/rmarkdown/man/render.html">render</a></span><span class="op">(</span><span class="st">"SPEAQeasyWorkshop2020.Rmd"</span>, <span class="st">"BiocStyle::html_document"</span><span class="op">)</span><span class="op">)</span>
@@ -381,14 +406,14 @@
 <span class="co">## Extract the R code</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://yihui.org/knitr/">"knitr"</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/knit.html">knit</a></span><span class="op">(</span><span class="st">"SPEAQeasyWorkshop2020.Rmd"</span>, tangle <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Clean up</span>
 <span class="fu"><a href="https://rdrr.io/r/base/files.html">file.remove</a></span><span class="op">(</span><span class="st">"SPEAQeasyWorkshop2020.bib"</span><span class="op">)</span>
 <span class="co">#&gt; [1] TRUE</span></code></pre></div>
 <p>Date the vignette was generated.</p>
-<pre><code>#&gt; [1] "2020-12-08 18:21:59 UTC"</code></pre>
+<pre><code>#&gt; [1] "2020-12-14 18:04:18 UTC"</code></pre>
 <p>Wallclock time spent generating the vignette.</p>
-<pre><code>#&gt; Time difference of 15.65 secs</code></pre>
+<pre><code>#&gt; Time difference of 14.683 secs</code></pre>
 <p><code>R</code> session information.</p>
 <pre><code>#&gt; ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
 #&gt;  setting  value                       
@@ -400,14 +425,14 @@
 #&gt;  collate  en_US.UTF-8                 
 #&gt;  ctype    en_US.UTF-8                 
 #&gt;  tz       Etc/UTC                     
-#&gt;  date     2020-12-08                  
+#&gt;  date     2020-12-14                  
 #&gt; 
 #&gt; ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
 #&gt;  package              * version  date       lib source                                 
 #&gt;  AnnotationDbi        * 1.52.0   2020-10-27 [1] Bioconductor                           
 #&gt;  askpass                1.1      2019-01-13 [2] RSPM (R 4.0.0)                         
 #&gt;  assertthat             0.2.1    2019-03-21 [2] RSPM (R 4.0.0)                         
-#&gt;  backports              1.2.0    2020-11-02 [2] RSPM (R 4.0.3)                         
+#&gt;  backports              1.2.1    2020-12-09 [1] RSPM (R 4.0.3)                         
 #&gt;  base64enc              0.1-3    2015-07-28 [2] RSPM (R 4.0.0)                         
 #&gt;  Biobase              * 2.50.0   2020-10-27 [1] Bioconductor                           
 #&gt;  BiocFileCache          1.14.0   2020-10-27 [1] Bioconductor                           
@@ -433,7 +458,7 @@
 #&gt;  cowplot                1.1.0    2020-09-08 [1] RSPM (R 4.0.2)                         
 #&gt;  crayon                 1.3.4    2017-09-16 [2] RSPM (R 4.0.0)                         
 #&gt;  curl                   4.3      2019-12-02 [2] RSPM (R 4.0.0)                         
-#&gt;  data.table             1.13.2   2020-10-19 [1] RSPM (R 4.0.3)                         
+#&gt;  data.table             1.13.4   2020-12-08 [1] RSPM (R 4.0.3)                         
 #&gt;  DBI                    1.1.0    2019-12-15 [1] RSPM (R 4.0.0)                         
 #&gt;  dbplyr                 2.0.0    2020-11-03 [1] RSPM (R 4.0.3)                         
 #&gt;  DelayedArray           0.16.0   2020-10-27 [1] Bioconductor                           
@@ -459,7 +484,7 @@
 #&gt;  Formula                1.2-4    2020-10-16 [1] RSPM (R 4.0.2)                         
 #&gt;  fs                     1.5.0    2020-07-31 [2] RSPM (R 4.0.2)                         
 #&gt;  generics               0.1.0    2020-10-31 [1] RSPM (R 4.0.3)                         
-#&gt;  GenomeInfoDb         * 1.26.1   2020-11-20 [1] Bioconductor                           
+#&gt;  GenomeInfoDb         * 1.26.2   2020-12-08 [1] Bioconductor                           
 #&gt;  GenomeInfoDbData       1.2.4    2020-11-25 [1] Bioconductor                           
 #&gt;  GenomicAlignments      1.26.0   2020-10-27 [1] Bioconductor                           
 #&gt;  GenomicFeatures        1.42.1   2020-11-12 [1] Bioconductor                           
@@ -480,13 +505,13 @@
 #&gt;  hms                    0.5.3    2020-01-08 [1] RSPM (R 4.0.0)                         
 #&gt;  htmlTable              2.1.0    2020-09-16 [1] RSPM (R 4.0.2)                         
 #&gt;  htmltools              0.5.0    2020-06-16 [2] RSPM (R 4.0.1)                         
-#&gt;  htmlwidgets            1.5.2    2020-10-03 [2] RSPM (R 4.0.2)                         
+#&gt;  htmlwidgets            1.5.3    2020-12-10 [2] RSPM (R 4.0.3)                         
 #&gt;  httr                   1.4.2    2020-07-20 [2] RSPM (R 4.0.2)                         
 #&gt;  igraph                 1.2.6    2020-10-06 [1] RSPM (R 4.0.2)                         
-#&gt;  IRanges              * 2.24.0   2020-10-27 [1] Bioconductor                           
+#&gt;  IRanges              * 2.24.1   2020-12-12 [1] Bioconductor                           
 #&gt;  iterators              1.0.13   2020-10-15 [1] RSPM (R 4.0.2)                         
 #&gt;  jpeg                   0.1-8.1  2019-10-24 [1] RSPM (R 4.0.0)                         
-#&gt;  jsonlite               1.7.1    2020-09-07 [2] RSPM (R 4.0.2)                         
+#&gt;  jsonlite               1.7.2    2020-12-09 [2] RSPM (R 4.0.3)                         
 #&gt;  knitcitations        * 1.0.11   2020-11-25 [1] Github (cboettig/knitcitations@23750d5)
 #&gt;  knitr                  1.30     2020-09-22 [2] RSPM (R 4.0.2)                         
 #&gt;  lattice                0.20-41  2020-04-02 [3] CRAN (R 4.0.3)                         
@@ -537,7 +562,7 @@
 #&gt;  rstudioapi             0.13     2020-11-12 [2] RSPM (R 4.0.3)                         
 #&gt;  rtracklayer            1.50.0   2020-10-27 [1] Bioconductor                           
 #&gt;  rvcheck                0.1.8    2020-03-01 [1] RSPM (R 4.0.0)                         
-#&gt;  S4Vectors            * 0.28.0   2020-10-27 [1] Bioconductor                           
+#&gt;  S4Vectors            * 0.28.1   2020-12-09 [1] Bioconductor                           
 #&gt;  scales                 1.1.1    2020-05-11 [1] RSPM (R 4.0.0)                         
 #&gt;  scatterpie             0.1.5    2020-09-09 [1] RSPM (R 4.0.2)                         
 #&gt;  sessioninfo          * 1.1.1    2018-11-05 [2] RSPM (R 4.0.0)                         
@@ -579,7 +604,7 @@
 <p>[3] M. Carlson. <em>org.Hs.eg.db: Genome wide annotation for Human</em>. R package version 3.12.0. 2020.</p>
 <p>[4] L. Collado-Torres, A. E. Jaffe, and E. E. Burke. <em>jaffelab: Commonly used functions by the Jaffe lab</em>. R package version 0.99.30. 2019. &lt;URL: <a href="https://github.com/LieberInstitute/jaffelab" class="uri">https://github.com/LieberInstitute/jaffelab</a>&gt;.</p>
 <p>[5] G. Csárdi, R. core, H. Wickham, W. Chang, et al. <em>sessioninfo: R Session Information</em>. R package version 1.1.1. 2018. &lt;URL: <a href="https://github.com/r-lib/sessioninfo#readme" class="uri">https://github.com/r-lib/sessioninfo#readme</a>&gt;.</p>
-<p>[6] N. J. Eagles, E. E. Burke, J. Leonard, B. K. Barry, et al. “SPEAQeasy: a Scalable Pipeline for Expression Analysis and Quantification for R/Bioconductor-powered RNA-seq analyses”. In: <em>bioRxiv</em> (2020). DOI: 10.1101/TODO. &lt;URL: <a href="https://www.biorxiv.org/content/10.1101/TODO" class="uri">https://www.biorxiv.org/content/10.1101/TODO</a>&gt;.</p>
+<p>[6] N. J. Eagles, E. E. Burke, J. Leonard, B. K. Barry, et al. “SPEAQeasy: a Scalable Pipeline for Expression Analysis and Quantification for R/Bioconductor-powered RNA-seq analyses”. In: <em>bioRxiv</em> (2020). DOI: 10.1101/2020.12.11.386789. &lt;URL: <a href="https://www.biorxiv.org/content/10.1101/2020.12.11.386789v1" class="uri">https://www.biorxiv.org/content/10.1101/2020.12.11.386789v1</a>&gt;.</p>
 <p>[7] N. J. Eagles, J. M. Stolz, and L. Collado-Torres. <em>EuroBioc2020 SPEAQeasy workshop</em>. <a href="https://github.com/LieberInstitute/SPEAQeasyWorkshop2020" class="uri">https://github.com/LieberInstitute/SPEAQeasyWorkshop2020</a> - R package version 0.99.0. 2020. DOI: 10.18129/B9.bioc.SPEAQeasyWorkshop2020. &lt;URL: <a href="http://www.bioconductor.org/packages/SPEAQeasyWorkshop2020" class="uri">http://www.bioconductor.org/packages/SPEAQeasyWorkshop2020</a>&gt;.</p>
 <p>[8] R. Kolde. <em>pheatmap: Pretty Heatmaps</em>. R package version 1.0.12. 2019.</p>
 <p>[9] C. Law, Y. Chen, W. Shi, and G. Smyth. “Voom: precision weights unlock linear model analysis tools for RNA-seq read counts”. In: <em>Genome Biology</em> 15 (2014), p. R29.</p>
