@@ -49,5 +49,7 @@ Imports:
     pheatmap,
     here,
     BiocStyle,
-    sessioninfo
+    sessioninfo,
+    tidyr,
+    VariantAnnotation
 remotes: LieberInstitute/jaffelab

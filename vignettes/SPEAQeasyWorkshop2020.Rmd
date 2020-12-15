@@ -65,6 +65,8 @@ bib <- c(
     recount = citation("recount"),
     RefManageR = citation("RefManageR")[1],
     SummarizedExperiment = citation("SummarizedExperiment"),
+    tidyr = citation("tidyr")[1],
+    VariantAnnotation = citation("VariantAnnotation")[1],
     voom = RefManageR::BibEntry(
         "article",
         key = "voom",
@@ -237,12 +239,13 @@ cat(paste0(readLines(
 
 Let's take a look at one of the major outputs from SPEAQeasy- the `RangedSummarizedExperiment` containing gene counts.
 
-```{r "examine_outputs"}
-library("SPEAQeasyWorkshop2020")
-library("here")
+```{r "intro_pkgs", message=FALSE, warning=FALSE}
 library("SummarizedExperiment")
 library("jaffelab") # GitHub: LieberInstitute/jaffelab
+```
 
+
+```{r "examine_outputs"}
 #  Load the RSE containing gene counts
 load(
     file.path(
@@ -269,10 +272,227 @@ corner(assays(rse_gene)$counts)
 head(rowData(rse_gene))
 ```
 
+## Identifying sample swaps
+
+_Note: the original version is available [here](http://research.libd.org/SPEAQeasy-example/swap_speaqeasy.html) and was written by [Josh Stolz](https://github.com/joshstolz) and [Louise Huuki](https://github.com/lahuuki)._
+
+
+```{r libraries, message = FALSE, warning = FALSE}
+library("pheatmap")
+library("tidyr")
+library("VariantAnnotation")
+```
+
+In order to resolve the swaps to our best ability we need four data sets. Here we have load `snpGeno_example` which is from our TOPMed imputed genotype data, a phenotype data sheet (pd_example), a VCF file of the relevant SPEAQeasy output (SPEAQeasy), and our current genotype sample sheet (`brain_sentrix`). This file is available in the directory listed below.
+
+```{r load_data, echo=TRUE}
+load(file.path(example_files, "sample_selection", "snpsGeno_example.RData"),
+    verbose = TRUE)
+load(file.path(example_files, "sample_selection", "pd_example.Rdata"),
+    verbose = TRUE)
+Speaqeasy <-
+    readVcf(
+        file.path(
+            example_files,
+            "pipeline_outputs",
+            "merged_variants",
+            "mergedVariants.vcf.gz"
+        ),
+        genome = "hg38"
+    )
+brain_sentrix <-
+    read.csv(file.path(example_files, "brain_sentrix_speaqeasy.csv"))
+```
+
+We can see that the genotype is represented in the form of 0s, 1s, and 2s. The rare 2s are a result of multiallelic SNPs and we will drop those. 0 represent the reference allele with ones representing the alternate. We can see the distribution below.
+
+```{r explore_speaqeasy_speaqeasy, echo=TRUE}
+Geno_speaqeasy <- geno(Speaqeasy)$GT
+table(Geno_speaqeasy)
+```
+
+Given this we convert we convert the Genotype data from SPEAQeasy to numeric data. The `"./."` were values that could not accurately be determined and are replaced with `NA`.
+
+```{r data_prep_speaqeasy, echo=TRUE}
+colnames_speaqeasy <- as.data.frame(colnames(Geno_speaqeasy))
+colnames(colnames_speaqeasy) <- c("a")
+samples <-
+    tidyr::separate(colnames_speaqeasy,
+        a,
+        into = c("a", "b", "c"),
+        sep = "_"
+    )
+samples <- paste0(samples$a, "_", samples$b)
+samples <- as.data.frame(samples)
+colnames(Geno_speaqeasy) <- samples$samples
+Geno_speaqeasy[Geno_speaqeasy == "./."] <- NA
+Geno_speaqeasy[Geno_speaqeasy == "0/0"] <- 0
+Geno_speaqeasy[Geno_speaqeasy == "0/1"] <- 1
+Geno_speaqeasy[Geno_speaqeasy == "1/1"] <- 2
+class(Geno_speaqeasy) <- "numeric"
+corner(Geno_speaqeasy)
+```
+
+We then make a correlation matrix to find the possible mismatches between samples.
+
+```{r cor_speaqeasy, echo=TRUE}
+speaqeasy_Cor <- cor(Geno_speaqeasy, use = "pairwise.comp")
+corner(speaqeasy_Cor)
+```
+
+Here in the heatmap below we can see that several points do not correlate with themselves in a symmetrical matrix. This could be mismatches, but it also could be a result of a brain being sequenced twice. We will dig more into this later on.
+
+```{r check_correlations_speaqeasy, echo=FALSE}
+pheatmap(
+    speaqeasy_Cor,
+    cluster_rows = FALSE,
+    show_rownames = FALSE,
+    cluster_cols = FALSE,
+    show_colnames = FALSE
+)
+```
+
+We repeat the process for the genotype data from TOPMed. First creating our numeric data for the genotypes.
+
+```{r data_prep_genotypes, echo=FALSE}
+names <- rownames(snpsGeno_example)
+Geno_example <- geno(snpsGeno_example)$GT
+table(Geno_example)
+Geno_example[Geno_example == ".|."] <- NA
+Geno_example[Geno_example == "0|0"] <- 0
+Geno_example[Geno_example == "1|0"] <- 1
+Geno_example[Geno_example == "0|1"] <- 1
+Geno_example[Geno_example == "1|1"] <- 2
+class(Geno_example) <- "numeric"
+rownames(Geno_example) <- names
+correlation_genotype <- cor(Geno_example, use = "pairwise.comp")
+corner(correlation_genotype)
+```
+
+In this case the data only appears to have samples that match themselves. However there is the potential for a second kind of error where a brain has two samples, however the do not match each other. 
+
+```{r check_correlations_genotypes, echo=FALSE}
+pheatmap(
+    correlation_genotype,
+    cluster_rows = FALSE,
+    show_rownames = FALSE,
+    cluster_cols = FALSE,
+    show_colnames = FALSE
+)
+```
+
+We will next compare the correlation between the SPEAQeasy samples and the TOPMed samples. In order to do this we need to subset the genotypes for only SNPs that are common between the two. We can see that we have 662 snps common between the 42 samples.
+
+```{r subset_genotype_data_sets}
+Geno_speaqeasy_subset <-
+    Geno_speaqeasy[rownames(Geno_speaqeasy) %in% rownames(Geno_example), ]
+snpsGeno_subset <-
+    Geno_example[rownames(Geno_example) %in% rownames(Geno_speaqeasy_subset), ]
+dim(Geno_speaqeasy_subset)
+dim(snpsGeno_subset)
+```
+
+As we did before we create a correlation matrix this time between the two data sets. 
+
+```{r make_correlation_genotype_speaqeasy}
+correlation_genotype_speaq <-
+    cor(snpsGeno_subset, Geno_speaqeasy_subset, use = "pairwise.comp")
+```
+
+In order to dig into this further we will collapse the correlation matrices into a data table shown below.
+
+```{r make_corlong3_table}
+## Convert to long format
+corLong3 <-
+    data.frame(cor = signif(as.numeric(correlation_genotype_speaq), 3))
+corLong3$rowSample <-
+    rep(colnames(snpsGeno_example), times = ncol(snpsGeno_example))
+corLong3$colSample <-
+    rep(colnames(Geno_speaqeasy), each = ncol(Geno_speaqeasy))
+```
+
+Check the correlation between SPEAQeasy and Genotype for mismatches and swaps.
+
+```{r check_mismatches}
+brain_sentrix_present <-
+    subset(brain_sentrix, ID %in% colnames(snpsGeno_example))
+
+## Match across tables
+speaqeasy_match_col <-
+    match(corLong3$colSample, pd_example$SAMPLE_ID)
+corLong3$colBrain <- pd_example$BrNum[speaqeasy_match_col]
+brain_sentrix_match_row <-
+    match(corLong3$rowSample, brain_sentrix_present$ID)
+corLong3$rowBrain <-
+    brain_sentrix_present$BrNum[brain_sentrix_match_row]
+
+# Fails to match
+corLong3[corLong3$rowBrain == corLong3$colBrain &
+    corLong3$cor < .8, ]
+
+# Mismatches
+corLong3[!corLong3$rowBrain == corLong3$colBrain &
+    corLong3$cor > .8, ]
+```
+
+We can see from this from this analysis there are a few swaps present between RNA and DNA samples here. We can categorize them as simple and complex sample swaps. Because the two Br2275 do not match each other and also match nothing else we will be forced to consider this a complex swap and drop the sample. In the case of Br2473 it is a simple swap with Br2260 in both cases. This can be amended by swapping with in the phenotype data sheet manually. Now we have our accurate data outputs and will need to fix our ranged summarized experiment object for our SPEAQeasy data.
+
+```{r swap_pd_sheet}
+## drop sample from rse with SPEAQeasy data
+ids <- pd_example$SAMPLE_ID[pd_example$BrNum == "Br2275"]
+rse_gene <- rse_gene[, !rse_gene$SAMPLE_ID == ids[1]]
+rse_gene <- rse_gene[, !rse_gene$SAMPLE_ID == ids[2]]
+
+# resolve swaps and drops in pd_example
+pd_example <- pd_example[!pd_example$SAMPLE_ID == ids[1], ]
+pd_example <- pd_example[!pd_example$SAMPLE_ID == ids[2], ]
+ids2 <- pd_example$SAMPLE_ID[pd_example$BrNum == "Br2260"]
+ids3 <- pd_example$SAMPLE_ID[pd_example$BrNum == "Br2473"]
+pd_example$SAMPLE_ID[pd_example$Sample_ID == ids2] <- "Br2473"
+pd_example$SAMPLE_ID[pd_example$Sample_ID == ids3] <- "Br2260"
+
+# reorder phenotype data by the sample order present in the 'rse_gene' object
+pd_example <-
+    pd_example[match(rse_gene$SAMPLE_ID, pd_example$SAMPLE_ID), ]
+
+# add important colData to 'rse_gene'
+rse_gene$BrainRegion <- pd_example$BrainRegion
+rse_gene$Race <- pd_example$Race
+rse_gene$PrimaryDx <- pd_example$PrimaryDx
+rse_gene$Sex <- pd_example$Sex
+rse_gene$AgeDeath <- pd_example$AgeDeath
+
+# add correct BrNum to colData for rse_gene
+colData(rse_gene)$BrNum <- pd_example$BrNum
+```
+
+We can then save the gene counts with the resolved sample swaps.
+
+```{r save_unswapped, eval = FALSE}
+## You can then save the data
+save(rse_gene, file = "rse_speaqeasy.RData")
+```
+
+
+
 ## DE Analysis
 
+In case that you skipped the previous section, you can load the data for the differential expression part with the following code.
+
+```{r load_skipping, eval = FALSE}
+## Root for our example files
+example_files <- system.file(
+    "extdata",
+    "SPEAQeasy-example",
+    package = "SPEAQeasyWorkshop2020"
+)
+
+## Load the file
+load(file.path(example_files, "rse_speaqeasy.RData", verbose = TRUE))
+```
+
+
 ```{r "start", message=FALSE, warning=FALSE}
-library("BiocStyle")
 library("clusterProfiler")
 library("edgeR")
 library("limma")
@@ -280,7 +500,6 @@ library("pheatmap")
 library("org.Hs.eg.db")
 library("RColorBrewer")
 library("recount")
-library("sessioninfo")
 ```
 
 Edit this as you see fit =)
@@ -327,6 +546,8 @@ The `r Biocpkg("SPEAQeasyWorkshop2020")` package `r Citep(bib[["SPEAQeasyWorksho
 * `r CRANpkg("rmarkdown")` `r Citep(bib[["rmarkdown"]])`
 * `r CRANpkg("sessioninfo")` `r Citep(bib[["sessioninfo"]])`
 * `r Biocpkg('SummarizedExperiment')` `r Citep(bib[['SummarizedExperiment']])`
+* `r CRANpkg("tidyr")` `r Citep(bib[["tidyr"]])`
+* `r Biocpkg('VariantAnnotation')` `r Citep(bib[['VariantAnnotation']])`
 * `r Biocpkg('voom')` `r Citep(bib[['voom']])`
 
 This package was developed using `r BiocStyle::Githubpkg("lcolladotor/biocthis")`.
