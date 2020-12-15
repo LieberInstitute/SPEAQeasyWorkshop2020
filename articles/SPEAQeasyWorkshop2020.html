@@ -92,19 +92,15 @@
 <h1 class="hasAnchor">
 <a href="#overview" class="anchor"></a>Overview</h1>
 <p>This workshop aims to describe the <code>SPEAQeasy</code> (Eagles, Burke, Leonard, Barry, Stolz, Huuki, Phan, Serrato, Gutiérrez-Millán, Aguilar-Ordoñez, Jaffe, and Collado-Torres, 2020) RNA-seq processing pipeline, show how to use it, and then illustrate how the results can be analyzed using Bioconductor R packages for differential expression analyses.</p>
-<p>SPEAQeasy is a <a href="https://www.nextflow.io/">Nextflow</a>-based <strong>S</strong>calable RNA-seq processing <strong>P</strong>ipeline for <strong>E</strong>xpression <strong>A</strong>nalysis and <strong>Q</strong>uantification that produces R objects ready for analysis with Bioconductor tools. Partipants will become familiar with SPEAQeasy set-up, execution on real data, and practice configuring some common settings. We will walk through a complete differential expression analysis, utilizing popular packages such as <a href="https://www.bioconductor.org/packages/release/bioc/html/limma.html">limma</a>, <a href="http://bioconductor.org/packages/release/bioc/html/edgeR.html">edgeR</a>, and <a href="https://bioconductor.org/packages/release/bioc/html/clusterProfiler.html">clusterProfiler</a>.</p>
+<p>SPEAQeasy is a <a href="https://www.nextflow.io/">Nextflow</a>-based <strong>S</strong>calable RNA-seq processing <strong>P</strong>ipeline for <strong>E</strong>xpression <strong>A</strong>nalysis and <strong>Q</strong>uantification that produces R objects ready for analysis with Bioconductor tools. Partipants will become familiar with SPEAQeasy set-up, execution on real data, and practice configuring some common settings. We will walk through a complete differential expression analysis, utilizing popular packages such as <a href="https://www.bioconductor.org/packages/limma">limma</a>, <a href="http://bioconductor.org/packages/edgeR">edgeR</a>, and <a href="https://bioconductor.org/packages/clusterProfiler">clusterProfiler</a>.</p>
 <div id="instructors" class="section level2">
 <h2 class="hasAnchor">
 <a href="#instructors" class="anchor"></a>Instructors</h2>
 <ul>
 <li><a href="https://github.com/Nick-Eagles">Nick Eagles</a></li>
 <li><a href="https://github.com/joshstolz">Josh Stolz</a></li>
+<li><a href="http://lcolladotor.github.io/">Leonardo Collado-Torres</a></li>
 </ul>
-</div>
-<div id="workshop-description" class="section level2">
-<h2 class="hasAnchor">
-<a href="#workshop-description" class="anchor"></a>Workshop Description</h2>
-<p>TODO</p>
 </div>
 <div id="pre-requisites" class="section level2">
 <h2 class="hasAnchor">
@@ -165,10 +161,6 @@
 <li>Understand SPEAQeasy outputs and the Bioconductor packages available for different analysis goals</li>
 <li>Get concrete experience with an example differential expression analysis given SPEAQeasy output data</li>
 </ul>
-</div>
-<div id="learning-objectives" class="section level3">
-<h3 class="hasAnchor">
-<a href="#learning-objectives" class="anchor"></a>Learning objectives</h3>
 </div>
 </div>
 <div id="citing-speaqeasy" class="section level2">
@@ -610,9 +602,9 @@
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://yihui.org/knitr/">"knitr"</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/knit.html">knit</a></span><span class="op">(</span><span class="st">"SPEAQeasyWorkshop2020.Rmd"</span>, tangle <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p>Date the vignette was generated.</p>
-<pre><code>#&gt; [1] "2020-12-15 16:36:09 UTC"</code></pre>
+<pre><code>#&gt; [1] "2020-12-15 16:42:21 UTC"</code></pre>
 <p>Wallclock time spent generating the vignette.</p>
-<pre><code>#&gt; Time difference of 15.635 secs</code></pre>
+<pre><code>#&gt; Time difference of 17.191 secs</code></pre>
 <p><code>R</code> session information.</p>
 <pre><code>#&gt; ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
 #&gt;  setting  value                       
