@@ -44,17 +44,12 @@ knitr::opts_chunk$set(
 startTime <- Sys.time()
 
 ## Bib setup
-library("knitcitations")
-
-## Load knitcitations with a clean bibliography
-cleanbib()
-cite_options(hyperlink = "to.doc", citation_format = "text", style = "html")
+library("RefManageR")
 
 ## Write bibliography information
 bib <- c(
     R = citation(),
     BiocStyle = citation("BiocStyle")[1],
-    knitcitations = citation("knitcitations")[1],
     knitr = citation("knitr")[1],
     rmarkdown = citation("rmarkdown")[1],
     sessioninfo = citation("sessioninfo")[1],
@@ -64,7 +59,6 @@ bib <- c(
     edgeR = citation("edgeR"),
     here = citation("here"),
     jaffelab = citation("jaffelab"),
-    knitcitations = citation("knitcitations"),
     limma = citation("limma"),
     org.Hs.eg.db = citation("org.Hs.eg.db"),
     pheatmap = citation("pheatmap"),
@@ -72,6 +66,7 @@ bib <- c(
     RColorBrewer = citation("RColorBrewer"),
     rmarkdown = citation("rmarkdown"),
     recount = citation("recount"),
+    RefManageR = citation("RefManageR")[1],
     SummarizedExperiment = citation("SummarizedExperiment"),
     voom = RefManageR::BibEntry(
         "article",
@@ -90,7 +85,7 @@ write.bibtex(bib, file = "SPEAQeasyWorkshop2020.bib")
 
 # Overview
 
-This workshop aims to describe the `SPEAQeasy` `r citep(bib[["SPEAQeasy"]])` RNA-seq processing pipeline, show how to use it, and then illustrate how the results can be analyzed using Bioconductor R packages for differential expression analyses.
+This workshop aims to describe the `SPEAQeasy` `r Citep(bib[["SPEAQeasy"]])` RNA-seq processing pipeline, show how to use it, and then illustrate how the results can be analyzed using Bioconductor R packages for differential expression analyses.
 
 SPEAQeasy is a [Nextflow](https://www.nextflow.io/)-based **S**calable RNA-seq processing **P**ipeline for **E**xpression **A**nalysis and **Q**uantification that produces R objects ready for analysis with Bioconductor tools. Partipants will become familiar with SPEAQeasy set-up, execution on real data, and practice configuring some common settings. We will walk through a complete differential expression analysis, utilizing popular packages such as [limma](https://www.bioconductor.org/packages/release/bioc/html/limma.html), [edgeR](http://bioconductor.org/packages/release/bioc/html/edgeR.html), and [clusterProfiler](https://bioconductor.org/packages/release/bioc/html/clusterProfiler.html).
 
@@ -152,7 +147,7 @@ Total: a 90 minute session.
 
 ## Citing `SPEAQeasy`
 
-We hope that `SPEAQeasy` `r citep(bib[["SPEAQeasy"]])` will be useful for your research. Please use the following information to cite the package and the overall approach. Thank you!
+We hope that `SPEAQeasy` `r Citep(bib[["SPEAQeasy"]])` will be useful for your research. Please use the following information to cite the package and the overall approach. Thank you!
 
 ```{r "citation"}
 ## Citation info
@@ -231,18 +226,44 @@ bash run_pipeline_local.sh
 qsub run_pipeline_jhpce.sh
 ```
 
+Here's an example of such a file.
+
+```{r "example_run_file"}
+## Root for our example files
+example_files <- system.file(
+    "extdata",
+    "SPEAQeasy-example",
+    package = "SPEAQeasyWorkshop2020"
+)
+
+## Read in the actual bash script used to run SPEAQeasy with the
+## data from SPEAQeasy-example
+cat(paste0(readLines(
+    file.path(example_files, "pipeline_outputs", "run_pipeline_jhpce.sh")
+), "\n"))
+```
+
+
 ### Examining SPEAQeasy outputs
 
 Let's take a look at one of the major outputs from SPEAQeasy- the `RangedSummarizedExperiment` containing gene counts.
 
-```{r "examine_outputs", eval=FALSE}
+```{r "examine_outputs"}
 library("SPEAQeasyWorkshop2020")
 library("here")
 library("SummarizedExperiment")
 library("jaffelab") # GitHub: LieberInstitute/jaffelab
 
 #  Load the RSE containing gene counts
-load(here('pipeline_outputs', 'rse_gene_Jlab_experiment_n42.Rdata'), verbose=TRUE)
+load(
+    file.path(
+        example_files,
+        "pipeline_outputs",
+        "count_objects",
+        "rse_gene_Jlab_experiment_n42.Rdata"
+    ),
+    verbose = TRUE
+)
 
 #  Print an overview
 rse_gene
@@ -277,7 +298,7 @@ Edit this as you see fit =)
 
 Here is an example of you can cite your package inside the vignette:
 
-* `r Biocpkg("SPEAQeasyWorkshop2020")` `r citep(bib[["SPEAQeasyWorkshop2020"]])`
+* `r Biocpkg("SPEAQeasyWorkshop2020")` `r Citep(bib[["SPEAQeasyWorkshop2020"]])`
 
 # Acknowledgements
 
@@ -299,25 +320,25 @@ Estlabished a foundation for the Nextflow-port (now SPEAQeasy) of the RNA-seq pi
 
 # Reproducibility
 
-The `r Biocpkg("SPEAQeasyWorkshop2020")` package `r citep(bib[["SPEAQeasyWorkshop2020"]])` was made possible thanks to:
+The `r Biocpkg("SPEAQeasyWorkshop2020")` package `r Citep(bib[["SPEAQeasyWorkshop2020"]])` was made possible thanks to:
 
-* R `r citep(bib[["R"]])`
-* `r Biocpkg("BiocStyle")` `r citep(bib[["BiocStyle"]])`
-* `r Biocpkg('clusterProfiler')` `r citep(bib[['clusterProfiler']])`
-* `r Biocpkg('edgeR')` `r citep(bib[['edgeR']])`
-* `r CRANpkg('here')` `r citep(bib[['here']])`
-* `r Githubpkg('LieberInstitute/jaffelab')` `r citep(bib[['jaffelab']])`
-* `r Biocpkg('limma')` `r citep(bib[['limma']])`
-* `r CRANpkg("knitcitations")` `r citep(bib[["knitcitations"]])`
-* `r CRANpkg("knitr")` `r citep(bib[["knitr"]])`
-* `r Biocpkg('org.Hs.eg.db')` `r citep(bib[['org.Hs.eg.db']])`
-* `r CRANpkg('pheatmap')` `r citep(bib[['pheatmap']])`
-* `r CRANpkg('RColorBrewer')` `r citep(bib[['RColorBrewer']])`
-* `r Biocpkg('recount')` `r citep(bib[['recount']])`
-* `r CRANpkg("rmarkdown")` `r citep(bib[["rmarkdown"]])`
-* `r CRANpkg("sessioninfo")` `r citep(bib[["sessioninfo"]])`
-* `r Biocpkg('SummarizedExperiment')` `r citep(bib[['SummarizedExperiment']])`
-* `r Biocpkg('voom')` `r citep(bib[['voom']])`
+* R `r Citep(bib[["R"]])`
+* `r Biocpkg("BiocStyle")` `r Citep(bib[["BiocStyle"]])`
+* `r Biocpkg('clusterProfiler')` `r Citep(bib[['clusterProfiler']])`
+* `r Biocpkg('edgeR')` `r Citep(bib[['edgeR']])`
+* `r CRANpkg('here')` `r Citep(bib[['here']])`
+* `r Githubpkg('LieberInstitute/jaffelab')` `r Citep(bib[['jaffelab']])`
+* `r Biocpkg('limma')` `r Citep(bib[['limma']])`
+* `r CRANpkg("knitr")` `r Citep(bib[["knitr"]])`
+* `r Biocpkg('org.Hs.eg.db')` `r Citep(bib[['org.Hs.eg.db']])`
+* `r CRANpkg('pheatmap')` `r Citep(bib[['pheatmap']])`
+* `r CRANpkg('RColorBrewer')` `r Citep(bib[['RColorBrewer']])`
+* `r Biocpkg('recount')` `r Citep(bib[['recount']])`
+* `r CRANpkg("RefManageR")` `r Citep(bib[["RefManageR"]])`
+* `r CRANpkg("rmarkdown")` `r Citep(bib[["rmarkdown"]])`
+* `r CRANpkg("sessioninfo")` `r Citep(bib[["sessioninfo"]])`
+* `r Biocpkg('SummarizedExperiment')` `r Citep(bib[['SummarizedExperiment']])`
+* `r Biocpkg('voom')` `r Citep(bib[['voom']])`
 
 This package was developed using `r BiocStyle::Githubpkg("lcolladotor/biocthis")`.
 
@@ -367,12 +388,12 @@ session_info()
 
 # Bibliography
 
-This vignette was generated using `r Biocpkg("BiocStyle")` `r citep(bib[["BiocStyle"]])`
-with `r CRANpkg("knitr")` `r citep(bib[["knitr"]])` and `r CRANpkg("rmarkdown")` `r citep(bib[["rmarkdown"]])` running behind the scenes.
+This vignette was generated using `r Biocpkg("BiocStyle")` `r Citep(bib[["BiocStyle"]])`
+with `r CRANpkg("knitr")` `r Citep(bib[["knitr"]])` and `r CRANpkg("rmarkdown")` `r Citep(bib[["rmarkdown"]])` running behind the scenes.
 
-Citations made with `r CRANpkg("knitcitations")` `r citep(bib[["knitcitations"]])`.
+Citations made with `r CRANpkg('RefManageR')` `r Citep(bib[['RefManageR']])`.
 
 ```{r vignetteBiblio, results = "asis", echo = FALSE, warning = FALSE, message = FALSE}
 ## Print bibliography
-bibliography()
+PrintBibliography(bib, .opts = list(hyperlink = "to.doc", style = "html"))
 ```

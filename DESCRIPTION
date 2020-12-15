@@ -1,7 +1,7 @@
 Package: SPEAQeasyWorkshop2020
 Title: EuroBioc2020 SPEAQeasy workshop
 Version: 0.99.0
-Date: 2020-11-24
+Date: 2020-12-15
 Authors@R: 
     c(
         person(given = "Nicholas J.",
@@ -34,7 +34,7 @@ RoxygenNote: 7.1.1
 DockerImage: lcollado/speaqeasyworkshop2020:latest
 Suggests: 
     knitr,
-    knitcitations,
+    RefManageR,
     rmarkdown
 VignetteBuilder: knitr
 Imports: 
