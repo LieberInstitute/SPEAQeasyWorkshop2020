@@ -106,7 +106,20 @@ This workshop makes use of two sets of files: the [SPEAQeasy GitHub repository](
 git clone git@github.com:LieberInstitute/SPEAQeasy.git
 ```
 
-The workshop-specific files include example outputs from SPEAQeasy, for performing a differential expression analysis. You can download a Docker image with these files using:
+The workshop-specific files include example outputs from SPEAQeasy, for performing a differential expression analysis. These files are included as part of this workshop package:
+
+```{r, "load_workshop_package", eval=FALSE}
+#  Install 'remotes' if needed, then the package for this workshop
+if (!requireNamespace('remotes')) {
+    install.packages('remotes')
+}
+remotes::install_github('LieberInstitute/SPEAQeasyWorkshop2020')
+
+#  You can load the package, which contains the example files for use later
+library('SPEAQeasyWorkshop2020')
+```
+
+You can also download a Docker image with these files using:
 
 ```{bash, "docker", eval = FALSE}
 docker run -e PASSWORD=bioc2020 -p 8787:8787 -d --rm lcollado/speaqeasyworkshop2020
@@ -122,8 +135,8 @@ To see the vignette on RStudio's window (from the docker image), run `browseVign
 | Activity                     | Time |
 |------------------------------|------|
 | General overview of SPEAQeasy                                   | 20m  |
-| Hands-on: configuring and running SPEAQeasy on real data        | 25m  |
-| Understanding SPEAQeasy outputs                                 | 15m  |
+| Hands-on: configuring and running SPEAQeasy on real data        | 20m  |
+| Understanding SPEAQeasy outputs                                 | 20m  |
 | Differential expression analysis                                | 30m  |
 
 Total: a 90 minute session.
