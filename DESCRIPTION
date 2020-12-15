@@ -51,5 +51,6 @@ Imports:
     BiocStyle,
     sessioninfo,
     tidyr,
-    VariantAnnotation
+    VariantAnnotation,
+    dplyr
 remotes: LieberInstitute/jaffelab

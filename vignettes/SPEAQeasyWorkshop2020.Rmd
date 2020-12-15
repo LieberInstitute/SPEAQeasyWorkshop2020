@@ -47,6 +47,7 @@ library("RefManageR")
 bib <- c(
     R = citation(),
     BiocStyle = citation("BiocStyle")[1],
+    dplyr = citation("dplyr")[1],
     knitr = citation("knitr")[1],
     rmarkdown = citation("rmarkdown")[1],
     sessioninfo = citation("sessioninfo")[1],
@@ -107,7 +108,7 @@ git clone git@github.com:LieberInstitute/SPEAQeasy.git
 
 The workshop-specific files include example outputs from SPEAQeasy, for performing a differential expression analysis. You can download a Docker image with these files using:
 
-```bash
+```{bash, "docker", eval = FALSE}
 docker run -e PASSWORD=bioc2020 -p 8787:8787 -d --rm lcollado/speaqeasyworkshop2020
 ```
 
@@ -287,9 +288,11 @@ In order to resolve the swaps to our best ability we need four data sets. Here w
 
 ```{r load_data, echo=TRUE}
 load(file.path(example_files, "sample_selection", "snpsGeno_example.RData"),
-    verbose = TRUE)
+    verbose = TRUE
+)
 load(file.path(example_files, "sample_selection", "pd_example.Rdata"),
-    verbose = TRUE)
+    verbose = TRUE
+)
 Speaqeasy <-
     readVcf(
         file.path(
@@ -473,9 +476,11 @@ We can then save the gene counts with the resolved sample swaps.
 save(rse_gene, file = "rse_speaqeasy.RData")
 ```
 
-
-
 ## DE Analysis
+
+_Note: the original version is available [here](http://research.libd.org/SPEAQeasy-example/de_analysis_speaqeasy.html) and was written by [Josh Stolz](https://github.com/joshstolz)._
+
+### Resuming
 
 In case that you skipped the previous section, you can load the data for the differential expression part with the following code.
 
@@ -492,7 +497,9 @@ load(file.path(example_files, "rse_speaqeasy.RData", verbose = TRUE))
 ```
 
 
-```{r "start", message=FALSE, warning=FALSE}
+The following analysis explores a `RangedSummarizedExperiment` object from the SPEAQeasy pipeline `r Citep(bib[["SPEAQeasy"]])`. Note that we will use a modified version of the object, which resolved sample identity issues which were present in the raw output from SPEAQeasy. This object also includes phenotype data added after resolving identity issues. Though SPEAQeasy produces objects for several feature types (genes, exons, exon-exon junctions), we will demonstrate an example analysis for just genes. We will perform differential expression across some typical variables of interest (e.g. sex, age, race) and show how to perform principal component analysis (PCA) and visualize findings with plots.
+
+```{r de_packages, message=FALSE, warning=FALSE}
 library("clusterProfiler")
 library("edgeR")
 library("limma")
@@ -500,13 +507,396 @@ library("pheatmap")
 library("org.Hs.eg.db")
 library("RColorBrewer")
 library("recount")
+
+## Clean up the PrimaryDx variable
+rse_gene$PrimaryDx <- factor(rse_gene$PrimaryDx)
 ```
 
-Edit this as you see fit =)
+### Statistics PCs
 
-Here is an example of you can cite your package inside the vignette:
+Here we are using principal component analysis to control for the listed variables impact on expression. Later on, this could added into our linear model.
 
-* `r Biocpkg("SPEAQeasyWorkshop2020")` `r Citep(bib[["SPEAQeasyWorkshop2020"]])`
+```{r stats_pcs}
+## Select variables of interest
+col_names <- c(
+    "trimmed",
+    "numReads",
+    "numMapped",
+    "numUnmapped",
+    "overallMapRate",
+    "concordMapRate",
+    "totalMapped",
+    "mitoMapped",
+    "mitoRate",
+    "totalAssignedGene"
+)
+set.seed(20201006)
+
+## Reduce these variables to one PC
+statsPca <- prcomp(as.data.frame(colData(rse_gene)[, col_names]))
+rse_gene$PC <- statsPca$x[, 1]
+getPcaVars(statsPca)[1]
+```
+
+### Stats vs. diagnosis and brain region
+
+Here we explore the relationship between some quality control covariates produced by SPEAQeasy against phenotype data that we have on the samples such as brain region, primary diagnosis and race.
+
+```{r dx_region}
+## We only have one race here
+table(rse_gene$Race)
+
+# Display box plots here
+boxplot(rse_gene$rRNA_rate ~ rse_gene$BrainRegion, xlab = "")
+boxplot(rse_gene$mitoRate ~ rse_gene$BrainRegion, xlab = "")
+boxplot(rse_gene$gene_Assigned ~ rse_gene$BrainRegion, xlab = "")
+boxplot(rse_gene$mitoRate ~ rse_gene$PrimaryDx,
+    las = 3,
+    xlab = ""
+)
+boxplot(rse_gene$gene_Assigned ~ rse_gene$PrimaryDx,
+    las = 3,
+    xlab = ""
+)
+boxplot(
+    rse_gene$mitoRate ~ rse_gene$PrimaryDx + rse_gene$BrainRegion,
+    las = 3,
+    xlab = ""
+)
+boxplot(
+    rse_gene$gene_Assigned ~ rse_gene$PrimaryDx + rse_gene$BrainRegion,
+    las = 3,
+    xlab = ""
+)
+```
+
+### Explore and visualize gene expression
+
+We can next explore overall patterns in the gene expression of our samples by visualizing the top principal components from the gene expression count data. For example, by visualizing the case-control samples in PC1 versus PC2. We can also check other covariates such as sex and brain region across the top 10 PCs.
+
+```{r gene_expression, echo=TRUE}
+# Filter for expressed
+rse_gene <- rse_gene[rowMeans(getRPKM(rse_gene, "Length")) > 0.2, ]
+
+# Explore gene expression
+geneExprs <- log2(getRPKM(rse_gene, "Length") + 1)
+set.seed(20201006)
+pca <- prcomp(t(geneExprs))
+pca_vars <- getPcaVars(pca)
+pca_vars_lab <- paste0(
+    "PC", seq(along = pca_vars), ": ",
+    pca_vars, "% Var Expl"
+)
+
+# Group together code for generating plots of interest
+set.seed(20201006)
+par(
+    mar = c(8, 6, 2, 2),
+    cex.axis = 1.8,
+    cex.lab = 1.8
+)
+palette(brewer.pal(4, "Dark2"))
+
+# PC1 vs. PC2
+plot(
+    pca$x,
+    pch = 21,
+    bg = factor(rse_gene$PrimaryDx),
+    cex = 1.2,
+    xlab = pca_vars_lab[1],
+    ylab = pca_vars_lab[2]
+)
+legend(
+    "bottomleft",
+    levels(rse_gene$PrimaryDx),
+    col = 1:2,
+    pch = 15,
+    cex = 2
+)
+
+
+# By sex
+for (i in 1:10) {
+    boxplot(
+        pca$x[, i] ~ rse_gene$Sex,
+        ylab = pca_vars_lab[i],
+        las = 3,
+        xlab = "Sex",
+        outline = FALSE
+    )
+    points(
+        pca$x[, i] ~ jitter(as.numeric(factor(rse_gene$Sex))),
+        pch = 21,
+        bg = rse_gene$PrimaryDx,
+        cex = 1.2
+    )
+}
+
+# By brain region
+for (i in 1:10) {
+    boxplot(
+        pca$x[, i] ~ rse_gene$BrainRegion,
+        ylab = pca_vars_lab[i],
+        las = 3,
+        xlab = "Brain Region",
+        outline = FALSE
+    )
+    points(
+        pca$x[, i] ~ jitter(as.numeric(factor(
+            rse_gene$BrainRegion
+        ))),
+        pch = 21,
+        bg = rse_gene$PrimaryDx,
+        cex = 1.2
+    )
+}
+```
+
+Is sex or brain region associated with any principal component from the gene expression data?
+
+### Modeling
+
+Once we have explored our data, we can proceed to performing differential expression analyses using for example the `r BiocStyle::Biocpkg("limma")` package, among other Bioconductor packages. Our data exploration should inform what model we want to use. Note that in our data we have repeated measures from the same donor brains (`BrNum`) which we can adjust using the function `duplicateCorrelation()`.
+
+```{r modeling, echo=TRUE, warning=FALSE}
+dge <- DGEList(
+    counts = assays(rse_gene)$counts,
+    genes = rowData(rse_gene)
+)
+dge <- calcNormFactors(dge)
+
+# Define a model of interest (feel free to play around with other models)
+mod <- model.matrix(~ PrimaryDx + PC + BrainRegion,
+    data = colData(rse_gene)
+)
+
+# Mean-variance
+vGene <- voom(dge, mod, plot = TRUE)
+
+# Get duplicate correlation
+gene_dupCorr <- duplicateCorrelation(vGene$E, mod,
+    block = colData(rse_gene)$BrNum
+)
+gene_dupCorr$consensus.correlation
+
+## We can save this for later since it can take a while
+## to compute and we might need it. This will be useful
+## for larger projects.
+# save(gene_dupCorr,
+#     file = here("DE_analysis", "rdas", "gene_dupCorr_neurons.rda")
+# )
+
+# Fit linear model
+fitGeneDupl <- lmFit(
+    vGene,
+    correlation = gene_dupCorr$consensus.correlation,
+    block = colData(rse_gene)$BrNum
+)
+
+# Here we perform an empirical Bayesian calculation to obtain our significant genes
+ebGeneDupl <- eBayes(fitGeneDupl)
+outGeneDupl <- topTable(
+    ebGeneDupl,
+    coef = 2,
+    p.value = 1,
+    number = nrow(rse_gene),
+    sort.by = "none"
+)
+
+# Explore the distribution of differential expression p-values
+hist(outGeneDupl$P.Value)
+
+## Check how many of the genes are FDR < 5% and 10%
+table(outGeneDupl$adj.P.Val < 0.05)
+table(outGeneDupl$adj.P.Val < 0.1)
+
+## Keep those genes iwth a p-value < 0.2
+sigGeneDupl <- topTable(
+    ebGeneDupl,
+    coef = 2,
+    p.value = 0.2,
+    number = nrow(rse_gene)
+)
+
+sigGeneDupl[, c("Symbol", "logFC", "P.Value", "AveExpr")]
+sigGeneDupl[sigGeneDupl$logFC > 0, c("Symbol", "logFC", "P.Value")]
+sigGeneDupl[sigGeneDupl$logFC < 0, c("Symbol", "logFC", "P.Value")]
+
+# write.csv(outGeneDupl,
+#     file = here("DE_analysis", "tables", "de_stats_allExprs.csv")
+# )
+# write.csv(sigGeneDupl,
+#     file = here("DE_analysis", "tables", "de_stats_fdr20_sorted.csv")
+# )
+```
+
+## Check plots
+
+Once you have identified candidate differentially expressed genes, it can be useful to visualize their expression values. Here we visualize the expression for the top two genes using boxplots.
+
+```{r check_plots, echo=TRUE}
+exprs <- vGene$E[rownames(sigGeneDupl), ]
+
+# Group together code for displaying boxplots
+set.seed(20201006)
+par(
+    mar = c(8, 6, 4, 2),
+    cex.axis = 1.8,
+    cex.lab = 1.8,
+    cex.main = 1.8
+)
+palette(brewer.pal(4, "Dark2"))
+
+for (i in 1:nrow(sigGeneDupl)) {
+    yy <- exprs[i, ]
+    boxplot(
+        yy ~ rse_gene$PrimaryDx,
+        outline = FALSE,
+        ylim = range(yy),
+        ylab = "Normalized log2 Exprs",
+        xlab = "",
+        main = paste(sigGeneDupl$Symbol[i], "-", sigGeneDupl$gencodeID[i])
+    )
+    points(
+        yy ~ jitter(as.numeric(rse_gene$PrimaryDx)),
+        pch = 21,
+        bg = rse_gene$PrimaryDx,
+        cex = 1.3
+    )
+    ll <-
+        ifelse(sigGeneDupl$logFC[i] > 0, "topleft", "topright")
+    legend(ll, paste0("p=", signif(sigGeneDupl$P.Value[i], 3)), cex = 1.3)
+}
+```
+
+## Visualize differentially expressed genes
+
+Here we visualize differentially expressed genes (DEGs) with a heatmap.
+
+```{r heatmap, echo=TRUE}
+exprs_heatmap <- vGene$E[rownames(sigGene), ]
+
+df <-
+    as.data.frame(colData(rse_gene)[, c("PrimaryDx", "Sex", "BrainRegion")])
+rownames(df) <-
+    colnames(exprs_heatmap) <- gsub("_.*", "", colnames(exprs_heatmap))
+colnames(df) <- c("Diagnosis", "Sex", "Region")
+
+#  Manually determine coloring for plot annotation
+palette_names <- c("Dark2", "Paired", "YlOrRd")
+ann_colors <- list()
+for (i in 1:ncol(df)) {
+    col_name <- colnames(df)[i]
+    n_uniq_colors <- length(unique(df[, col_name]))
+
+    #   Use a unique palette with the correct number of levels, named with
+    #   those levels
+    ann_colors[[col_name]] <- brewer.pal(n_uniq_colors, palette_names[i])[1:n_uniq_colors]
+    names(ann_colors[[col_name]]) <- unique(df[, col_name])
+}
+
+# Display heatmap
+pheatmap(
+    exprs_heatmap,
+    cluster_rows = TRUE,
+    show_rownames = FALSE,
+    cluster_cols = TRUE,
+    annotation_col = df,
+    annotation_colors = ann_colors
+)
+```
+
+## Gene ontology
+
+We will use `r BiocStyle::Biocpkg("clusterProfiler")` to check if the differentially expressed genes are enriched in certain gene ontology terms and KEGG pathways. Running this code takes a a couple of minutes, so please be patient.
+
+```{r gene_ontology, echo=TRUE}
+# Get significant genes by sign
+sigGene <- outGeneDupl[outGeneDupl$P.Value < 0.005, ]
+sigGeneList <-
+    split(as.character(sigGene$EntrezID), sign(sigGene$logFC))
+sigGeneList <- lapply(sigGeneList, function(x) {
+      x[!is.na(x)]
+  })
+geneUniverse <- as.character(outGeneDupl$EntrezID)
+geneUniverse <- geneUniverse[!is.na(geneUniverse)]
+
+# Do GO and KEGG
+goBP_Adj <- compareCluster(
+    sigGeneList,
+    fun = "enrichGO",
+    universe = geneUniverse,
+    OrgDb = org.Hs.eg.db,
+    ont = "BP",
+    pAdjustMethod = "BH",
+    pvalueCutoff = 1,
+    qvalueCutoff = 1,
+    readable = TRUE
+)
+
+goMF_Adj <- compareCluster(
+    sigGeneList,
+    fun = "enrichGO",
+    universe = geneUniverse,
+    OrgDb = org.Hs.eg.db,
+    ont = "MF",
+    pAdjustMethod = "BH",
+    pvalueCutoff = 1,
+    qvalueCutoff = 1,
+    readable = TRUE
+)
+
+goCC_Adj <- compareCluster(
+    sigGeneList,
+    fun = "enrichGO",
+    universe = geneUniverse,
+    OrgDb = org.Hs.eg.db,
+    ont = "CC",
+    pAdjustMethod = "BH",
+    pvalueCutoff = 1,
+    qvalueCutoff = 1,
+    readable = TRUE
+)
+
+kegg_Adj <- compareCluster(
+    sigGeneList,
+    fun = "enrichKEGG",
+    universe = geneUniverse,
+    pAdjustMethod = "BH",
+    pvalueCutoff = 1,
+    qvalueCutoff = 1
+)
+
+# save(
+#     goBP_Adj,
+#     goCC_Adj,
+#     goMF_Adj,
+#     kegg_Adj,
+#     file = here("DE_analysis", "rdas", "gene_set_objects_p005.rda")
+# )
+
+goList <-
+    list(
+        BP = goBP_Adj,
+        MF = goMF_Adj,
+        CC = goCC_Adj,
+        KEGG = kegg_Adj
+    )
+goDf <-
+    dplyr::bind_rows(lapply(goList, as.data.frame), .id = "Ontology")
+goDf <- goDf[order(goDf$pvalue), ]
+
+# write.csv(
+#     goDf,
+#     file = here("DE_analysis", "tables", "geneSet_output.csv"),
+#     row.names = FALSE
+# )
+
+options(width = 130)
+head(goDf[goDf$p.adjust < 0.05, c(1:5, 7)], n = 20)
+```
+
+For some examples on how to visualize the gene ontology results, check [our longer guide in SPEAQeasy-example](http://research.libd.org/SPEAQeasy-example/bootcamp_intro#53_GO_enrichment_analyses).
 
 # Acknowledgements
 
@@ -533,6 +923,7 @@ The `r Biocpkg("SPEAQeasyWorkshop2020")` package `r Citep(bib[["SPEAQeasyWorksho
 * R `r Citep(bib[["R"]])`
 * `r Biocpkg("BiocStyle")` `r Citep(bib[["BiocStyle"]])`
 * `r Biocpkg('clusterProfiler')` `r Citep(bib[['clusterProfiler']])`
+* `r CRANpkg("dplyr")` `r Citep(bib[["dplyr"]])`
 * `r Biocpkg('edgeR')` `r Citep(bib[['edgeR']])`
 * `r CRANpkg('here')` `r Citep(bib[['here']])`
 * `r Githubpkg('LieberInstitute/jaffelab')` `r Citep(bib[['jaffelab']])`
