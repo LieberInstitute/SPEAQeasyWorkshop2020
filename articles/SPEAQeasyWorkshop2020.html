@@ -327,79 +327,10 @@
 <a href="#examining-speaqeasy-outputs" class="anchor"></a>Examining SPEAQeasy outputs</h3>
 <p>Let’s take a look at one of the major outputs from SPEAQeasy- the <code>RangedSummarizedExperiment</code> containing gene counts.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://LieberInstitute.github.io/SPEAQeasyWorkshop2020/">"SPEAQeasyWorkshop2020"</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://here.r-lib.org/">"here"</a></span><span class="op">)</span>
-<span class="co">#&gt; here() starts at /__w/SPEAQeasyWorkshop2020/SPEAQeasyWorkshop2020</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://bioconductor.org/packages/SummarizedExperiment">"SummarizedExperiment"</a></span><span class="op">)</span>
-<span class="co">#&gt; Loading required package: MatrixGenerics</span>
-<span class="co">#&gt; Loading required package: matrixStats</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: 'MatrixGenerics'</span>
-<span class="co">#&gt; The following objects are masked from 'package:matrixStats':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse,</span>
-<span class="co">#&gt;     colCounts, colCummaxs, colCummins, colCumprods, colCumsums,</span>
-<span class="co">#&gt;     colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs,</span>
-<span class="co">#&gt;     colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,</span>
-<span class="co">#&gt;     colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds,</span>
-<span class="co">#&gt;     colSums2, colTabulates, colVarDiffs, colVars, colWeightedMads,</span>
-<span class="co">#&gt;     colWeightedMeans, colWeightedMedians, colWeightedSds,</span>
-<span class="co">#&gt;     colWeightedVars, rowAlls, rowAnyNAs, rowAnys, rowAvgsPerColSet,</span>
-<span class="co">#&gt;     rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods,</span>
-<span class="co">#&gt;     rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs, rowLogSumExps,</span>
-<span class="co">#&gt;     rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins,</span>
-<span class="co">#&gt;     rowOrderStats, rowProds, rowQuantiles, rowRanges, rowRanks,</span>
-<span class="co">#&gt;     rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars,</span>
-<span class="co">#&gt;     rowWeightedMads, rowWeightedMeans, rowWeightedMedians,</span>
-<span class="co">#&gt;     rowWeightedSds, rowWeightedVars</span>
-<span class="co">#&gt; Loading required package: GenomicRanges</span>
-<span class="co">#&gt; Loading required package: stats4</span>
-<span class="co">#&gt; Loading required package: BiocGenerics</span>
-<span class="co">#&gt; Loading required package: parallel</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: 'BiocGenerics'</span>
-<span class="co">#&gt; The following objects are masked from 'package:parallel':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,</span>
-<span class="co">#&gt;     clusterExport, clusterMap, parApply, parCapply, parLapply,</span>
-<span class="co">#&gt;     parLapplyLB, parRapply, parSapply, parSapplyLB</span>
-<span class="co">#&gt; The following objects are masked from 'package:stats':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     IQR, mad, sd, var, xtabs</span>
-<span class="co">#&gt; The following objects are masked from 'package:base':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     anyDuplicated, append, as.data.frame, basename, cbind, colnames,</span>
-<span class="co">#&gt;     dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,</span>
-<span class="co">#&gt;     grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,</span>
-<span class="co">#&gt;     order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,</span>
-<span class="co">#&gt;     rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,</span>
-<span class="co">#&gt;     union, unique, unsplit, which.max, which.min</span>
-<span class="co">#&gt; Loading required package: S4Vectors</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: 'S4Vectors'</span>
-<span class="co">#&gt; The following object is masked from 'package:base':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     expand.grid</span>
-<span class="co">#&gt; Loading required package: IRanges</span>
-<span class="co">#&gt; Loading required package: GenomeInfoDb</span>
-<span class="co">#&gt; Loading required package: Biobase</span>
-<span class="co">#&gt; Welcome to Bioconductor</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     Vignettes contain introductory material; view with</span>
-<span class="co">#&gt;     'browseVignettes()'. To cite Bioconductor, see</span>
-<span class="co">#&gt;     'citation("Biobase")', and for packages 'citation("pkgname")'.</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: 'Biobase'</span>
-<span class="co">#&gt; The following object is masked from 'package:MatrixGenerics':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     rowMedians</span>
-<span class="co">#&gt; The following objects are masked from 'package:matrixStats':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     anyMissing, rowMedians</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/LieberInstitute/jaffelab">"jaffelab"</a></span><span class="op">)</span> <span class="co"># GitHub: LieberInstitute/jaffelab</span>
-<span class="co">#&gt; Loading required package: rafalib</span>
-
-<span class="co">#  Load the RSE containing gene counts</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://bioconductor.org/packages/SummarizedExperiment">"SummarizedExperiment"</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/LieberInstitute/jaffelab">"jaffelab"</a></span><span class="op">)</span> <span class="co"># GitHub: LieberInstitute/jaffelab</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">#  Load the RSE containing gene counts</span>
 <span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span>
     <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span>
         <span class="va">example_files</span>,
@@ -508,19 +439,233 @@
 <span class="co">#&gt; ENSG00000237613.2 0.00683033         2 ENST00000417324.1;EN..</span></code></pre></div>
 </div>
 </div>
+<div id="identifying-sample-swaps" class="section level2">
+<h2 class="hasAnchor">
+<a href="#identifying-sample-swaps" class="anchor"></a>Identifying sample swaps</h2>
+<p><em>Note: the original version is available <a href="http://research.libd.org/SPEAQeasy-example/swap_speaqeasy.html">here</a> and was written by <a href="https://github.com/joshstolz">Josh Stolz</a> and <a href="https://github.com/lahuuki">Louise Huuki</a>.</em></p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st">"pheatmap"</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://tidyr.tidyverse.org">"tidyr"</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st">"VariantAnnotation"</span><span class="op">)</span></code></pre></div>
+<p>In order to resolve the swaps to our best ability we need four data sets. Here we have load <code>snpGeno_example</code> which is from our TOPMed imputed genotype data, a phenotype data sheet (pd_example), a VCF file of the relevant SPEAQeasy output (SPEAQeasy), and our current genotype sample sheet (<code>brain_sentrix</code>). This file is available in the directory listed below.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">example_files</span>, <span class="st">"sample_selection"</span>, <span class="st">"snpsGeno_example.RData"</span><span class="op">)</span>,
+    verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="co">#&gt; Loading objects:</span>
+<span class="co">#&gt;   snpsGeno_example</span>
+<span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">example_files</span>, <span class="st">"sample_selection"</span>, <span class="st">"pd_example.Rdata"</span><span class="op">)</span>,
+    verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="co">#&gt; Loading objects:</span>
+<span class="co">#&gt;   pd_example</span>
+<span class="va">Speaqeasy</span> <span class="op">&lt;-</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/VariantAnnotation/man/readVcf-methods.html">readVcf</a></span><span class="op">(</span>
+        <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span>
+            <span class="va">example_files</span>,
+            <span class="st">"pipeline_outputs"</span>,
+            <span class="st">"merged_variants"</span>,
+            <span class="st">"mergedVariants.vcf.gz"</span>
+        <span class="op">)</span>,
+        genome <span class="op">=</span> <span class="st">"hg38"</span>
+    <span class="op">)</span>
+<span class="va">brain_sentrix</span> <span class="op">&lt;-</span>
+    <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">example_files</span>, <span class="st">"brain_sentrix_speaqeasy.csv"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p>We can see that the genotype is represented in the form of 0s, 1s, and 2s. The rare 2s are a result of multiallelic SNPs and we will drop those. 0 represent the reference allele with ones representing the alternate. We can see the distribution below.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">Geno_speaqeasy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/VariantAnnotation/man/VCF-class.html">geno</a></span><span class="op">(</span><span class="va">Speaqeasy</span><span class="op">)</span><span class="op">$</span><span class="va">GT</span>
+<span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">Geno_speaqeasy</span><span class="op">)</span>
+<span class="co">#&gt; Geno_speaqeasy</span>
+<span class="co">#&gt;   ./.   0/1   0/2   1/1   2/2 </span>
+<span class="co">#&gt; 14096  7803     4  6018     9</span></code></pre></div>
+<p>Given this we convert we convert the Genotype data from SPEAQeasy to numeric data. The <code>"./."</code> were values that could not accurately be determined and are replaced with <code>NA</code>.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">colnames_speaqeasy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">Geno_speaqeasy</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">colnames_speaqeasy</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"a"</span><span class="op">)</span>
+<span class="va">samples</span> <span class="op">&lt;-</span>
+    <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">colnames_speaqeasy</span>,
+        <span class="va">a</span>,
+        into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span><span class="op">)</span>,
+        sep <span class="op">=</span> <span class="st">"_"</span>
+    <span class="op">)</span>
+<span class="co">#&gt; Warning: Expected 3 pieces. Additional pieces discarded in 42 rows [1, 2, 3, 4,</span>
+<span class="co">#&gt; 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, ...].</span>
+<span class="va">samples</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">samples</span><span class="op">$</span><span class="va">a</span>, <span class="st">"_"</span>, <span class="va">samples</span><span class="op">$</span><span class="va">b</span><span class="op">)</span>
+<span class="va">samples</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">samples</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">Geno_speaqeasy</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">samples</span><span class="op">$</span><span class="va">samples</span>
+<span class="va">Geno_speaqeasy</span><span class="op">[</span><span class="va">Geno_speaqeasy</span> <span class="op">==</span> <span class="st">"./."</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span>
+<span class="va">Geno_speaqeasy</span><span class="op">[</span><span class="va">Geno_speaqeasy</span> <span class="op">==</span> <span class="st">"0/0"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span>
+<span class="va">Geno_speaqeasy</span><span class="op">[</span><span class="va">Geno_speaqeasy</span> <span class="op">==</span> <span class="st">"0/1"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1</span>
+<span class="va">Geno_speaqeasy</span><span class="op">[</span><span class="va">Geno_speaqeasy</span> <span class="op">==</span> <span class="st">"1/1"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">2</span>
+<span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">Geno_speaqeasy</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"numeric"</span>
+<span class="co">#&gt; Warning in class(Geno_speaqeasy) &lt;- "numeric": NAs introduced by coercion</span>
+<span class="fu"><a href="https://rdrr.io/pkg/jaffelab/man/corner.html">corner</a></span><span class="op">(</span><span class="va">Geno_speaqeasy</span><span class="op">)</span>
+<span class="co">#&gt;                   R14030_H7K5NBBXX R14184_H7K5NBBXX R13904_H7K5NBBXX</span>
+<span class="co">#&gt; chr1:4712657_G/A                 2                1                2</span>
+<span class="co">#&gt; chr1:7853370_G/A                NA               NA               NA</span>
+<span class="co">#&gt; chr1:9263851_G/A                NA               NA                1</span>
+<span class="co">#&gt; chr1:13475857_T/C               NA               NA               NA</span>
+<span class="co">#&gt; chr1:15289643_G/A               NA               NA               NA</span>
+<span class="co">#&gt; chr1:15341780_G/A               NA               NA               NA</span>
+<span class="co">#&gt;                   R14296_H7JLCBBXX R14247_HF3JYBBXX R15093_HFY2MBBXX</span>
+<span class="co">#&gt; chr1:4712657_G/A                 1                1                2</span>
+<span class="co">#&gt; chr1:7853370_G/A                NA               NA               NA</span>
+<span class="co">#&gt; chr1:9263851_G/A                 1                1               NA</span>
+<span class="co">#&gt; chr1:13475857_T/C               NA               NA               NA</span>
+<span class="co">#&gt; chr1:15289643_G/A               NA               NA               NA</span>
+<span class="co">#&gt; chr1:15341780_G/A               NA               NA                1</span></code></pre></div>
+<p>We then make a correlation matrix to find the possible mismatches between samples.</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">speaqeasy_Cor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">Geno_speaqeasy</span>, use <span class="op">=</span> <span class="st">"pairwise.comp"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/pkg/jaffelab/man/corner.html">corner</a></span><span class="op">(</span><span class="va">speaqeasy_Cor</span><span class="op">)</span>
+<span class="co">#&gt;                  R14030_H7K5NBBXX R14184_H7K5NBBXX R13904_H7K5NBBXX</span>
+<span class="co">#&gt; R14030_H7K5NBBXX       1.00000000       0.13507812       0.01657484</span>
+<span class="co">#&gt; R14184_H7K5NBBXX       0.13507812       1.00000000       0.09347004</span>
+<span class="co">#&gt; R13904_H7K5NBBXX       0.01657484       0.09347004       1.00000000</span>
+<span class="co">#&gt; R14296_H7JLCBBXX       0.03106472       0.18748043       0.04958385</span>
+<span class="co">#&gt; R14247_HF3JYBBXX       0.03384912       0.07080491       0.28798955</span>
+<span class="co">#&gt; R15093_HFY2MBBXX       0.18938568       0.04720309       0.25477682</span>
+<span class="co">#&gt;                  R14296_H7JLCBBXX R14247_HF3JYBBXX R15093_HFY2MBBXX</span>
+<span class="co">#&gt; R14030_H7K5NBBXX       0.03106472       0.03384912       0.18938568</span>
+<span class="co">#&gt; R14184_H7K5NBBXX       0.18748043       0.07080491       0.04720309</span>
+<span class="co">#&gt; R13904_H7K5NBBXX       0.04958385       0.28798955       0.25477682</span>
+<span class="co">#&gt; R14296_H7JLCBBXX       1.00000000       0.16653808       0.27251010</span>
+<span class="co">#&gt; R14247_HF3JYBBXX       0.16653808       1.00000000       0.14097339</span>
+<span class="co">#&gt; R15093_HFY2MBBXX       0.27251010       0.14097339       1.00000000</span></code></pre></div>
+<p>Here in the heatmap below we can see that several points do not correlate with themselves in a symmetrical matrix. This could be mismatches, but it also could be a result of a brain being sequenced twice. We will dig more into this later on.</p>
+<p><img src="SPEAQeasyWorkshop2020_files/figure-html/check_correlations_speaqeasy-1.png" width="700"></p>
+<p>We repeat the process for the genotype data from TOPMed. First creating our numeric data for the genotypes.</p>
+<pre><code>#&gt; Geno_example
+#&gt;  0|0  0|1  1|0  1|1 
+#&gt; 9656 6956 7185 7535
+#&gt;                   4463344375_R01C01 4463344375_R01C02 4572348848_R01C02
+#&gt; 4463344375_R01C01        1.00000000        0.21736687        0.17615291
+#&gt; 4463344375_R01C02        0.21736687        1.00000000        0.13803954
+#&gt; 4572348848_R01C02        0.17615291        0.13803954        1.00000000
+#&gt; 4572348855_R01C02        0.16590842        0.14670605        0.10600440
+#&gt; 5535549043_R01C01        0.05367081        0.07697879        0.09356496
+#&gt; 5535506145_R01C01        0.21189898        0.18114194        0.17829111
+#&gt;                   4572348855_R01C02 5535549043_R01C01 5535506145_R01C01
+#&gt; 4463344375_R01C01        0.16590842        0.05367081        0.21189898
+#&gt; 4463344375_R01C02        0.14670605        0.07697879        0.18114194
+#&gt; 4572348848_R01C02        0.10600440        0.09356496        0.17829111
+#&gt; 4572348855_R01C02        1.00000000        0.04874508        0.08186958
+#&gt; 5535549043_R01C01        0.04874508        1.00000000        0.05331113
+#&gt; 5535506145_R01C01        0.08186958        0.05331113        1.00000000</code></pre>
+<p>In this case the data only appears to have samples that match themselves. However there is the potential for a second kind of error where a brain has two samples, however the do not match each other.</p>
+<p><img src="SPEAQeasyWorkshop2020_files/figure-html/check_correlations_genotypes-1.png" width="700"></p>
+<p>We will next compare the correlation between the SPEAQeasy samples and the TOPMed samples. In order to do this we need to subset the genotypes for only SNPs that are common between the two. We can see that we have 662 snps common between the 42 samples.</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">Geno_speaqeasy_subset</span> <span class="op">&lt;-</span>
+    <span class="va">Geno_speaqeasy</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">Geno_speaqeasy</span><span class="op">)</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">Geno_example</span><span class="op">)</span>, <span class="op">]</span>
+<span class="va">snpsGeno_subset</span> <span class="op">&lt;-</span>
+    <span class="va">Geno_example</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">Geno_example</span><span class="op">)</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">Geno_speaqeasy_subset</span><span class="op">)</span>, <span class="op">]</span>
+<span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">Geno_speaqeasy_subset</span><span class="op">)</span>
+<span class="co">#&gt; [1] 662  42</span>
+<span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">snpsGeno_subset</span><span class="op">)</span>
+<span class="co">#&gt; [1] 662  42</span></code></pre></div>
+<p>As we did before we create a correlation matrix this time between the two data sets.</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">correlation_genotype_speaq</span> <span class="op">&lt;-</span>
+    <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">snpsGeno_subset</span>, <span class="va">Geno_speaqeasy_subset</span>, use <span class="op">=</span> <span class="st">"pairwise.comp"</span><span class="op">)</span></code></pre></div>
+<p>In order to dig into this further we will collapse the correlation matrices into a data table shown below.</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## Convert to long format</span>
+<span class="va">corLong3</span> <span class="op">&lt;-</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>cor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">correlation_genotype_speaq</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>
+<span class="va">corLong3</span><span class="op">$</span><span class="va">rowSample</span> <span class="op">&lt;-</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">snpsGeno_example</span><span class="op">)</span>, times <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">snpsGeno_example</span><span class="op">)</span><span class="op">)</span>
+<span class="va">corLong3</span><span class="op">$</span><span class="va">colSample</span> <span class="op">&lt;-</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">Geno_speaqeasy</span><span class="op">)</span>, each <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">Geno_speaqeasy</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p>Check the correlation between SPEAQeasy and Genotype for mismatches and swaps.</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">brain_sentrix_present</span> <span class="op">&lt;-</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">brain_sentrix</span>, <span class="va">ID</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">snpsGeno_example</span><span class="op">)</span><span class="op">)</span>
+
+<span class="co">## Match across tables</span>
+<span class="va">speaqeasy_match_col</span> <span class="op">&lt;-</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/match.html">match</a></span><span class="op">(</span><span class="va">corLong3</span><span class="op">$</span><span class="va">colSample</span>, <span class="va">pd_example</span><span class="op">$</span><span class="va">SAMPLE_ID</span><span class="op">)</span>
+<span class="va">corLong3</span><span class="op">$</span><span class="va">colBrain</span> <span class="op">&lt;-</span> <span class="va">pd_example</span><span class="op">$</span><span class="va">BrNum</span><span class="op">[</span><span class="va">speaqeasy_match_col</span><span class="op">]</span>
+<span class="va">brain_sentrix_match_row</span> <span class="op">&lt;-</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/match.html">match</a></span><span class="op">(</span><span class="va">corLong3</span><span class="op">$</span><span class="va">rowSample</span>, <span class="va">brain_sentrix_present</span><span class="op">$</span><span class="va">ID</span><span class="op">)</span>
+<span class="va">corLong3</span><span class="op">$</span><span class="va">rowBrain</span> <span class="op">&lt;-</span>
+    <span class="va">brain_sentrix_present</span><span class="op">$</span><span class="va">BrNum</span><span class="op">[</span><span class="va">brain_sentrix_match_row</span><span class="op">]</span>
+
+<span class="co"># Fails to match</span>
+<span class="va">corLong3</span><span class="op">[</span><span class="va">corLong3</span><span class="op">$</span><span class="va">rowBrain</span> <span class="op">==</span> <span class="va">corLong3</span><span class="op">$</span><span class="va">colBrain</span> <span class="op">&amp;</span>
+    <span class="va">corLong3</span><span class="op">$</span><span class="va">cor</span> <span class="op">&lt;</span> <span class="fl">.8</span>, <span class="op">]</span>
+<span class="co">#&gt;           cor         rowSample        colSample colBrain rowBrain</span>
+<span class="co">#&gt; 165   0.00962 9373408026_R01C01 R14296_H7JLCBBXX   Br2473   Br2473</span>
+<span class="co">#&gt; 425   0.11600 5535549043_R01C01 R14129_HCTYLBBXX   Br1652   Br1652</span>
+<span class="co">#&gt; 432   0.11800 6017049081_R01C02 R14129_HCTYLBBXX   Br1652   Br1652</span>
+<span class="co">#&gt; 498  -0.04270 9373406026_R02C01 R14222_H7JHNBBXX   Br2275   Br2275</span>
+<span class="co">#&gt; 582  -0.03790 9373406026_R02C01 R13997_H7JHNBBXX   Br2275   Br2275</span>
+<span class="co">#&gt; 669   0.08540 9373408026_R01C01 R14077_HCTYLBBXX   Br2473   Br2473</span>
+<span class="co">#&gt; 917   0.04020 9373406026_R01C01 R14290_H7L3FBBXX   Br2260   Br2260</span>
+<span class="co">#&gt; 1463  0.05050 9373406026_R01C01 R14071_HF3JYBBXX   Br2260   Br2260</span>
+<span class="co">#&gt; 1697  0.76500 3998646040_R06C01 R14017_HF5JNBBXX   Br5190   Br5190</span>
+
+<span class="co"># Mismatches</span>
+<span class="va">corLong3</span><span class="op">[</span><span class="op">!</span><span class="va">corLong3</span><span class="op">$</span><span class="va">rowBrain</span> <span class="op">==</span> <span class="va">corLong3</span><span class="op">$</span><span class="va">colBrain</span> <span class="op">&amp;</span>
+    <span class="va">corLong3</span><span class="op">$</span><span class="va">cor</span> <span class="op">&gt;</span> <span class="fl">.8</span>, <span class="op">]</span>
+<span class="co">#&gt;        cor         rowSample        colSample colBrain rowBrain</span>
+<span class="co">#&gt; 161  0.865 9373406026_R01C01 R14296_H7JLCBBXX   Br2473   Br2260</span>
+<span class="co">#&gt; 665  0.815 9373406026_R01C01 R14077_HCTYLBBXX   Br2473   Br2260</span>
+<span class="co">#&gt; 921  0.866 9373408026_R01C01 R14290_H7L3FBBXX   Br2260   Br2473</span>
+<span class="co">#&gt; 1467 0.915 9373408026_R01C01 R14071_HF3JYBBXX   Br2260   Br2473</span></code></pre></div>
+<p>We can see from this from this analysis there are a few swaps present between RNA and DNA samples here. We can categorize them as simple and complex sample swaps. Because the two Br2275 do not match each other and also match nothing else we will be forced to consider this a complex swap and drop the sample. In the case of Br2473 it is a simple swap with Br2260 in both cases. This can be amended by swapping with in the phenotype data sheet manually. Now we have our accurate data outputs and will need to fix our ranged summarized experiment object for our SPEAQeasy data.</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## drop sample from rse with SPEAQeasy data</span>
+<span class="va">ids</span> <span class="op">&lt;-</span> <span class="va">pd_example</span><span class="op">$</span><span class="va">SAMPLE_ID</span><span class="op">[</span><span class="va">pd_example</span><span class="op">$</span><span class="va">BrNum</span> <span class="op">==</span> <span class="st">"Br2275"</span><span class="op">]</span>
+<span class="va">rse_gene</span> <span class="op">&lt;-</span> <span class="va">rse_gene</span><span class="op">[</span>, <span class="op">!</span><span class="va">rse_gene</span><span class="op">$</span><span class="va">SAMPLE_ID</span> <span class="op">==</span> <span class="va">ids</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
+<span class="va">rse_gene</span> <span class="op">&lt;-</span> <span class="va">rse_gene</span><span class="op">[</span>, <span class="op">!</span><span class="va">rse_gene</span><span class="op">$</span><span class="va">SAMPLE_ID</span> <span class="op">==</span> <span class="va">ids</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>
+
+<span class="co"># resolve swaps and drops in pd_example</span>
+<span class="va">pd_example</span> <span class="op">&lt;-</span> <span class="va">pd_example</span><span class="op">[</span><span class="op">!</span><span class="va">pd_example</span><span class="op">$</span><span class="va">SAMPLE_ID</span> <span class="op">==</span> <span class="va">ids</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="op">]</span>
+<span class="va">pd_example</span> <span class="op">&lt;-</span> <span class="va">pd_example</span><span class="op">[</span><span class="op">!</span><span class="va">pd_example</span><span class="op">$</span><span class="va">SAMPLE_ID</span> <span class="op">==</span> <span class="va">ids</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, <span class="op">]</span>
+<span class="va">ids2</span> <span class="op">&lt;-</span> <span class="va">pd_example</span><span class="op">$</span><span class="va">SAMPLE_ID</span><span class="op">[</span><span class="va">pd_example</span><span class="op">$</span><span class="va">BrNum</span> <span class="op">==</span> <span class="st">"Br2260"</span><span class="op">]</span>
+<span class="va">ids3</span> <span class="op">&lt;-</span> <span class="va">pd_example</span><span class="op">$</span><span class="va">SAMPLE_ID</span><span class="op">[</span><span class="va">pd_example</span><span class="op">$</span><span class="va">BrNum</span> <span class="op">==</span> <span class="st">"Br2473"</span><span class="op">]</span>
+<span class="va">pd_example</span><span class="op">$</span><span class="va">SAMPLE_ID</span><span class="op">[</span><span class="va">pd_example</span><span class="op">$</span><span class="va">Sample_ID</span> <span class="op">==</span> <span class="va">ids2</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Br2473"</span>
+<span class="va">pd_example</span><span class="op">$</span><span class="va">SAMPLE_ID</span><span class="op">[</span><span class="va">pd_example</span><span class="op">$</span><span class="va">Sample_ID</span> <span class="op">==</span> <span class="va">ids3</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Br2260"</span>
+
+<span class="co"># reorder phenotype data by the sample order present in the 'rse_gene' object</span>
+<span class="va">pd_example</span> <span class="op">&lt;-</span>
+    <span class="va">pd_example</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/match.html">match</a></span><span class="op">(</span><span class="va">rse_gene</span><span class="op">$</span><span class="va">SAMPLE_ID</span>, <span class="va">pd_example</span><span class="op">$</span><span class="va">SAMPLE_ID</span><span class="op">)</span>, <span class="op">]</span>
+
+<span class="co"># add important colData to 'rse_gene'</span>
+<span class="va">rse_gene</span><span class="op">$</span><span class="va">BrainRegion</span> <span class="op">&lt;-</span> <span class="va">pd_example</span><span class="op">$</span><span class="va">BrainRegion</span>
+<span class="va">rse_gene</span><span class="op">$</span><span class="va">Race</span> <span class="op">&lt;-</span> <span class="va">pd_example</span><span class="op">$</span><span class="va">Race</span>
+<span class="va">rse_gene</span><span class="op">$</span><span class="va">PrimaryDx</span> <span class="op">&lt;-</span> <span class="va">pd_example</span><span class="op">$</span><span class="va">PrimaryDx</span>
+<span class="va">rse_gene</span><span class="op">$</span><span class="va">Sex</span> <span class="op">&lt;-</span> <span class="va">pd_example</span><span class="op">$</span><span class="va">Sex</span>
+<span class="va">rse_gene</span><span class="op">$</span><span class="va">AgeDeath</span> <span class="op">&lt;-</span> <span class="va">pd_example</span><span class="op">$</span><span class="va">AgeDeath</span>
+
+<span class="co"># add correct BrNum to colData for rse_gene</span>
+<span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">rse_gene</span><span class="op">)</span><span class="op">$</span><span class="va">BrNum</span> <span class="op">&lt;-</span> <span class="va">pd_example</span><span class="op">$</span><span class="va">BrNum</span></code></pre></div>
+<p>We can then save the gene counts with the resolved sample swaps.</p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## You can then save the data</span>
+<span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span><span class="op">(</span><span class="va">rse_gene</span>, file <span class="op">=</span> <span class="st">"rse_speaqeasy.RData"</span><span class="op">)</span></code></pre></div>
+</div>
 <div id="de-analysis" class="section level2">
 <h2 class="hasAnchor">
 <a href="#de-analysis" class="anchor"></a>DE Analysis</h2>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/Bioconductor/BiocStyle">"BiocStyle"</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://yulab-smu.top/biomedical-knowledge-mining-book/">"clusterProfiler"</a></span><span class="op">)</span>
+<p>In case that you skipped the previous section, you can load the data for the differential expression part with the following code.</p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## Root for our example files</span>
+<span class="va">example_files</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span>
+    <span class="st">"extdata"</span>,
+    <span class="st">"SPEAQeasy-example"</span>,
+    package <span class="op">=</span> <span class="st">"SPEAQeasyWorkshop2020"</span>
+<span class="op">)</span>
+
+<span class="co">## Load the file</span>
+<span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">example_files</span>, <span class="st">"rse_speaqeasy.RData"</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://yulab-smu.top/biomedical-knowledge-mining-book/">"clusterProfiler"</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://bioinf.wehi.edu.au/edgeR">"edgeR"</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://bioinf.wehi.edu.au/limma">"limma"</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st">"pheatmap"</span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st">"org.Hs.eg.db"</span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st">"RColorBrewer"</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/leekgroup/recount">"recount"</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/r-lib/sessioninfo#readme">"sessioninfo"</a></span><span class="op">)</span></code></pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/leekgroup/recount">"recount"</a></span><span class="op">)</span></code></pre></div>
 <p>Edit this as you see fit =)</p>
 <p>Here is an example of you can cite your package inside the vignette:</p>
 <ul>
@@ -589,11 +734,15 @@
 <li>
 <em><a href="https://bioconductor.org/packages/3.12/SummarizedExperiment">SummarizedExperiment</a></em> (Morgan, Obenchain, Hester, and Pagès, 2020)</li>
 <li>
+<em><a href="https://CRAN.R-project.org/package=tidyr">tidyr</a></em> (Wickham, 2020)</li>
+<li>
+<em><a href="https://bioconductor.org/packages/3.12/VariantAnnotation">VariantAnnotation</a></em> (Obenchain, Lawrence, Carey, Gogarten, Shannon, and Morgan, 2014)</li>
+<li>
 <em><a href="https://bioconductor.org/packages/3.12/voom">voom</a></em> (Law, Chen, Shi, and Smyth, 2014)</li>
 </ul>
 <p>This package was developed using <em><a href="https://github.com/lcolladotor/biocthis">biocthis</a></em>.</p>
 <p>Code for creating the vignette</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Create the vignette</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/rstudio/rmarkdown">"rmarkdown"</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/rmarkdown/man/render.html">render</a></span><span class="op">(</span><span class="st">"SPEAQeasyWorkshop2020.Rmd"</span>, <span class="st">"BiocStyle::html_document"</span><span class="op">)</span><span class="op">)</span>
@@ -602,9 +751,9 @@
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://yihui.org/knitr/">"knitr"</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/knit.html">knit</a></span><span class="op">(</span><span class="st">"SPEAQeasyWorkshop2020.Rmd"</span>, tangle <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p>Date the vignette was generated.</p>
-<pre><code>#&gt; [1] "2020-12-15 16:42:21 UTC"</code></pre>
+<pre><code>#&gt; [1] "2020-12-15 17:34:39 UTC"</code></pre>
 <p>Wallclock time spent generating the vignette.</p>
-<pre><code>#&gt; Time difference of 17.191 secs</code></pre>
+<pre><code>#&gt; Time difference of 17.835 secs</code></pre>
 <p><code>R</code> session information.</p>
 <pre><code>#&gt; ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
 #&gt;  setting  value                       
@@ -619,172 +768,170 @@
 #&gt;  date     2020-12-15                  
 #&gt; 
 #&gt; ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
-#&gt;  package               * version  date       lib source                                   
-#&gt;  AnnotationDbi         * 1.52.0   2020-10-27 [1] Bioconductor                             
-#&gt;  askpass                 1.1      2019-01-13 [2] RSPM (R 4.0.0)                           
-#&gt;  assertthat              0.2.1    2019-03-21 [2] RSPM (R 4.0.0)                           
-#&gt;  backports               1.2.1    2020-12-09 [1] RSPM (R 4.0.3)                           
-#&gt;  base64enc               0.1-3    2015-07-28 [2] RSPM (R 4.0.0)                           
-#&gt;  Biobase               * 2.50.0   2020-10-27 [1] Bioconductor                             
-#&gt;  BiocFileCache           1.14.0   2020-10-27 [1] Bioconductor                             
-#&gt;  BiocGenerics          * 0.36.0   2020-10-27 [1] Bioconductor                             
-#&gt;  BiocManager             1.30.10  2019-11-16 [2] CRAN (R 4.0.3)                           
-#&gt;  BiocParallel            1.24.1   2020-11-06 [1] Bioconductor                             
-#&gt;  BiocStyle             * 2.18.1   2020-11-24 [1] Bioconductor                             
-#&gt;  biomaRt                 2.46.0   2020-10-27 [1] Bioconductor                             
-#&gt;  Biostrings              2.58.0   2020-10-27 [1] Bioconductor                             
-#&gt;  bit                     4.0.4    2020-08-04 [1] RSPM (R 4.0.2)                           
-#&gt;  bit64                   4.0.5    2020-08-30 [1] RSPM (R 4.0.2)                           
-#&gt;  bitops                  1.0-6    2013-08-17 [1] RSPM (R 4.0.0)                           
-#&gt;  blob                    1.2.1    2020-01-20 [1] RSPM (R 4.0.0)                           
-#&gt;  bookdown                0.21     2020-10-13 [1] RSPM (R 4.0.2)                           
-#&gt;  BSgenome                1.58.0   2020-10-27 [1] Bioconductor                             
-#&gt;  bumphunter              1.32.0   2020-10-27 [1] Bioconductor                             
-#&gt;  checkmate               2.0.0    2020-02-06 [1] RSPM (R 4.0.0)                           
-#&gt;  cli                     2.2.0    2020-11-20 [2] RSPM (R 4.0.3)                           
-#&gt;  cluster                 2.1.0    2019-06-19 [3] CRAN (R 4.0.3)                           
-#&gt;  clusterProfiler       * 3.18.0   2020-10-27 [1] Bioconductor                             
-#&gt;  codetools               0.2-18   2020-11-04 [3] RSPM (R 4.0.3)                           
-#&gt;  colorspace              2.0-0    2020-11-11 [1] RSPM (R 4.0.3)                           
-#&gt;  cowplot                 1.1.0    2020-09-08 [1] RSPM (R 4.0.2)                           
-#&gt;  crayon                  1.3.4    2017-09-16 [2] RSPM (R 4.0.0)                           
-#&gt;  curl                    4.3      2019-12-02 [2] RSPM (R 4.0.0)                           
-#&gt;  data.table              1.13.4   2020-12-08 [1] RSPM (R 4.0.3)                           
-#&gt;  DBI                     1.1.0    2019-12-15 [1] RSPM (R 4.0.0)                           
-#&gt;  dbplyr                  2.0.0    2020-11-03 [1] RSPM (R 4.0.3)                           
-#&gt;  DelayedArray            0.16.0   2020-10-27 [1] Bioconductor                             
-#&gt;  derfinder               1.24.0   2020-10-27 [1] Bioconductor                             
-#&gt;  derfinderHelper         1.24.0   2020-10-27 [1] Bioconductor                             
-#&gt;  desc                    1.2.0    2018-05-01 [2] RSPM (R 4.0.0)                           
-#&gt;  digest                  0.6.27   2020-10-24 [2] RSPM (R 4.0.3)                           
-#&gt;  DO.db                   2.9      2020-11-25 [1] Bioconductor                             
-#&gt;  doRNG                   1.8.2    2020-01-27 [1] RSPM (R 4.0.0)                           
-#&gt;  DOSE                    3.16.0   2020-10-27 [1] Bioconductor                             
-#&gt;  downloader              0.4      2015-07-09 [1] RSPM (R 4.0.0)                           
-#&gt;  dplyr                   1.0.2    2020-08-18 [1] RSPM (R 4.0.2)                           
-#&gt;  edgeR                 * 3.32.0   2020-10-27 [1] Bioconductor                             
-#&gt;  ellipsis                0.3.1    2020-05-15 [2] RSPM (R 4.0.0)                           
-#&gt;  enrichplot              1.10.1   2020-11-14 [1] Bioconductor                             
-#&gt;  evaluate                0.14     2019-05-28 [2] RSPM (R 4.0.0)                           
-#&gt;  fansi                   0.4.1    2020-01-08 [2] RSPM (R 4.0.0)                           
-#&gt;  farver                  2.0.3    2020-01-16 [1] RSPM (R 4.0.0)                           
-#&gt;  fastmatch               1.1-0    2017-01-28 [1] RSPM (R 4.0.0)                           
-#&gt;  fgsea                   1.16.0   2020-10-27 [1] Bioconductor                             
-#&gt;  foreach                 1.5.1    2020-10-15 [1] RSPM (R 4.0.2)                           
-#&gt;  foreign                 0.8-80   2020-05-24 [3] CRAN (R 4.0.3)                           
-#&gt;  Formula                 1.2-4    2020-10-16 [1] RSPM (R 4.0.2)                           
-#&gt;  fs                      1.5.0    2020-07-31 [2] RSPM (R 4.0.2)                           
-#&gt;  generics                0.1.0    2020-10-31 [1] RSPM (R 4.0.3)                           
-#&gt;  GenomeInfoDb          * 1.26.2   2020-12-08 [1] Bioconductor                             
-#&gt;  GenomeInfoDbData        1.2.4    2020-11-25 [1] Bioconductor                             
-#&gt;  GenomicAlignments       1.26.0   2020-10-27 [1] Bioconductor                             
-#&gt;  GenomicFeatures         1.42.1   2020-11-12 [1] Bioconductor                             
-#&gt;  GenomicFiles            1.26.0   2020-10-27 [1] Bioconductor                             
-#&gt;  GenomicRanges         * 1.42.0   2020-10-27 [1] Bioconductor                             
-#&gt;  GEOquery                2.58.0   2020-10-27 [1] Bioconductor                             
-#&gt;  ggforce                 0.3.2    2020-06-23 [1] RSPM (R 4.0.2)                           
-#&gt;  ggplot2                 3.3.2    2020-06-19 [1] RSPM (R 4.0.1)                           
-#&gt;  ggraph                  2.0.4    2020-11-16 [1] RSPM (R 4.0.3)                           
-#&gt;  ggrepel                 0.8.2    2020-03-08 [1] RSPM (R 4.0.2)                           
-#&gt;  glue                    1.4.2    2020-08-27 [2] RSPM (R 4.0.2)                           
-#&gt;  GO.db                   3.12.1   2020-11-25 [1] Bioconductor                             
-#&gt;  googledrive             1.0.1    2020-05-05 [1] RSPM (R 4.0.0)                           
-#&gt;  GOSemSim                2.16.1   2020-10-29 [1] Bioconductor                             
-#&gt;  graphlayouts            0.7.1    2020-10-26 [1] RSPM (R 4.0.3)                           
-#&gt;  gridExtra               2.3      2017-09-09 [1] RSPM (R 4.0.0)                           
-#&gt;  gtable                  0.3.0    2019-03-25 [1] RSPM (R 4.0.0)                           
-#&gt;  here                  * 1.0.1    2020-12-13 [1] RSPM (R 4.0.3)                           
-#&gt;  Hmisc                   4.4-2    2020-11-29 [1] RSPM (R 4.0.3)                           
-#&gt;  hms                     0.5.3    2020-01-08 [1] RSPM (R 4.0.0)                           
-#&gt;  htmlTable               2.1.0    2020-09-16 [1] RSPM (R 4.0.2)                           
-#&gt;  htmltools               0.5.0    2020-06-16 [2] RSPM (R 4.0.1)                           
-#&gt;  htmlwidgets             1.5.3    2020-12-10 [2] RSPM (R 4.0.3)                           
-#&gt;  httr                    1.4.2    2020-07-20 [2] RSPM (R 4.0.2)                           
-#&gt;  igraph                  1.2.6    2020-10-06 [1] RSPM (R 4.0.2)                           
-#&gt;  IRanges               * 2.24.1   2020-12-12 [1] Bioconductor                             
-#&gt;  iterators               1.0.13   2020-10-15 [1] RSPM (R 4.0.2)                           
-#&gt;  jaffelab              * 0.99.30  2020-11-25 [1] Github (LieberInstitute/jaffelab@42637ff)
-#&gt;  jpeg                    0.1-8.1  2019-10-24 [1] RSPM (R 4.0.0)                           
-#&gt;  jsonlite                1.7.2    2020-12-09 [2] RSPM (R 4.0.3)                           
-#&gt;  knitr                   1.30     2020-09-22 [2] RSPM (R 4.0.2)                           
-#&gt;  lattice                 0.20-41  2020-04-02 [3] CRAN (R 4.0.3)                           
-#&gt;  latticeExtra            0.6-29   2019-12-19 [1] RSPM (R 4.0.0)                           
-#&gt;  lifecycle               0.2.0    2020-03-06 [2] RSPM (R 4.0.0)                           
-#&gt;  limma                 * 3.46.0   2020-10-27 [1] Bioconductor                             
-#&gt;  locfit                  1.5-9.4  2020-03-25 [1] RSPM (R 4.0.0)                           
-#&gt;  lubridate               1.7.9.2  2020-11-13 [1] RSPM (R 4.0.3)                           
-#&gt;  magrittr                2.0.1    2020-11-17 [2] RSPM (R 4.0.3)                           
-#&gt;  MASS                    7.3-53   2020-09-09 [3] CRAN (R 4.0.3)                           
-#&gt;  Matrix                  1.2-18   2019-11-27 [3] CRAN (R 4.0.3)                           
-#&gt;  MatrixGenerics        * 1.2.0    2020-10-27 [1] Bioconductor                             
-#&gt;  matrixStats           * 0.57.0   2020-09-25 [1] RSPM (R 4.0.2)                           
-#&gt;  memoise                 1.1.0    2017-04-21 [2] RSPM (R 4.0.0)                           
-#&gt;  munsell                 0.5.0    2018-06-12 [1] RSPM (R 4.0.0)                           
-#&gt;  nnet                    7.3-14   2020-04-26 [3] CRAN (R 4.0.3)                           
-#&gt;  openssl                 1.4.3    2020-09-18 [2] RSPM (R 4.0.2)                           
-#&gt;  org.Hs.eg.db          * 3.12.0   2020-11-25 [1] Bioconductor                             
-#&gt;  pheatmap              * 1.0.12   2019-01-04 [1] RSPM (R 4.0.0)                           
-#&gt;  pillar                  1.4.7    2020-11-20 [2] RSPM (R 4.0.3)                           
-#&gt;  pkgconfig               2.0.3    2019-09-22 [2] RSPM (R 4.0.0)                           
-#&gt;  pkgdown                 1.6.1    2020-09-12 [1] RSPM (R 4.0.2)                           
-#&gt;  plyr                    1.8.6    2020-03-03 [1] RSPM (R 4.0.2)                           
-#&gt;  png                     0.1-7    2013-12-03 [1] RSPM (R 4.0.0)                           
-#&gt;  polyclip                1.10-0   2019-03-14 [1] RSPM (R 4.0.0)                           
-#&gt;  prettyunits             1.1.1    2020-01-24 [2] RSPM (R 4.0.0)                           
-#&gt;  progress                1.2.2    2019-05-16 [1] RSPM (R 4.0.0)                           
-#&gt;  purrr                   0.3.4    2020-04-17 [2] RSPM (R 4.0.0)                           
-#&gt;  qvalue                  2.22.0   2020-10-27 [1] Bioconductor                             
-#&gt;  R6                      2.5.0    2020-10-28 [2] RSPM (R 4.0.3)                           
-#&gt;  rafalib               * 1.0.0    2015-08-09 [1] RSPM (R 4.0.0)                           
-#&gt;  ragg                    0.4.0    2020-10-05 [1] RSPM (R 4.0.3)                           
-#&gt;  rappdirs                0.3.1    2016-03-28 [1] RSPM (R 4.0.0)                           
-#&gt;  RColorBrewer          * 1.1-2    2014-12-07 [1] RSPM (R 4.0.0)                           
-#&gt;  Rcpp                    1.0.5    2020-07-06 [2] RSPM (R 4.0.2)                           
-#&gt;  RCurl                   1.98-1.2 2020-04-18 [1] RSPM (R 4.0.0)                           
-#&gt;  readr                   1.4.0    2020-10-05 [1] RSPM (R 4.0.3)                           
-#&gt;  recount               * 1.16.0   2020-10-27 [1] Bioconductor                             
-#&gt;  RefManageR            * 1.3.0    2020-11-25 [1] Github (ropensci/RefManageR@ab8fe60)     
-#&gt;  rentrez                 1.2.3    2020-11-10 [1] RSPM (R 4.0.3)                           
-#&gt;  reshape2                1.4.4    2020-04-09 [1] RSPM (R 4.0.2)                           
-#&gt;  rlang                   0.4.9    2020-11-26 [2] RSPM (R 4.0.3)                           
-#&gt;  rmarkdown               2.5      2020-10-21 [1] RSPM (R 4.0.3)                           
-#&gt;  rngtools                1.5      2020-01-23 [1] RSPM (R 4.0.0)                           
-#&gt;  rpart                   4.1-15   2019-04-12 [3] CRAN (R 4.0.3)                           
-#&gt;  rprojroot               2.0.2    2020-11-15 [2] RSPM (R 4.0.3)                           
-#&gt;  Rsamtools               2.6.0    2020-10-27 [1] Bioconductor                             
-#&gt;  RSQLite                 2.2.1    2020-09-30 [1] RSPM (R 4.0.2)                           
-#&gt;  rstudioapi              0.13     2020-11-12 [2] RSPM (R 4.0.3)                           
-#&gt;  rtracklayer             1.50.0   2020-10-27 [1] Bioconductor                             
-#&gt;  rvcheck                 0.1.8    2020-03-01 [1] RSPM (R 4.0.0)                           
-#&gt;  S4Vectors             * 0.28.1   2020-12-09 [1] Bioconductor                             
-#&gt;  scales                  1.1.1    2020-05-11 [1] RSPM (R 4.0.0)                           
-#&gt;  scatterpie              0.1.5    2020-09-09 [1] RSPM (R 4.0.2)                           
-#&gt;  segmented               1.3-1    2020-12-10 [1] RSPM (R 4.0.3)                           
-#&gt;  sessioninfo           * 1.1.1    2018-11-05 [2] RSPM (R 4.0.0)                           
-#&gt;  shadowtext              0.0.7    2019-11-06 [1] RSPM (R 4.0.0)                           
-#&gt;  SPEAQeasyWorkshop2020 * 0.99.0   2020-12-15 [1] Bioconductor                             
-#&gt;  stringi                 1.5.3    2020-09-09 [2] RSPM (R 4.0.2)                           
-#&gt;  stringr                 1.4.0    2019-02-10 [2] RSPM (R 4.0.0)                           
-#&gt;  SummarizedExperiment  * 1.20.0   2020-10-27 [1] Bioconductor                             
-#&gt;  survival                3.2-7    2020-09-28 [3] CRAN (R 4.0.3)                           
-#&gt;  systemfonts             0.3.2    2020-09-29 [1] RSPM (R 4.0.3)                           
-#&gt;  textshaping             0.2.1    2020-11-13 [1] RSPM (R 4.0.3)                           
-#&gt;  tibble                  3.0.4    2020-10-12 [2] RSPM (R 4.0.2)                           
-#&gt;  tidygraph               1.2.0    2020-05-12 [1] RSPM (R 4.0.2)                           
-#&gt;  tidyr                   1.1.2    2020-08-27 [1] RSPM (R 4.0.3)                           
-#&gt;  tidyselect              1.1.0    2020-05-11 [1] RSPM (R 4.0.0)                           
-#&gt;  tweenr                  1.0.1    2018-12-14 [1] RSPM (R 4.0.2)                           
-#&gt;  VariantAnnotation       1.36.0   2020-10-27 [1] Bioconductor                             
-#&gt;  vctrs                   0.3.5    2020-11-17 [2] RSPM (R 4.0.3)                           
-#&gt;  viridis                 0.5.1    2018-03-29 [1] RSPM (R 4.0.0)                           
-#&gt;  viridisLite             0.3.0    2018-02-01 [1] RSPM (R 4.0.0)                           
-#&gt;  withr                   2.3.0    2020-09-22 [2] RSPM (R 4.0.2)                           
-#&gt;  xfun                    0.19     2020-10-30 [2] RSPM (R 4.0.3)                           
-#&gt;  XML                     3.99-0.5 2020-07-23 [1] RSPM (R 4.0.2)                           
-#&gt;  xml2                    1.3.2    2020-04-23 [2] RSPM (R 4.0.0)                           
-#&gt;  XVector                 0.30.0   2020-10-27 [1] Bioconductor                             
-#&gt;  yaml                    2.2.1    2020-02-01 [2] RSPM (R 4.0.0)                           
-#&gt;  zlibbioc                1.36.0   2020-10-27 [1] Bioconductor                             
+#&gt;  package              * version  date       lib source                                   
+#&gt;  AnnotationDbi        * 1.52.0   2020-10-27 [1] Bioconductor                             
+#&gt;  askpass                1.1      2019-01-13 [2] RSPM (R 4.0.0)                           
+#&gt;  assertthat             0.2.1    2019-03-21 [2] RSPM (R 4.0.0)                           
+#&gt;  backports              1.2.1    2020-12-09 [1] RSPM (R 4.0.3)                           
+#&gt;  base64enc              0.1-3    2015-07-28 [2] RSPM (R 4.0.0)                           
+#&gt;  Biobase              * 2.50.0   2020-10-27 [1] Bioconductor                             
+#&gt;  BiocFileCache          1.14.0   2020-10-27 [1] Bioconductor                             
+#&gt;  BiocGenerics         * 0.36.0   2020-10-27 [1] Bioconductor                             
+#&gt;  BiocManager            1.30.10  2019-11-16 [2] CRAN (R 4.0.3)                           
+#&gt;  BiocParallel           1.24.1   2020-11-06 [1] Bioconductor                             
+#&gt;  BiocStyle            * 2.18.1   2020-11-24 [1] Bioconductor                             
+#&gt;  biomaRt                2.46.0   2020-10-27 [1] Bioconductor                             
+#&gt;  Biostrings           * 2.58.0   2020-10-27 [1] Bioconductor                             
+#&gt;  bit                    4.0.4    2020-08-04 [1] RSPM (R 4.0.2)                           
+#&gt;  bit64                  4.0.5    2020-08-30 [1] RSPM (R 4.0.2)                           
+#&gt;  bitops                 1.0-6    2013-08-17 [1] RSPM (R 4.0.0)                           
+#&gt;  blob                   1.2.1    2020-01-20 [1] RSPM (R 4.0.0)                           
+#&gt;  bookdown               0.21     2020-10-13 [1] RSPM (R 4.0.2)                           
+#&gt;  BSgenome               1.58.0   2020-10-27 [1] Bioconductor                             
+#&gt;  bumphunter             1.32.0   2020-10-27 [1] Bioconductor                             
+#&gt;  checkmate              2.0.0    2020-02-06 [1] RSPM (R 4.0.0)                           
+#&gt;  cli                    2.2.0    2020-11-20 [2] RSPM (R 4.0.3)                           
+#&gt;  cluster                2.1.0    2019-06-19 [3] CRAN (R 4.0.3)                           
+#&gt;  clusterProfiler      * 3.18.0   2020-10-27 [1] Bioconductor                             
+#&gt;  codetools              0.2-18   2020-11-04 [3] RSPM (R 4.0.3)                           
+#&gt;  colorspace             2.0-0    2020-11-11 [1] RSPM (R 4.0.3)                           
+#&gt;  cowplot                1.1.0    2020-09-08 [1] RSPM (R 4.0.2)                           
+#&gt;  crayon                 1.3.4    2017-09-16 [2] RSPM (R 4.0.0)                           
+#&gt;  curl                   4.3      2019-12-02 [2] RSPM (R 4.0.0)                           
+#&gt;  data.table             1.13.4   2020-12-08 [1] RSPM (R 4.0.3)                           
+#&gt;  DBI                    1.1.0    2019-12-15 [1] RSPM (R 4.0.0)                           
+#&gt;  dbplyr                 2.0.0    2020-11-03 [1] RSPM (R 4.0.3)                           
+#&gt;  DelayedArray           0.16.0   2020-10-27 [1] Bioconductor                             
+#&gt;  derfinder              1.24.0   2020-10-27 [1] Bioconductor                             
+#&gt;  derfinderHelper        1.24.0   2020-10-27 [1] Bioconductor                             
+#&gt;  desc                   1.2.0    2018-05-01 [2] RSPM (R 4.0.0)                           
+#&gt;  digest                 0.6.27   2020-10-24 [2] RSPM (R 4.0.3)                           
+#&gt;  DO.db                  2.9      2020-11-25 [1] Bioconductor                             
+#&gt;  doRNG                  1.8.2    2020-01-27 [1] RSPM (R 4.0.0)                           
+#&gt;  DOSE                   3.16.0   2020-10-27 [1] Bioconductor                             
+#&gt;  downloader             0.4      2015-07-09 [1] RSPM (R 4.0.0)                           
+#&gt;  dplyr                  1.0.2    2020-08-18 [1] RSPM (R 4.0.2)                           
+#&gt;  edgeR                * 3.32.0   2020-10-27 [1] Bioconductor                             
+#&gt;  ellipsis               0.3.1    2020-05-15 [2] RSPM (R 4.0.0)                           
+#&gt;  enrichplot             1.10.1   2020-11-14 [1] Bioconductor                             
+#&gt;  evaluate               0.14     2019-05-28 [2] RSPM (R 4.0.0)                           
+#&gt;  fansi                  0.4.1    2020-01-08 [2] RSPM (R 4.0.0)                           
+#&gt;  farver                 2.0.3    2020-01-16 [1] RSPM (R 4.0.0)                           
+#&gt;  fastmatch              1.1-0    2017-01-28 [1] RSPM (R 4.0.0)                           
+#&gt;  fgsea                  1.16.0   2020-10-27 [1] Bioconductor                             
+#&gt;  foreach                1.5.1    2020-10-15 [1] RSPM (R 4.0.2)                           
+#&gt;  foreign                0.8-80   2020-05-24 [3] CRAN (R 4.0.3)                           
+#&gt;  Formula                1.2-4    2020-10-16 [1] RSPM (R 4.0.2)                           
+#&gt;  fs                     1.5.0    2020-07-31 [2] RSPM (R 4.0.2)                           
+#&gt;  generics               0.1.0    2020-10-31 [1] RSPM (R 4.0.3)                           
+#&gt;  GenomeInfoDb         * 1.26.2   2020-12-08 [1] Bioconductor                             
+#&gt;  GenomeInfoDbData       1.2.4    2020-11-25 [1] Bioconductor                             
+#&gt;  GenomicAlignments      1.26.0   2020-10-27 [1] Bioconductor                             
+#&gt;  GenomicFeatures        1.42.1   2020-11-12 [1] Bioconductor                             
+#&gt;  GenomicFiles           1.26.0   2020-10-27 [1] Bioconductor                             
+#&gt;  GenomicRanges        * 1.42.0   2020-10-27 [1] Bioconductor                             
+#&gt;  GEOquery               2.58.0   2020-10-27 [1] Bioconductor                             
+#&gt;  ggforce                0.3.2    2020-06-23 [1] RSPM (R 4.0.2)                           
+#&gt;  ggplot2                3.3.2    2020-06-19 [1] RSPM (R 4.0.1)                           
+#&gt;  ggraph                 2.0.4    2020-11-16 [1] RSPM (R 4.0.3)                           
+#&gt;  ggrepel                0.8.2    2020-03-08 [1] RSPM (R 4.0.2)                           
+#&gt;  glue                   1.4.2    2020-08-27 [2] RSPM (R 4.0.2)                           
+#&gt;  GO.db                  3.12.1   2020-11-25 [1] Bioconductor                             
+#&gt;  googledrive            1.0.1    2020-05-05 [1] RSPM (R 4.0.0)                           
+#&gt;  GOSemSim               2.16.1   2020-10-29 [1] Bioconductor                             
+#&gt;  graphlayouts           0.7.1    2020-10-26 [1] RSPM (R 4.0.3)                           
+#&gt;  gridExtra              2.3      2017-09-09 [1] RSPM (R 4.0.0)                           
+#&gt;  gtable                 0.3.0    2019-03-25 [1] RSPM (R 4.0.0)                           
+#&gt;  Hmisc                  4.4-2    2020-11-29 [1] RSPM (R 4.0.3)                           
+#&gt;  hms                    0.5.3    2020-01-08 [1] RSPM (R 4.0.0)                           
+#&gt;  htmlTable              2.1.0    2020-09-16 [1] RSPM (R 4.0.2)                           
+#&gt;  htmltools              0.5.0    2020-06-16 [2] RSPM (R 4.0.1)                           
+#&gt;  htmlwidgets            1.5.3    2020-12-10 [2] RSPM (R 4.0.3)                           
+#&gt;  httr                   1.4.2    2020-07-20 [2] RSPM (R 4.0.2)                           
+#&gt;  igraph                 1.2.6    2020-10-06 [1] RSPM (R 4.0.2)                           
+#&gt;  IRanges              * 2.24.1   2020-12-12 [1] Bioconductor                             
+#&gt;  iterators              1.0.13   2020-10-15 [1] RSPM (R 4.0.2)                           
+#&gt;  jaffelab             * 0.99.30  2020-11-25 [1] Github (LieberInstitute/jaffelab@42637ff)
+#&gt;  jpeg                   0.1-8.1  2019-10-24 [1] RSPM (R 4.0.0)                           
+#&gt;  jsonlite               1.7.2    2020-12-09 [2] RSPM (R 4.0.3)                           
+#&gt;  knitr                  1.30     2020-09-22 [2] RSPM (R 4.0.2)                           
+#&gt;  lattice                0.20-41  2020-04-02 [3] CRAN (R 4.0.3)                           
+#&gt;  latticeExtra           0.6-29   2019-12-19 [1] RSPM (R 4.0.0)                           
+#&gt;  lifecycle              0.2.0    2020-03-06 [2] RSPM (R 4.0.0)                           
+#&gt;  limma                * 3.46.0   2020-10-27 [1] Bioconductor                             
+#&gt;  locfit                 1.5-9.4  2020-03-25 [1] RSPM (R 4.0.0)                           
+#&gt;  lubridate              1.7.9.2  2020-11-13 [1] RSPM (R 4.0.3)                           
+#&gt;  magrittr               2.0.1    2020-11-17 [2] RSPM (R 4.0.3)                           
+#&gt;  MASS                   7.3-53   2020-09-09 [3] CRAN (R 4.0.3)                           
+#&gt;  Matrix                 1.2-18   2019-11-27 [3] CRAN (R 4.0.3)                           
+#&gt;  MatrixGenerics       * 1.2.0    2020-10-27 [1] Bioconductor                             
+#&gt;  matrixStats          * 0.57.0   2020-09-25 [1] RSPM (R 4.0.2)                           
+#&gt;  memoise                1.1.0    2017-04-21 [2] RSPM (R 4.0.0)                           
+#&gt;  munsell                0.5.0    2018-06-12 [1] RSPM (R 4.0.0)                           
+#&gt;  nnet                   7.3-14   2020-04-26 [3] CRAN (R 4.0.3)                           
+#&gt;  openssl                1.4.3    2020-09-18 [2] RSPM (R 4.0.2)                           
+#&gt;  org.Hs.eg.db         * 3.12.0   2020-11-25 [1] Bioconductor                             
+#&gt;  pheatmap             * 1.0.12   2019-01-04 [1] RSPM (R 4.0.0)                           
+#&gt;  pillar                 1.4.7    2020-11-20 [2] RSPM (R 4.0.3)                           
+#&gt;  pkgconfig              2.0.3    2019-09-22 [2] RSPM (R 4.0.0)                           
+#&gt;  pkgdown                1.6.1    2020-09-12 [1] RSPM (R 4.0.2)                           
+#&gt;  plyr                   1.8.6    2020-03-03 [1] RSPM (R 4.0.2)                           
+#&gt;  png                    0.1-7    2013-12-03 [1] RSPM (R 4.0.0)                           
+#&gt;  polyclip               1.10-0   2019-03-14 [1] RSPM (R 4.0.0)                           
+#&gt;  prettyunits            1.1.1    2020-01-24 [2] RSPM (R 4.0.0)                           
+#&gt;  progress               1.2.2    2019-05-16 [1] RSPM (R 4.0.0)                           
+#&gt;  purrr                  0.3.4    2020-04-17 [2] RSPM (R 4.0.0)                           
+#&gt;  qvalue                 2.22.0   2020-10-27 [1] Bioconductor                             
+#&gt;  R6                     2.5.0    2020-10-28 [2] RSPM (R 4.0.3)                           
+#&gt;  rafalib              * 1.0.0    2015-08-09 [1] RSPM (R 4.0.0)                           
+#&gt;  ragg                   0.4.0    2020-10-05 [1] RSPM (R 4.0.3)                           
+#&gt;  rappdirs               0.3.1    2016-03-28 [1] RSPM (R 4.0.0)                           
+#&gt;  RColorBrewer         * 1.1-2    2014-12-07 [1] RSPM (R 4.0.0)                           
+#&gt;  Rcpp                   1.0.5    2020-07-06 [2] RSPM (R 4.0.2)                           
+#&gt;  RCurl                  1.98-1.2 2020-04-18 [1] RSPM (R 4.0.0)                           
+#&gt;  readr                  1.4.0    2020-10-05 [1] RSPM (R 4.0.3)                           
+#&gt;  recount              * 1.16.0   2020-10-27 [1] Bioconductor                             
+#&gt;  RefManageR           * 1.3.0    2020-11-25 [1] Github (ropensci/RefManageR@ab8fe60)     
+#&gt;  rentrez                1.2.3    2020-11-10 [1] RSPM (R 4.0.3)                           
+#&gt;  reshape2               1.4.4    2020-04-09 [1] RSPM (R 4.0.2)                           
+#&gt;  rlang                  0.4.9    2020-11-26 [2] RSPM (R 4.0.3)                           
+#&gt;  rmarkdown              2.5      2020-10-21 [1] RSPM (R 4.0.3)                           
+#&gt;  rngtools               1.5      2020-01-23 [1] RSPM (R 4.0.0)                           
+#&gt;  rpart                  4.1-15   2019-04-12 [3] CRAN (R 4.0.3)                           
+#&gt;  rprojroot              2.0.2    2020-11-15 [2] RSPM (R 4.0.3)                           
+#&gt;  Rsamtools            * 2.6.0    2020-10-27 [1] Bioconductor                             
+#&gt;  RSQLite                2.2.1    2020-09-30 [1] RSPM (R 4.0.2)                           
+#&gt;  rstudioapi             0.13     2020-11-12 [2] RSPM (R 4.0.3)                           
+#&gt;  rtracklayer            1.50.0   2020-10-27 [1] Bioconductor                             
+#&gt;  rvcheck                0.1.8    2020-03-01 [1] RSPM (R 4.0.0)                           
+#&gt;  S4Vectors            * 0.28.1   2020-12-09 [1] Bioconductor                             
+#&gt;  scales                 1.1.1    2020-05-11 [1] RSPM (R 4.0.0)                           
+#&gt;  scatterpie             0.1.5    2020-09-09 [1] RSPM (R 4.0.2)                           
+#&gt;  segmented              1.3-1    2020-12-10 [1] RSPM (R 4.0.3)                           
+#&gt;  sessioninfo          * 1.1.1    2018-11-05 [2] RSPM (R 4.0.0)                           
+#&gt;  shadowtext             0.0.7    2019-11-06 [1] RSPM (R 4.0.0)                           
+#&gt;  stringi                1.5.3    2020-09-09 [2] RSPM (R 4.0.2)                           
+#&gt;  stringr                1.4.0    2019-02-10 [2] RSPM (R 4.0.0)                           
+#&gt;  SummarizedExperiment * 1.20.0   2020-10-27 [1] Bioconductor                             
+#&gt;  survival               3.2-7    2020-09-28 [3] CRAN (R 4.0.3)                           
+#&gt;  systemfonts            0.3.2    2020-09-29 [1] RSPM (R 4.0.3)                           
+#&gt;  textshaping            0.2.1    2020-11-13 [1] RSPM (R 4.0.3)                           
+#&gt;  tibble                 3.0.4    2020-10-12 [2] RSPM (R 4.0.2)                           
+#&gt;  tidygraph              1.2.0    2020-05-12 [1] RSPM (R 4.0.2)                           
+#&gt;  tidyr                * 1.1.2    2020-08-27 [1] RSPM (R 4.0.3)                           
+#&gt;  tidyselect             1.1.0    2020-05-11 [1] RSPM (R 4.0.0)                           
+#&gt;  tweenr                 1.0.1    2018-12-14 [1] RSPM (R 4.0.2)                           
+#&gt;  VariantAnnotation    * 1.36.0   2020-10-27 [1] Bioconductor                             
+#&gt;  vctrs                  0.3.5    2020-11-17 [2] RSPM (R 4.0.3)                           
+#&gt;  viridis                0.5.1    2018-03-29 [1] RSPM (R 4.0.0)                           
+#&gt;  viridisLite            0.3.0    2018-02-01 [1] RSPM (R 4.0.0)                           
+#&gt;  withr                  2.3.0    2020-09-22 [2] RSPM (R 4.0.2)                           
+#&gt;  xfun                   0.19     2020-10-30 [2] RSPM (R 4.0.3)                           
+#&gt;  XML                    3.99-0.5 2020-07-23 [1] RSPM (R 4.0.2)                           
+#&gt;  xml2                   1.3.2    2020-04-23 [2] RSPM (R 4.0.0)                           
+#&gt;  XVector              * 0.30.0   2020-10-27 [1] Bioconductor                             
+#&gt;  yaml                   2.2.1    2020-02-01 [2] RSPM (R 4.0.0)                           
+#&gt;  zlibbioc               1.36.0   2020-10-27 [1] Bioconductor                             
 #&gt; 
 #&gt; [1] /__w/_temp/Library
 #&gt; [2] /usr/local/lib/R/site-library
@@ -832,19 +979,25 @@
 <a id="bib-neuwirth2014rcolorbrewer"></a><a href="#cite-neuwirth2014rcolorbrewer">[12]</a><cite> E. Neuwirth. <em>RColorBrewer: ColorBrewer Palettes</em>. R package version 1.1-2. 2014.</cite>
 </p>
 <p>
-<a id="bib-ole2020biocstyle"></a><a href="#cite-ole2020biocstyle">[13]</a><cite> A. Oleś, M. Morgan, and W. Huber. <em>BiocStyle: Standard styles for vignettes and other Bioconductor documents</em>. R package version 2.18.1. 2020. URL: <a href="https://github.com/Bioconductor/BiocStyle">https://github.com/Bioconductor/BiocStyle</a>.</cite>
+<a id="bib-Obenchain15072014"></a><a href="#cite-Obenchain15072014">[13]</a><cite> V. Obenchain, M. Lawrence, V. Carey, et al. “VariantAnnotation: a Bioconductor package for exploration and annotation of genetic variants”. In: <em>Bioinformatics</em> 30.14 (2014), pp. 2076-2078. DOI: <a href="https://doi.org/10.1093/bioinformatics/btu168">10.1093/bioinformatics/btu168</a>.</cite>
 </p>
 <p>
-<a id="bib-2020language"></a><a href="#cite-2020language">[14]</a><cite> R Core Team. <em>R: A Language and Environment for Statistical Computing</em>. R Foundation for Statistical Computing. Vienna, Austria, 2020. URL: <a href="https://www.R-project.org/">https://www.R-project.org/</a>.</cite>
+<a id="bib-ole2020biocstyle"></a><a href="#cite-ole2020biocstyle">[14]</a><cite> A. Oleś, M. Morgan, and W. Huber. <em>BiocStyle: Standard styles for vignettes and other Bioconductor documents</em>. R package version 2.18.1. 2020. URL: <a href="https://github.com/Bioconductor/BiocStyle">https://github.com/Bioconductor/BiocStyle</a>.</cite>
 </p>
 <p>
-<a id="bib-ritchie2015limma"></a><a href="#cite-ritchie2015limma">[15]</a><cite> M. E. Ritchie, B. Phipson, D. Wu, et al. “limma powers differential expression analyses for RNA-sequencing and microarray studies”. In: <em>Nucleic Acids Research</em> 43.7 (2015), p. e47. DOI: <a href="https://doi.org/10.1093/nar/gkv007">10.1093/nar/gkv007</a>.</cite>
+<a id="bib-2020language"></a><a href="#cite-2020language">[15]</a><cite> R Core Team. <em>R: A Language and Environment for Statistical Computing</em>. R Foundation for Statistical Computing. Vienna, Austria, 2020. URL: <a href="https://www.R-project.org/">https://www.R-project.org/</a>.</cite>
 </p>
 <p>
-<a id="bib-xie2020knitr"></a><a href="#cite-xie2020knitr">[16]</a><cite> Y. Xie. <em>knitr: A General-Purpose Package for Dynamic Report Generation in R</em>. R package version 1.30. 2020. URL: <a href="https://yihui.org/knitr/">https://yihui.org/knitr/</a>.</cite>
+<a id="bib-ritchie2015limma"></a><a href="#cite-ritchie2015limma">[16]</a><cite> M. E. Ritchie, B. Phipson, D. Wu, et al. “limma powers differential expression analyses for RNA-sequencing and microarray studies”. In: <em>Nucleic Acids Research</em> 43.7 (2015), p. e47. DOI: <a href="https://doi.org/10.1093/nar/gkv007">10.1093/nar/gkv007</a>.</cite>
 </p>
 <p>
-<a id="bib-yu2012clusterprofiler"></a><a href="#cite-yu2012clusterprofiler">[17]</a><cite> G. Yu, L. Wang, Y. Han, et al. “clusterProfiler: an R package for comparing biological themes among gene clusters”. In: <em>OMICS: A Journal of Integrative Biology</em> 16.5 (2012), pp. 284-287. DOI: <a href="https://doi.org/10.1089/omi.2011.0118">10.1089/omi.2011.0118</a>.</cite>
+<a id="bib-wickham2020tidyr"></a><a href="#cite-wickham2020tidyr">[17]</a><cite> H. Wickham. <em>tidyr: Tidy Messy Data</em>. <a href="https://tidyr.tidyverse.org" class="uri">https://tidyr.tidyverse.org</a>, <a href="https://github.com/tidyverse/tidyr" class="uri">https://github.com/tidyverse/tidyr</a>. 2020.</cite>
+</p>
+<p>
+<a id="bib-xie2020knitr"></a><a href="#cite-xie2020knitr">[18]</a><cite> Y. Xie. <em>knitr: A General-Purpose Package for Dynamic Report Generation in R</em>. R package version 1.30. 2020. URL: <a href="https://yihui.org/knitr/">https://yihui.org/knitr/</a>.</cite>
+</p>
+<p>
+<a id="bib-yu2012clusterprofiler"></a><a href="#cite-yu2012clusterprofiler">[19]</a><cite> G. Yu, L. Wang, Y. Han, et al. “clusterProfiler: an R package for comparing biological themes among gene clusters”. In: <em>OMICS: A Journal of Integrative Biology</em> 16.5 (2012), pp. 284-287. DOI: <a href="https://doi.org/10.1089/omi.2011.0118">10.1089/omi.2011.0118</a>.</cite>
 </p>
 </div>
   </div>
