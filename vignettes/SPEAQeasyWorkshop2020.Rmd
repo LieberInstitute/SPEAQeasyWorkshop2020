@@ -14,14 +14,11 @@ author:
     email: lcolladotor@gmail.com
 output: 
   BiocStyle::html_document:
-    self_contained: false
+    self_contained: yes
     toc: true
     toc_float: true
     toc_depth: 2
     code_folding: show
-resource_files:
-  - images/workflow.png
-  - images/main_outputs.png
 date: "`r doc_date()`"
 package: "`r pkg_ver('SPEAQeasyWorkshop2020')`"
 vignette: >
