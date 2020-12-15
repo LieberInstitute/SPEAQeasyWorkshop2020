@@ -20,9 +20,9 @@ knitr::opts_chunk$set(
 [![R build status](https://github.com/LieberInstitute/SPEAQeasyWorkshop2020/workflows/R-CMD-check-bioc/badge.svg)](https://github.com/LieberInstitute/SPEAQeasyWorkshop2020/actions)
 <!-- badges: end -->
 
-This workshop aims to describe the `SPEAQeasy` `r citep(bib[["SPEAQeasy"]])` RNA-seq processing pipeline, show how to use it, and then illustrate how the results can be analyzed using Bioconductor R packages for differential expression analyses.
+This workshop aims to describe the `SPEAQeasy` RNA-seq processing pipeline, show how to use it, and then illustrate how the results can be analyzed using Bioconductor R packages for differential expression analyses.
 
-SPEAQeasy is a [Nextflow](https://www.nextflow.io/)-based **S**calable RNA-seq processing **P**ipeline for **E**xpression **A**nalysis and **Q**uantification that produces R objects ready for analysis with Bioconductor tools. Partipants will become familiar with SPEAQeasy set-up, execution on real data, and practice configuring some common settings. We will walk through a complete differential expression analysis, utilizing popular packages such as [limma](https://www.bioconductor.org/packages/release/bioc/html/limma.html), [edgeR](http://bioconductor.org/packages/release/bioc/html/edgeR.html), and [clusterProfiler](https://bioconductor.org/packages/release/bioc/html/clusterProfiler.html).
+SPEAQeasy is a [Nextflow](https://www.nextflow.io/)-based **S**calable RNA-seq processing **P**ipeline for **E**xpression **A**nalysis and **Q**uantification that produces R objects ready for analysis with Bioconductor tools. Partipants will become familiar with SPEAQeasy set-up, execution on real data, and practice configuring some common settings. We will walk through a complete differential expression analysis, utilizing popular packages such as [limma](https://www.bioconductor.org/packages/limma), [edgeR](http://bioconductor.org/packages/edgeR), and [clusterProfiler](https://bioconductor.org/packages/clusterProfiler).
 
 ## Citation
 
@@ -49,6 +49,6 @@ Please note that the `SPEAQeasyWorkshop2020` project is released with a [Contrib
 
 For more details, check the `dev` directory.
 
-This package was developed using `r BiocStyle::Githubpkg('lcolladotor/biocthis')`.
+This package was developed using `r BiocStyle::Biocpkg('biocthis')`.
 
 

@@ -11,8 +11,21 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 status](https://github.com/LieberInstitute/SPEAQeasyWorkshop2020/workflows/R-CMD-check-bioc/badge.svg)](https://github.com/LieberInstitute/SPEAQeasyWorkshop2020/actions)
 <!-- badges: end -->
 
-TODO: copy the “overview” portion from the vignette to here once it’s
-done.
+This workshop aims to describe the `SPEAQeasy` RNA-seq processing
+pipeline, show how to use it, and then illustrate how the results can be
+analyzed using Bioconductor R packages for differential expression
+analyses.
+
+SPEAQeasy is a [Nextflow](https://www.nextflow.io/)-based **S**calable
+RNA-seq processing **P**ipeline for **E**xpression **A**nalysis and
+**Q**uantification that produces R objects ready for analysis with
+Bioconductor tools. Partipants will become familiar with SPEAQeasy
+set-up, execution on real data, and practice configuring some common
+settings. We will walk through a complete differential expression
+analysis, utilizing popular packages such as
+[limma](https://www.bioconductor.org/packages/limma),
+[edgeR](http://bioconductor.org/packages/edgeR), and
+[clusterProfiler](https://bioconductor.org/packages/clusterProfiler).
 
 ## Citation
 
@@ -45,9 +58,9 @@ print(citation("SPEAQeasyWorkshop2020"), bibtex = TRUE)
 #> Serrato VL, Gutiérrez-Millán E, Aguilar-Ordoñez I, Jaffe AE,
 #> Collado-Torres L (2020). "SPEAQeasy: a Scalable Pipeline for Expression
 #> Analysis and Quantification for R/Bioconductor-powered RNA-seq
-#> analyses." _bioRxiv_. doi: 10.1101/TODO (URL:
-#> https://doi.org/10.1101/TODO), <URL:
-#> https://www.biorxiv.org/content/10.1101/TODO>.
+#> analyses." _bioRxiv_. doi: 10.1101/2020.12.11.386789 (URL:
+#> https://doi.org/10.1101/2020.12.11.386789), <URL:
+#> https://www.biorxiv.org/content/10.1101/2020.12.11.386789v1>.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
@@ -56,8 +69,8 @@ print(citation("SPEAQeasyWorkshop2020"), bibtex = TRUE)
 #>     author = {Nicholas J. Eagles and Emily E. Burke and Jacob Leonard and Brianna K. Barry and Joshua M. Stolz and Louise Huuki and BaDoi N. Phan and Violeta Larrios Serrato and Everardo Gutiérrez-Millán and Israel Aguilar-Ordoñez and Andrew E. Jaffe and Leonardo Collado-Torres},
 #>     year = {2020},
 #>     journal = {bioRxiv},
-#>     doi = {10.1101/TODO},
-#>     url = {https://www.biorxiv.org/content/10.1101/TODO},
+#>     doi = {10.1101/2020.12.11.386789},
+#>     url = {https://www.biorxiv.org/content/10.1101/2020.12.11.386789v1},
 #>   }
 ```
 
@@ -99,4 +112,4 @@ By contributing to this project, you agree to abide by its terms.
 For more details, check the `dev` directory.
 
 This package was developed using
-*[biocthis](https://github.com/lcolladotor/biocthis)*.
+*[biocthis](https://bioconductor.org/packages/3.12/biocthis)*.
