@@ -39,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -63,8 +63,7 @@
 
       
 
-      </header><script src="SPEAQeasyWorkshop2020_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="SPEAQeasyWorkshop2020_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
-<script src="SPEAQeasyWorkshop2020_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
+      </header><script src="SPEAQeasyWorkshop2020_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>SPEAQeasy: a Scalable Pipeline for Expression Analysis and Quantification for R/Bioconductor-powered RNA-seq analyses</h1>
@@ -77,7 +76,7 @@
       Lieber Institute for Brain Development, Johns Hopkins Medical Campus<br><a class="author_email" href="mailto:#"></a><a href="mailto:lcolladotor@gmail.com" class="email">lcolladotor@gmail.com</a>
       </address>
                   
-            <h4 class="date">15 December 2020</h4>
+            <h4 class="date">16 December 2020</h4>
       
       
       <div class="hidden name"><code>SPEAQeasyWorkshop2020.Rmd</code></div>
@@ -115,8 +114,18 @@
 <a href="#workshop-participation" class="anchor"></a>Workshop Participation</h2>
 <p>This workshop makes use of two sets of files: the <a href="https://github.com/LieberInstitute/SPEAQeasy">SPEAQeasy GitHub repository</a> and the workshop-specific files. You can clone the SPEAQeasy repository with:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">git</span> clone git@github.com:LieberInstitute/SPEAQeasy.git</span></code></pre></div>
-<p>The workshop-specific files include example outputs from SPEAQeasy, for performing a differential expression analysis. You can download a Docker image with these files using:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="ex">docker</span> run -e PASSWORD=bioc2020 -p 8787:8787 -d --rm lcollado/speaqeasyworkshop2020</span></code></pre></div>
+<p>The workshop-specific files include example outputs from SPEAQeasy, for performing a differential expression analysis. These files are included as part of this workshop package:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">#  Install 'remotes' if needed, then the package for this workshop</span>
+<span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span><span class="op">(</span><span class="st">'BiocManager'</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">'BiocManager'</span><span class="op">)</span>
+<span class="op">}</span>
+<span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html">install</a></span><span class="op">(</span><span class="st">'LieberInstitute/SPEAQeasyWorkshop2020'</span><span class="op">)</span>
+
+<span class="co">#  You can load the package, which contains the example files for use later</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://LieberInstitute.github.io/SPEAQeasyWorkshop2020/">'SPEAQeasyWorkshop2020'</a></span><span class="op">)</span></code></pre></div>
+<p>You can also download a Docker image with these files using:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="ex">docker</span> run -e PASSWORD=bioc2020 -p 8787:8787 -d --rm lcollado/speaqeasyworkshop2020</span></code></pre></div>
 <p>Then, log in to RStudio at <a href="http://localhost:8787">http://localhost:8787</a> using username <code>rstudio</code> and password <code>bioc2020</code>. Note that on Windows you need to provide your localhost IP address like <code>http://191.163.92.108:8787/</code> - find it using <code>docker-machine ip default</code> in Docker’s terminal.</p>
 <p>To see the vignette on RStudio’s window (from the docker image), run <code><a href="https://rdrr.io/r/utils/browseVignettes.html">browseVignettes(package = "SPEAQeasyWorkshop2020")</a></code>. Click on one of the links, “HTML”, “source”, “R code”. In case of <code>The requested page was not found</code> error, add <code>help/</code> to the URL right after the hostname, e.g., <a href="http://localhost:8787/help/library/SPEAQeasyWorkshop2020/doc/SPEAQeasyWorkshop2020.html">http://localhost:8787/help/library/SPEAQeasyWorkshop2020/doc/SPEAQeasyWorkshop2020.html</a>. This is a <a href="https://github.com/rocker-org/rocker-versioned/issues/178">known bug</a>.</p>
 </div>
@@ -135,11 +144,11 @@
 </tr>
 <tr class="even">
 <td>Hands-on: configuring and running SPEAQeasy on real data</td>
-<td>25m</td>
+<td>20m</td>
 </tr>
 <tr class="odd">
 <td>Understanding SPEAQeasy outputs</td>
-<td>15m</td>
+<td>20m</td>
 </tr>
 <tr class="even">
 <td>Differential expression analysis</td>
@@ -168,7 +177,7 @@
 <a href="#citing-speaqeasy" class="anchor"></a>Citing <code>SPEAQeasy</code>
 </h2>
 <p>We hope that <code>SPEAQeasy</code> (Eagles, Burke, Leonard, et al., 2020) will be useful for your research. Please use the following information to cite the package and the overall approach. Thank you!</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Citation info</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/citation.html">citation</a></span><span class="op">(</span><span class="st">"SPEAQeasyWorkshop2020"</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>
 <span class="co">#&gt; </span>
@@ -220,13 +229,13 @@
 <h3 class="hasAnchor">
 <a href="#installation-and-set-up" class="anchor"></a>Installation and Set-up</h3>
 <p>First, clone the SPEAQeasy repository.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">git</span> clone git@github.com:LieberInstitute/SPEAQeasy.git</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">git</span> clone git@github.com:LieberInstitute/SPEAQeasy.git</span></code></pre></div>
 <p>SPEAQeasy dependencies can be managed with docker, involving a fairly quick installation that is reproducible regardless of the computing environment. For those who are able to use docker, SPEAQeasy can be installed with:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="co">#  From within the SPEAQeasy repository:</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="fu">bash</span> install_software.sh <span class="st">"docker"</span></span></code></pre></div>
-<p>If you do not have access to docker on your machine, SPEAQeasy can be installed with:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="co">#  From within the SPEAQeasy repository:</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="fu">bash</span> install_software.sh <span class="st">"local"</span></span></code></pre></div>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="fu">bash</span> install_software.sh <span class="st">"docker"</span></span></code></pre></div>
+<p>If you do not have access to docker on your machine, SPEAQeasy can be installed with:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a><span class="co">#  From within the SPEAQeasy repository:</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="fu">bash</span> install_software.sh <span class="st">"local"</span></span></code></pre></div>
 <p>Please note that installation with docker is recommended if available, and that “local” installation can take quite some time, as all dependencies are built from source. <strong>Installing and running SPEAQeasy is not required for this workshop</strong>, but is demonstrated to familiarize participants with the process. The workshop files include outputs from SPEAQeasy, which can be used later for the example differential expression analysis.</p>
 <p>Choose a “main” script as appropriate for your particular set-up. “Main” scripts and associated configuration files exist for SLURM-managed computing clusters, SGE-managed clusters, local machines, and the <a href="https://jhpce.jhu.edu/">JHPCE</a> cluster.</p>
 <table class="table">
@@ -265,19 +274,19 @@
 </table>
 <p>Within the main script, you can configure arguments specific to the experiment, such as the reference organism, pairing of samples, and where to place output files, among other specifications.</p>
 <p>When running SPEAQeasy on a cluster (i.e. SLURM, SGE, or JHPCE users), it is recommended you submit the pipeline as a job, using the command appropriate for your cluster. For those running SPEAQeasy locally, the main script can be executed directly.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a><span class="co">#  SLURM-managed clusters</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a><span class="ex">sbatch</span> run_pipeline_slurm.sh</span>
-<span id="cb7-3"><a href="#cb7-3"></a></span>
-<span id="cb7-4"><a href="#cb7-4"></a><span class="co">#  SGE-managed clusters</span></span>
-<span id="cb7-5"><a href="#cb7-5"></a><span class="ex">qsub</span> run_pipeline_sge.sh</span>
-<span id="cb7-6"><a href="#cb7-6"></a></span>
-<span id="cb7-7"><a href="#cb7-7"></a><span class="co">#  local machines</span></span>
-<span id="cb7-8"><a href="#cb7-8"></a><span class="fu">bash</span> run_pipeline_local.sh</span>
-<span id="cb7-9"><a href="#cb7-9"></a></span>
-<span id="cb7-10"><a href="#cb7-10"></a><span class="co">#  The JHPCE cluster</span></span>
-<span id="cb7-11"><a href="#cb7-11"></a><span class="ex">qsub</span> run_pipeline_jhpce.sh</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1"></a><span class="co">#  SLURM-managed clusters</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="ex">sbatch</span> run_pipeline_slurm.sh</span>
+<span id="cb8-3"><a href="#cb8-3"></a></span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="co">#  SGE-managed clusters</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="ex">qsub</span> run_pipeline_sge.sh</span>
+<span id="cb8-6"><a href="#cb8-6"></a></span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="co">#  local machines</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a><span class="fu">bash</span> run_pipeline_local.sh</span>
+<span id="cb8-9"><a href="#cb8-9"></a></span>
+<span id="cb8-10"><a href="#cb8-10"></a><span class="co">#  The JHPCE cluster</span></span>
+<span id="cb8-11"><a href="#cb8-11"></a><span class="ex">qsub</span> run_pipeline_jhpce.sh</span></code></pre></div>
 <p>Here’s an example of such a file.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Root for our example files</span>
 <span class="va">example_files</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span>
     <span class="st">"extdata"</span>,
@@ -326,10 +335,10 @@
 <h3 class="hasAnchor">
 <a href="#examining-speaqeasy-outputs" class="anchor"></a>Examining SPEAQeasy outputs</h3>
 <p>Let’s take a look at one of the major outputs from SPEAQeasy- the <code>RangedSummarizedExperiment</code> containing gene counts.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://bioconductor.org/packages/SummarizedExperiment">"SummarizedExperiment"</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/LieberInstitute/jaffelab">"jaffelab"</a></span><span class="op">)</span> <span class="co"># GitHub: LieberInstitute/jaffelab</span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#  Load the RSE containing gene counts</span>
 <span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span>
     <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span>
@@ -443,18 +452,20 @@
 <h2 class="hasAnchor">
 <a href="#identifying-sample-swaps" class="anchor"></a>Identifying sample swaps</h2>
 <p><em>Note: the original version is available <a href="http://research.libd.org/SPEAQeasy-example/swap_speaqeasy.html">here</a> and was written by <a href="https://github.com/joshstolz">Josh Stolz</a> and <a href="https://github.com/lahuuki">Louise Huuki</a>.</em></p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st">"pheatmap"</span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://tidyr.tidyverse.org">"tidyr"</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st">"VariantAnnotation"</span><span class="op">)</span></code></pre></div>
 <p>In order to resolve the swaps to our best ability we need four data sets. Here we have load <code>snpGeno_example</code> which is from our TOPMed imputed genotype data, a phenotype data sheet (pd_example), a VCF file of the relevant SPEAQeasy output (SPEAQeasy), and our current genotype sample sheet (<code>brain_sentrix</code>). This file is available in the directory listed below.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">example_files</span>, <span class="st">"sample_selection"</span>, <span class="st">"snpsGeno_example.RData"</span><span class="op">)</span>,
-    verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+    verbose <span class="op">=</span> <span class="cn">TRUE</span>
+<span class="op">)</span>
 <span class="co">#&gt; Loading objects:</span>
 <span class="co">#&gt;   snpsGeno_example</span>
 <span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">example_files</span>, <span class="st">"sample_selection"</span>, <span class="st">"pd_example.Rdata"</span><span class="op">)</span>,
-    verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+    verbose <span class="op">=</span> <span class="cn">TRUE</span>
+<span class="op">)</span>
 <span class="co">#&gt; Loading objects:</span>
 <span class="co">#&gt;   pd_example</span>
 <span class="va">Speaqeasy</span> <span class="op">&lt;-</span>
@@ -470,14 +481,14 @@
 <span class="va">brain_sentrix</span> <span class="op">&lt;-</span>
     <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">example_files</span>, <span class="st">"brain_sentrix_speaqeasy.csv"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>We can see that the genotype is represented in the form of 0s, 1s, and 2s. The rare 2s are a result of multiallelic SNPs and we will drop those. 0 represent the reference allele with ones representing the alternate. We can see the distribution below.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Geno_speaqeasy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/VariantAnnotation/man/VCF-class.html">geno</a></span><span class="op">(</span><span class="va">Speaqeasy</span><span class="op">)</span><span class="op">$</span><span class="va">GT</span>
 <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">Geno_speaqeasy</span><span class="op">)</span>
 <span class="co">#&gt; Geno_speaqeasy</span>
 <span class="co">#&gt;   ./.   0/1   0/2   1/1   2/2 </span>
 <span class="co">#&gt; 14096  7803     4  6018     9</span></code></pre></div>
 <p>Given this we convert we convert the Genotype data from SPEAQeasy to numeric data. The <code>"./."</code> were values that could not accurately be determined and are replaced with <code>NA</code>.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">colnames_speaqeasy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">Geno_speaqeasy</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">colnames_speaqeasy</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"a"</span><span class="op">)</span>
 <span class="va">samples</span> <span class="op">&lt;-</span>
@@ -513,7 +524,7 @@
 <span class="co">#&gt; chr1:15289643_G/A               NA               NA               NA</span>
 <span class="co">#&gt; chr1:15341780_G/A               NA               NA                1</span></code></pre></div>
 <p>We then make a correlation matrix to find the possible mismatches between samples.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">speaqeasy_Cor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">Geno_speaqeasy</span>, use <span class="op">=</span> <span class="st">"pairwise.comp"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/pkg/jaffelab/man/corner.html">corner</a></span><span class="op">(</span><span class="va">speaqeasy_Cor</span><span class="op">)</span>
 <span class="co">#&gt;                  R14030_H7K5NBBXX R14184_H7K5NBBXX R13904_H7K5NBBXX</span>
@@ -553,7 +564,7 @@
 <p>In this case the data only appears to have samples that match themselves. However there is the potential for a second kind of error where a brain has two samples, however the do not match each other.</p>
 <p><img src="SPEAQeasyWorkshop2020_files/figure-html/check_correlations_genotypes-1.png" width="700"></p>
 <p>We will next compare the correlation between the SPEAQeasy samples and the TOPMed samples. In order to do this we need to subset the genotypes for only SNPs that are common between the two. We can see that we have 662 snps common between the 42 samples.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">Geno_speaqeasy_subset</span> <span class="op">&lt;-</span>
     <span class="va">Geno_speaqeasy</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">Geno_speaqeasy</span><span class="op">)</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">Geno_example</span><span class="op">)</span>, <span class="op">]</span>
 <span class="va">snpsGeno_subset</span> <span class="op">&lt;-</span>
@@ -563,11 +574,11 @@
 <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">snpsGeno_subset</span><span class="op">)</span>
 <span class="co">#&gt; [1] 662  42</span></code></pre></div>
 <p>As we did before we create a correlation matrix this time between the two data sets.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">correlation_genotype_speaq</span> <span class="op">&lt;-</span>
     <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">snpsGeno_subset</span>, <span class="va">Geno_speaqeasy_subset</span>, use <span class="op">=</span> <span class="st">"pairwise.comp"</span><span class="op">)</span></code></pre></div>
 <p>In order to dig into this further we will collapse the correlation matrices into a data table shown below.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Convert to long format</span>
 <span class="va">corLong3</span> <span class="op">&lt;-</span>
     <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>cor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">correlation_genotype_speaq</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>
@@ -576,7 +587,7 @@
 <span class="va">corLong3</span><span class="op">$</span><span class="va">colSample</span> <span class="op">&lt;-</span>
     <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">Geno_speaqeasy</span><span class="op">)</span>, each <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">Geno_speaqeasy</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Check the correlation between SPEAQeasy and Genotype for mismatches and swaps.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">brain_sentrix_present</span> <span class="op">&lt;-</span>
     <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">brain_sentrix</span>, <span class="va">ID</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">snpsGeno_example</span><span class="op">)</span><span class="op">)</span>
 
@@ -612,7 +623,7 @@
 <span class="co">#&gt; 921  0.866 9373408026_R01C01 R14290_H7L3FBBXX   Br2260   Br2473</span>
 <span class="co">#&gt; 1467 0.915 9373408026_R01C01 R14071_HF3JYBBXX   Br2260   Br2473</span></code></pre></div>
 <p>We can see from this from this analysis there are a few swaps present between RNA and DNA samples here. We can categorize them as simple and complex sample swaps. Because the two Br2275 do not match each other and also match nothing else we will be forced to consider this a complex swap and drop the sample. In the case of Br2473 it is a simple swap with Br2260 in both cases. This can be amended by swapping with in the phenotype data sheet manually. Now we have our accurate data outputs and will need to fix our ranged summarized experiment object for our SPEAQeasy data.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## drop sample from rse with SPEAQeasy data</span>
 <span class="va">ids</span> <span class="op">&lt;-</span> <span class="va">pd_example</span><span class="op">$</span><span class="va">SAMPLE_ID</span><span class="op">[</span><span class="va">pd_example</span><span class="op">$</span><span class="va">BrNum</span> <span class="op">==</span> <span class="st">"Br2275"</span><span class="op">]</span>
 <span class="va">rse_gene</span> <span class="op">&lt;-</span> <span class="va">rse_gene</span><span class="op">[</span>, <span class="op">!</span><span class="va">rse_gene</span><span class="op">$</span><span class="va">SAMPLE_ID</span> <span class="op">==</span> <span class="va">ids</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
@@ -640,15 +651,19 @@
 <span class="co"># add correct BrNum to colData for rse_gene</span>
 <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">rse_gene</span><span class="op">)</span><span class="op">$</span><span class="va">BrNum</span> <span class="op">&lt;-</span> <span class="va">pd_example</span><span class="op">$</span><span class="va">BrNum</span></code></pre></div>
 <p>We can then save the gene counts with the resolved sample swaps.</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## You can then save the data</span>
 <span class="fu"><a href="https://rdrr.io/r/base/save.html">save</a></span><span class="op">(</span><span class="va">rse_gene</span>, file <span class="op">=</span> <span class="st">"rse_speaqeasy.RData"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="de-analysis" class="section level2">
 <h2 class="hasAnchor">
 <a href="#de-analysis" class="anchor"></a>DE Analysis</h2>
+<p><em>Note: the original version is available <a href="http://research.libd.org/SPEAQeasy-example/de_analysis_speaqeasy.html">here</a> and was written by <a href="https://github.com/joshstolz">Josh Stolz</a>.</em></p>
+<div id="resuming" class="section level3">
+<h3 class="hasAnchor">
+<a href="#resuming" class="anchor"></a>Resuming</h3>
 <p>In case that you skipped the previous section, you can load the data for the differential expression part with the following code.</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Root for our example files</span>
 <span class="va">example_files</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span>
     <span class="st">"extdata"</span>,
@@ -658,20 +673,467 @@
 
 <span class="co">## Load the file</span>
 <span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">example_files</span>, <span class="st">"rse_speaqeasy.RData"</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<p>The following analysis explores a <code>RangedSummarizedExperiment</code> object from the SPEAQeasy pipeline (Eagles, Burke, Leonard, et al., 2020). Note that we will use a modified version of the object, which resolved sample identity issues which were present in the raw output from SPEAQeasy. This object also includes phenotype data added after resolving identity issues. Though SPEAQeasy produces objects for several feature types (genes, exons, exon-exon junctions), we will demonstrate an example analysis for just genes. We will perform differential expression across some typical variables of interest (e.g. sex, age, race) and show how to perform principal component analysis (PCA) and visualize findings with plots.</p>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://yulab-smu.top/biomedical-knowledge-mining-book/">"clusterProfiler"</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://bioinf.wehi.edu.au/edgeR">"edgeR"</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://bioinf.wehi.edu.au/limma">"limma"</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st">"pheatmap"</span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st">"org.Hs.eg.db"</span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st">"RColorBrewer"</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/leekgroup/recount">"recount"</a></span><span class="op">)</span></code></pre></div>
-<p>Edit this as you see fit =)</p>
-<p>Here is an example of you can cite your package inside the vignette:</p>
-<ul>
-<li>
-<em><a href="https://bioconductor.org/packages/3.12/SPEAQeasyWorkshop2020">SPEAQeasyWorkshop2020</a></em> (Eagles, Stolz, and Collado-Torres, 2020)</li>
-</ul>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/leekgroup/recount">"recount"</a></span><span class="op">)</span>
+
+<span class="co">## Clean up the PrimaryDx variable</span>
+<span class="va">rse_gene</span><span class="op">$</span><span class="va">PrimaryDx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">rse_gene</span><span class="op">$</span><span class="va">PrimaryDx</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="statistics-pcs" class="section level3">
+<h3 class="hasAnchor">
+<a href="#statistics-pcs" class="anchor"></a>Statistics PCs</h3>
+<p>Here we are using principal component analysis to control for the listed variables impact on expression. Later on, this could added into our linear model.</p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## Select variables of interest</span>
+<span class="va">col_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
+    <span class="st">"trimmed"</span>,
+    <span class="st">"numReads"</span>,
+    <span class="st">"numMapped"</span>,
+    <span class="st">"numUnmapped"</span>,
+    <span class="st">"overallMapRate"</span>,
+    <span class="st">"concordMapRate"</span>,
+    <span class="st">"totalMapped"</span>,
+    <span class="st">"mitoMapped"</span>,
+    <span class="st">"mitoRate"</span>,
+    <span class="st">"totalAssignedGene"</span>
+<span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">20201006</span><span class="op">)</span>
+
+<span class="co">## Reduce these variables to one PC</span>
+<span class="va">statsPca</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/prcomp.html">prcomp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">rse_gene</span><span class="op">)</span><span class="op">[</span>, <span class="va">col_names</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
+<span class="va">rse_gene</span><span class="op">$</span><span class="va">PC</span> <span class="op">&lt;-</span> <span class="va">statsPca</span><span class="op">$</span><span class="va">x</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span>
+<span class="fu"><a href="https://rdrr.io/pkg/jaffelab/man/getPcaVars.html">getPcaVars</a></span><span class="op">(</span><span class="va">statsPca</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>
+<span class="co">#&gt; [1] 87.3</span></code></pre></div>
+</div>
+<div id="stats-vs--diagnosis-and-brain-region" class="section level3">
+<h3 class="hasAnchor">
+<a href="#stats-vs--diagnosis-and-brain-region" class="anchor"></a>Stats vs. diagnosis and brain region</h3>
+<p>Here we explore the relationship between some quality control covariates produced by SPEAQeasy against phenotype data that we have on the samples such as brain region, primary diagnosis and race.</p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## We only have one race here</span>
+<span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">rse_gene</span><span class="op">$</span><span class="va">Race</span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; CAUC </span>
+<span class="co">#&gt;   40</span>
+
+<span class="co"># Display box plots here</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html">boxplot</a></span><span class="op">(</span><span class="va">rse_gene</span><span class="op">$</span><span class="va">rRNA_rate</span> <span class="op">~</span> <span class="va">rse_gene</span><span class="op">$</span><span class="va">BrainRegion</span>, xlab <span class="op">=</span> <span class="st">""</span><span class="op">)</span></code></pre></div>
+<p><img src="SPEAQeasyWorkshop2020_files/figure-html/dx_region-1.png" width="700"></p>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html">boxplot</a></span><span class="op">(</span><span class="va">rse_gene</span><span class="op">$</span><span class="va">mitoRate</span> <span class="op">~</span> <span class="va">rse_gene</span><span class="op">$</span><span class="va">BrainRegion</span>, xlab <span class="op">=</span> <span class="st">""</span><span class="op">)</span></code></pre></div>
+<p><img src="SPEAQeasyWorkshop2020_files/figure-html/dx_region-2.png" width="700"></p>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html">boxplot</a></span><span class="op">(</span><span class="va">rse_gene</span><span class="op">$</span><span class="va">gene_Assigned</span> <span class="op">~</span> <span class="va">rse_gene</span><span class="op">$</span><span class="va">BrainRegion</span>, xlab <span class="op">=</span> <span class="st">""</span><span class="op">)</span></code></pre></div>
+<p><img src="SPEAQeasyWorkshop2020_files/figure-html/dx_region-3.png" width="700"></p>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html">boxplot</a></span><span class="op">(</span><span class="va">rse_gene</span><span class="op">$</span><span class="va">mitoRate</span> <span class="op">~</span> <span class="va">rse_gene</span><span class="op">$</span><span class="va">PrimaryDx</span>,
+    las <span class="op">=</span> <span class="fl">3</span>,
+    xlab <span class="op">=</span> <span class="st">""</span>
+<span class="op">)</span></code></pre></div>
+<p><img src="SPEAQeasyWorkshop2020_files/figure-html/dx_region-4.png" width="700"></p>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html">boxplot</a></span><span class="op">(</span><span class="va">rse_gene</span><span class="op">$</span><span class="va">gene_Assigned</span> <span class="op">~</span> <span class="va">rse_gene</span><span class="op">$</span><span class="va">PrimaryDx</span>,
+    las <span class="op">=</span> <span class="fl">3</span>,
+    xlab <span class="op">=</span> <span class="st">""</span>
+<span class="op">)</span></code></pre></div>
+<p><img src="SPEAQeasyWorkshop2020_files/figure-html/dx_region-5.png" width="700"></p>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html">boxplot</a></span><span class="op">(</span>
+    <span class="va">rse_gene</span><span class="op">$</span><span class="va">mitoRate</span> <span class="op">~</span> <span class="va">rse_gene</span><span class="op">$</span><span class="va">PrimaryDx</span> <span class="op">+</span> <span class="va">rse_gene</span><span class="op">$</span><span class="va">BrainRegion</span>,
+    las <span class="op">=</span> <span class="fl">3</span>,
+    xlab <span class="op">=</span> <span class="st">""</span>
+<span class="op">)</span></code></pre></div>
+<p><img src="SPEAQeasyWorkshop2020_files/figure-html/dx_region-6.png" width="700"></p>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html">boxplot</a></span><span class="op">(</span>
+    <span class="va">rse_gene</span><span class="op">$</span><span class="va">gene_Assigned</span> <span class="op">~</span> <span class="va">rse_gene</span><span class="op">$</span><span class="va">PrimaryDx</span> <span class="op">+</span> <span class="va">rse_gene</span><span class="op">$</span><span class="va">BrainRegion</span>,
+    las <span class="op">=</span> <span class="fl">3</span>,
+    xlab <span class="op">=</span> <span class="st">""</span>
+<span class="op">)</span></code></pre></div>
+<p><img src="SPEAQeasyWorkshop2020_files/figure-html/dx_region-7.png" width="700"></p>
+</div>
+<div id="explore-and-visualize-gene-expression" class="section level3">
+<h3 class="hasAnchor">
+<a href="#explore-and-visualize-gene-expression" class="anchor"></a>Explore and visualize gene expression</h3>
+<p>We can next explore overall patterns in the gene expression of our samples by visualizing the top principal components from the gene expression count data. For example, by visualizing the case-control samples in PC1 versus PC2. We can also check other covariates such as sex and brain region across the top 10 PCs.</p>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Filter for expressed</span>
+<span class="va">rse_gene</span> <span class="op">&lt;-</span> <span class="va">rse_gene</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowMeans</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/recount/man/getRPKM.html">getRPKM</a></span><span class="op">(</span><span class="va">rse_gene</span>, <span class="st">"Length"</span><span class="op">)</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0.2</span>, <span class="op">]</span>
+
+<span class="co"># Explore gene expression</span>
+<span class="va">geneExprs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log2</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/recount/man/getRPKM.html">getRPKM</a></span><span class="op">(</span><span class="va">rse_gene</span>, <span class="st">"Length"</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">20201006</span><span class="op">)</span>
+<span class="va">pca</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/prcomp.html">prcomp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">geneExprs</span><span class="op">)</span><span class="op">)</span>
+<span class="va">pca_vars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/jaffelab/man/getPcaVars.html">getPcaVars</a></span><span class="op">(</span><span class="va">pca</span><span class="op">)</span>
+<span class="va">pca_vars_lab</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span>
+    <span class="st">"PC"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span>along <span class="op">=</span> <span class="va">pca_vars</span><span class="op">)</span>, <span class="st">": "</span>,
+    <span class="va">pca_vars</span>, <span class="st">"% Var Expl"</span>
+<span class="op">)</span>
+
+<span class="co"># Group together code for generating plots of interest</span>
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">20201006</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>
+    mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">8</span>, <span class="fl">6</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span>,
+    cex.axis <span class="op">=</span> <span class="fl">1.8</span>,
+    cex.lab <span class="op">=</span> <span class="fl">1.8</span>
+<span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/grDevices/palette.html">palette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html">brewer.pal</a></span><span class="op">(</span><span class="fl">4</span>, <span class="st">"Dark2"</span><span class="op">)</span><span class="op">)</span>
+
+<span class="co"># PC1 vs. PC2</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>
+    <span class="va">pca</span><span class="op">$</span><span class="va">x</span>,
+    pch <span class="op">=</span> <span class="fl">21</span>,
+    bg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">rse_gene</span><span class="op">$</span><span class="va">PrimaryDx</span><span class="op">)</span>,
+    cex <span class="op">=</span> <span class="fl">1.2</span>,
+    xlab <span class="op">=</span> <span class="va">pca_vars_lab</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,
+    ylab <span class="op">=</span> <span class="va">pca_vars_lab</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>
+<span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/legend.html">legend</a></span><span class="op">(</span>
+    <span class="st">"bottomleft"</span>,
+    <span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">rse_gene</span><span class="op">$</span><span class="va">PrimaryDx</span><span class="op">)</span>,
+    col <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span>,
+    pch <span class="op">=</span> <span class="fl">15</span>,
+    cex <span class="op">=</span> <span class="fl">2</span>
+<span class="op">)</span></code></pre></div>
+<p><img src="SPEAQeasyWorkshop2020_files/figure-html/gene_expression-1.png" width="700"></p>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
+
+<span class="co"># By sex</span>
+<span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span> <span class="op">{</span>
+    <span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html">boxplot</a></span><span class="op">(</span>
+        <span class="va">pca</span><span class="op">$</span><span class="va">x</span><span class="op">[</span>, <span class="va">i</span><span class="op">]</span> <span class="op">~</span> <span class="va">rse_gene</span><span class="op">$</span><span class="va">Sex</span>,
+        ylab <span class="op">=</span> <span class="va">pca_vars_lab</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>,
+        las <span class="op">=</span> <span class="fl">3</span>,
+        xlab <span class="op">=</span> <span class="st">"Sex"</span>,
+        outline <span class="op">=</span> <span class="cn">FALSE</span>
+    <span class="op">)</span>
+    <span class="fu"><a href="https://rdrr.io/r/graphics/points.html">points</a></span><span class="op">(</span>
+        <span class="va">pca</span><span class="op">$</span><span class="va">x</span><span class="op">[</span>, <span class="va">i</span><span class="op">]</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/jitter.html">jitter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">rse_gene</span><span class="op">$</span><span class="va">Sex</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
+        pch <span class="op">=</span> <span class="fl">21</span>,
+        bg <span class="op">=</span> <span class="va">rse_gene</span><span class="op">$</span><span class="va">PrimaryDx</span>,
+        cex <span class="op">=</span> <span class="fl">1.2</span>
+    <span class="op">)</span>
+<span class="op">}</span></code></pre></div>
+<p><img src="SPEAQeasyWorkshop2020_files/figure-html/gene_expression-2.png" width="700"><img src="SPEAQeasyWorkshop2020_files/figure-html/gene_expression-3.png" width="700"><img src="SPEAQeasyWorkshop2020_files/figure-html/gene_expression-4.png" width="700"><img src="SPEAQeasyWorkshop2020_files/figure-html/gene_expression-5.png" width="700"><img src="SPEAQeasyWorkshop2020_files/figure-html/gene_expression-6.png" width="700"><img src="SPEAQeasyWorkshop2020_files/figure-html/gene_expression-7.png" width="700"><img src="SPEAQeasyWorkshop2020_files/figure-html/gene_expression-8.png" width="700"><img src="SPEAQeasyWorkshop2020_files/figure-html/gene_expression-9.png" width="700"><img src="SPEAQeasyWorkshop2020_files/figure-html/gene_expression-10.png" width="700"><img src="SPEAQeasyWorkshop2020_files/figure-html/gene_expression-11.png" width="700"></p>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
+<span class="co"># By brain region</span>
+<span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span> <span class="op">{</span>
+    <span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html">boxplot</a></span><span class="op">(</span>
+        <span class="va">pca</span><span class="op">$</span><span class="va">x</span><span class="op">[</span>, <span class="va">i</span><span class="op">]</span> <span class="op">~</span> <span class="va">rse_gene</span><span class="op">$</span><span class="va">BrainRegion</span>,
+        ylab <span class="op">=</span> <span class="va">pca_vars_lab</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>,
+        las <span class="op">=</span> <span class="fl">3</span>,
+        xlab <span class="op">=</span> <span class="st">"Brain Region"</span>,
+        outline <span class="op">=</span> <span class="cn">FALSE</span>
+    <span class="op">)</span>
+    <span class="fu"><a href="https://rdrr.io/r/graphics/points.html">points</a></span><span class="op">(</span>
+        <span class="va">pca</span><span class="op">$</span><span class="va">x</span><span class="op">[</span>, <span class="va">i</span><span class="op">]</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/jitter.html">jitter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span>
+            <span class="va">rse_gene</span><span class="op">$</span><span class="va">BrainRegion</span>
+        <span class="op">)</span><span class="op">)</span><span class="op">)</span>,
+        pch <span class="op">=</span> <span class="fl">21</span>,
+        bg <span class="op">=</span> <span class="va">rse_gene</span><span class="op">$</span><span class="va">PrimaryDx</span>,
+        cex <span class="op">=</span> <span class="fl">1.2</span>
+    <span class="op">)</span>
+<span class="op">}</span></code></pre></div>
+<p><img src="SPEAQeasyWorkshop2020_files/figure-html/gene_expression-12.png" width="700"><img src="SPEAQeasyWorkshop2020_files/figure-html/gene_expression-13.png" width="700"><img src="SPEAQeasyWorkshop2020_files/figure-html/gene_expression-14.png" width="700"><img src="SPEAQeasyWorkshop2020_files/figure-html/gene_expression-15.png" width="700"><img src="SPEAQeasyWorkshop2020_files/figure-html/gene_expression-16.png" width="700"><img src="SPEAQeasyWorkshop2020_files/figure-html/gene_expression-17.png" width="700"><img src="SPEAQeasyWorkshop2020_files/figure-html/gene_expression-18.png" width="700"><img src="SPEAQeasyWorkshop2020_files/figure-html/gene_expression-19.png" width="700"><img src="SPEAQeasyWorkshop2020_files/figure-html/gene_expression-20.png" width="700"><img src="SPEAQeasyWorkshop2020_files/figure-html/gene_expression-21.png" width="700"></p>
+<p>Is sex or brain region associated with any principal component from the gene expression data?</p>
+</div>
+<div id="modeling" class="section level3">
+<h3 class="hasAnchor">
+<a href="#modeling" class="anchor"></a>Modeling</h3>
+<p>Once we have explored our data, we can proceed to performing differential expression analyses using for example the <em><a href="https://bioconductor.org/packages/3.12/limma">limma</a></em> package, among other Bioconductor packages. Our data exploration should inform what model we want to use. Note that in our data we have repeated measures from the same donor brains (<code>BrNum</code>) which we can adjust using the function <code><a href="https://rdrr.io/pkg/limma/man/dupcor.html">duplicateCorrelation()</a></code>.</p>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">dge</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/edgeR/man/DGEList.html">DGEList</a></span><span class="op">(</span>
+    counts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">assays</a></span><span class="op">(</span><span class="va">rse_gene</span><span class="op">)</span><span class="op">$</span><span class="va">counts</span>,
+    genes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">rowData</a></span><span class="op">(</span><span class="va">rse_gene</span><span class="op">)</span>
+<span class="op">)</span>
+<span class="va">dge</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/edgeR/man/calcNormFactors.html">calcNormFactors</a></span><span class="op">(</span><span class="va">dge</span><span class="op">)</span>
+
+<span class="co"># Define a model of interest (feel free to play around with other models)</span>
+<span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/model.matrix.html">model.matrix</a></span><span class="op">(</span><span class="op">~</span> <span class="va">PrimaryDx</span> <span class="op">+</span> <span class="va">PC</span> <span class="op">+</span> <span class="va">BrainRegion</span>,
+    data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">rse_gene</span><span class="op">)</span>
+<span class="op">)</span>
+
+<span class="co"># Mean-variance</span>
+<span class="va">vGene</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/limma/man/voom.html">voom</a></span><span class="op">(</span><span class="va">dge</span>, <span class="va">mod</span>, plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<p><img src="SPEAQeasyWorkshop2020_files/figure-html/modeling-1.png" width="700"></p>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
+<span class="co"># Get duplicate correlation</span>
+<span class="va">gene_dupCorr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/limma/man/dupcor.html">duplicateCorrelation</a></span><span class="op">(</span><span class="va">vGene</span><span class="op">$</span><span class="va">E</span>, <span class="va">mod</span>,
+    block <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">rse_gene</span><span class="op">)</span><span class="op">$</span><span class="va">BrNum</span>
+<span class="op">)</span>
+<span class="va">gene_dupCorr</span><span class="op">$</span><span class="va">consensus.correlation</span>
+<span class="co">#&gt; [1] 0.5626941</span>
+
+<span class="co">## We can save this for later since it can take a while</span>
+<span class="co">## to compute and we might need it. This will be useful</span>
+<span class="co">## for larger projects.</span>
+<span class="co"># save(gene_dupCorr,</span>
+<span class="co">#     file = here("DE_analysis", "rdas", "gene_dupCorr_neurons.rda")</span>
+<span class="co"># )</span>
+
+<span class="co"># Fit linear model</span>
+<span class="va">fitGeneDupl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/limma/man/lmFit.html">lmFit</a></span><span class="op">(</span>
+    <span class="va">vGene</span>,
+    correlation <span class="op">=</span> <span class="va">gene_dupCorr</span><span class="op">$</span><span class="va">consensus.correlation</span>,
+    block <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">rse_gene</span><span class="op">)</span><span class="op">$</span><span class="va">BrNum</span>
+<span class="op">)</span>
+
+<span class="co"># Here we perform an empirical Bayesian calculation to obtain our significant genes</span>
+<span class="va">ebGeneDupl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/limma/man/ebayes.html">eBayes</a></span><span class="op">(</span><span class="va">fitGeneDupl</span><span class="op">)</span>
+<span class="va">outGeneDupl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/limma/man/toptable.html">topTable</a></span><span class="op">(</span>
+    <span class="va">ebGeneDupl</span>,
+    coef <span class="op">=</span> <span class="fl">2</span>,
+    p.value <span class="op">=</span> <span class="fl">1</span>,
+    number <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">rse_gene</span><span class="op">)</span>,
+    sort.by <span class="op">=</span> <span class="st">"none"</span>
+<span class="op">)</span>
+
+<span class="co"># Explore the distribution of differential expression p-values</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">outGeneDupl</span><span class="op">$</span><span class="va">P.Value</span><span class="op">)</span></code></pre></div>
+<p><img src="SPEAQeasyWorkshop2020_files/figure-html/modeling-2.png" width="700"></p>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
+<span class="co">## Check how many of the genes are FDR &lt; 5% and 10%</span>
+<span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">outGeneDupl</span><span class="op">$</span><span class="va">adj.P.Val</span> <span class="op">&lt;</span> <span class="fl">0.05</span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; FALSE </span>
+<span class="co">#&gt; 26708</span>
+<span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">outGeneDupl</span><span class="op">$</span><span class="va">adj.P.Val</span> <span class="op">&lt;</span> <span class="fl">0.1</span><span class="op">)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; FALSE  TRUE </span>
+<span class="co">#&gt; 26707     1</span>
+
+<span class="co">## Keep those genes iwth a p-value &lt; 0.2</span>
+<span class="va">sigGeneDupl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/limma/man/toptable.html">topTable</a></span><span class="op">(</span>
+    <span class="va">ebGeneDupl</span>,
+    coef <span class="op">=</span> <span class="fl">2</span>,
+    p.value <span class="op">=</span> <span class="fl">0.2</span>,
+    number <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">rse_gene</span><span class="op">)</span>
+<span class="op">)</span>
+
+<span class="va">sigGeneDupl</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Symbol"</span>, <span class="st">"logFC"</span>, <span class="st">"P.Value"</span>, <span class="st">"AveExpr"</span><span class="op">)</span><span class="op">]</span>
+<span class="co">#&gt;                   Symbol      logFC      P.Value   AveExpr</span>
+<span class="co">#&gt; ENSG00000269699.6   ZIM2 -1.0860109 2.073084e-06 0.8970203</span>
+<span class="co">#&gt; ENSG00000126368.6  NR1D1 -0.7676477 8.956110e-06 4.6128957</span>
+<span class="va">sigGeneDupl</span><span class="op">[</span><span class="va">sigGeneDupl</span><span class="op">$</span><span class="va">logFC</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Symbol"</span>, <span class="st">"logFC"</span>, <span class="st">"P.Value"</span><span class="op">)</span><span class="op">]</span>
+<span class="co">#&gt; [1] Symbol  logFC   P.Value</span>
+<span class="co">#&gt; &lt;0 rows&gt; (or 0-length row.names)</span>
+<span class="va">sigGeneDupl</span><span class="op">[</span><span class="va">sigGeneDupl</span><span class="op">$</span><span class="va">logFC</span> <span class="op">&lt;</span> <span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Symbol"</span>, <span class="st">"logFC"</span>, <span class="st">"P.Value"</span><span class="op">)</span><span class="op">]</span>
+<span class="co">#&gt;                   Symbol      logFC      P.Value</span>
+<span class="co">#&gt; ENSG00000269699.6   ZIM2 -1.0860109 2.073084e-06</span>
+<span class="co">#&gt; ENSG00000126368.6  NR1D1 -0.7676477 8.956110e-06</span>
+
+<span class="co"># write.csv(outGeneDupl,</span>
+<span class="co">#     file = here("DE_analysis", "tables", "de_stats_allExprs.csv")</span>
+<span class="co"># )</span>
+<span class="co"># write.csv(sigGeneDupl,</span>
+<span class="co">#     file = here("DE_analysis", "tables", "de_stats_fdr20_sorted.csv")</span>
+<span class="co"># )</span></code></pre></div>
+</div>
+</div>
+<div id="check-plots" class="section level2">
+<h2 class="hasAnchor">
+<a href="#check-plots" class="anchor"></a>Check plots</h2>
+<p>Once you have identified candidate differentially expressed genes, it can be useful to visualize their expression values. Here we visualize the expression for the top two genes using boxplots.</p>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">exprs</span> <span class="op">&lt;-</span> <span class="va">vGene</span><span class="op">$</span><span class="va">E</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">sigGeneDupl</span><span class="op">)</span>, <span class="op">]</span>
+
+<span class="co"># Group together code for displaying boxplots</span>
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">20201006</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>
+    mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">8</span>, <span class="fl">6</span>, <span class="fl">4</span>, <span class="fl">2</span><span class="op">)</span>,
+    cex.axis <span class="op">=</span> <span class="fl">1.8</span>,
+    cex.lab <span class="op">=</span> <span class="fl">1.8</span>,
+    cex.main <span class="op">=</span> <span class="fl">1.8</span>
+<span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/grDevices/palette.html">palette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html">brewer.pal</a></span><span class="op">(</span><span class="fl">4</span>, <span class="st">"Dark2"</span><span class="op">)</span><span class="op">)</span>
+
+<span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">sigGeneDupl</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">yy</span> <span class="op">&lt;-</span> <span class="va">exprs</span><span class="op">[</span><span class="va">i</span>, <span class="op">]</span>
+    <span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html">boxplot</a></span><span class="op">(</span>
+        <span class="va">yy</span> <span class="op">~</span> <span class="va">rse_gene</span><span class="op">$</span><span class="va">PrimaryDx</span>,
+        outline <span class="op">=</span> <span class="cn">FALSE</span>,
+        ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span><span class="op">(</span><span class="va">yy</span><span class="op">)</span>,
+        ylab <span class="op">=</span> <span class="st">"Normalized log2 Exprs"</span>,
+        xlab <span class="op">=</span> <span class="st">""</span>,
+        main <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">sigGeneDupl</span><span class="op">$</span><span class="va">Symbol</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, <span class="st">"-"</span>, <span class="va">sigGeneDupl</span><span class="op">$</span><span class="va">gencodeID</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span>
+    <span class="op">)</span>
+    <span class="fu"><a href="https://rdrr.io/r/graphics/points.html">points</a></span><span class="op">(</span>
+        <span class="va">yy</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/jitter.html">jitter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">rse_gene</span><span class="op">$</span><span class="va">PrimaryDx</span><span class="op">)</span><span class="op">)</span>,
+        pch <span class="op">=</span> <span class="fl">21</span>,
+        bg <span class="op">=</span> <span class="va">rse_gene</span><span class="op">$</span><span class="va">PrimaryDx</span>,
+        cex <span class="op">=</span> <span class="fl">1.3</span>
+    <span class="op">)</span>
+    <span class="va">ll</span> <span class="op">&lt;-</span>
+        <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">sigGeneDupl</span><span class="op">$</span><span class="va">logFC</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="st">"topleft"</span>, <span class="st">"topright"</span><span class="op">)</span>
+    <span class="fu"><a href="https://rdrr.io/r/graphics/legend.html">legend</a></span><span class="op">(</span><span class="va">ll</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"p="</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html">signif</a></span><span class="op">(</span><span class="va">sigGeneDupl</span><span class="op">$</span><span class="va">P.Value</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>, cex <span class="op">=</span> <span class="fl">1.3</span><span class="op">)</span>
+<span class="op">}</span></code></pre></div>
+<p><img src="SPEAQeasyWorkshop2020_files/figure-html/check_plots-1.png" width="700"><img src="SPEAQeasyWorkshop2020_files/figure-html/check_plots-2.png" width="700"></p>
+</div>
+<div id="visualize-differentially-expressed-genes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#visualize-differentially-expressed-genes" class="anchor"></a>Visualize differentially expressed genes</h2>
+<p>Here we visualize differentially expressed genes (DEGs) with a heatmap.</p>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Get significant genes by sign</span>
+<span class="va">sigGene</span> <span class="op">&lt;-</span> <span class="va">outGeneDupl</span><span class="op">[</span><span class="va">outGeneDupl</span><span class="op">$</span><span class="va">P.Value</span> <span class="op">&lt;</span> <span class="fl">0.005</span>, <span class="op">]</span>
+
+<span class="va">exprs_heatmap</span> <span class="op">&lt;-</span> <span class="va">vGene</span><span class="op">$</span><span class="va">E</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">sigGene</span><span class="op">)</span>, <span class="op">]</span>
+
+<span class="va">df</span> <span class="op">&lt;-</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">rse_gene</span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"PrimaryDx"</span>, <span class="st">"Sex"</span>, <span class="st">"BrainRegion"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">&lt;-</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">exprs_heatmap</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span><span class="op">(</span><span class="st">"_.*"</span>, <span class="st">""</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">exprs_heatmap</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Diagnosis"</span>, <span class="st">"Sex"</span>, <span class="st">"Region"</span><span class="op">)</span>
+
+<span class="co">#  Manually determine coloring for plot annotation</span>
+<span class="va">palette_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Dark2"</span>, <span class="st">"Paired"</span>, <span class="st">"YlOrRd"</span><span class="op">)</span>
+<span class="va">ann_colors</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span>
+<span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">col_name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>
+    <span class="va">n_uniq_colors</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">df</span><span class="op">[</span>, <span class="va">col_name</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
+    
+    <span class="co">#   Use a unique palette with the correct number of levels, named with</span>
+    <span class="co">#   those levels</span>
+    <span class="va">ann_colors</span><span class="op">[[</span><span class="va">col_name</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span>
+        <span class="fu"><a href="https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html">brewer.pal</a></span><span class="op">(</span><span class="va">n_uniq_colors</span>, <span class="va">palette_names</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="va">n_uniq_colors</span><span class="op">)</span><span class="op">]</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">ann_colors</span><span class="op">[[</span><span class="va">col_name</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">df</span><span class="op">[</span>, <span class="va">col_name</span><span class="op">]</span><span class="op">)</span>
+<span class="op">}</span>
+<span class="co">#&gt; Warning in brewer.pal(n_uniq_colors, palette_names[i]): minimal value for n is 3, returning requested palette with 3 different levels</span>
+
+<span class="co">#&gt; Warning in brewer.pal(n_uniq_colors, palette_names[i]): minimal value for n is 3, returning requested palette with 3 different levels</span>
+
+<span class="co">#&gt; Warning in brewer.pal(n_uniq_colors, palette_names[i]): minimal value for n is 3, returning requested palette with 3 different levels</span>
+
+<span class="co"># Display heatmap</span>
+<span class="fu"><a href="https://rdrr.io/pkg/pheatmap/man/pheatmap.html">pheatmap</a></span><span class="op">(</span>
+    <span class="va">exprs_heatmap</span>,
+    cluster_rows <span class="op">=</span> <span class="cn">TRUE</span>,
+    show_rownames <span class="op">=</span> <span class="cn">FALSE</span>,
+    cluster_cols <span class="op">=</span> <span class="cn">TRUE</span>,
+    annotation_col <span class="op">=</span> <span class="va">df</span>,
+    annotation_colors <span class="op">=</span> <span class="va">ann_colors</span>
+<span class="op">)</span></code></pre></div>
+<p><img src="SPEAQeasyWorkshop2020_files/figure-html/heatmap-1.png" width="700"></p>
+</div>
+<div id="gene-ontology" class="section level2">
+<h2 class="hasAnchor">
+<a href="#gene-ontology" class="anchor"></a>Gene ontology</h2>
+<p>We will use <em><a href="https://bioconductor.org/packages/3.12/clusterProfiler">clusterProfiler</a></em> to check if the differentially expressed genes are enriched in certain gene ontology terms and KEGG pathways. Running this code takes a a couple of minutes, so please be patient.</p>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">sigGeneList</span> <span class="op">&lt;-</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">sigGene</span><span class="op">$</span><span class="va">EntrezID</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/sign.html">sign</a></span><span class="op">(</span><span class="va">sigGene</span><span class="op">$</span><span class="va">logFC</span><span class="op">)</span><span class="op">)</span>
+<span class="va">sigGeneList</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">sigGeneList</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
+      <span class="va">x</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">]</span>
+  <span class="op">}</span><span class="op">)</span>
+<span class="va">geneUniverse</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">outGeneDupl</span><span class="op">$</span><span class="va">EntrezID</span><span class="op">)</span>
+<span class="va">geneUniverse</span> <span class="op">&lt;-</span> <span class="va">geneUniverse</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">geneUniverse</span><span class="op">)</span><span class="op">]</span>
+
+<span class="co"># Do GO and KEGG</span>
+<span class="va">goBP_Adj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/clusterProfiler/man/compareCluster.html">compareCluster</a></span><span class="op">(</span>
+    <span class="va">sigGeneList</span>,
+    fun <span class="op">=</span> <span class="st">"enrichGO"</span>,
+    universe <span class="op">=</span> <span class="va">geneUniverse</span>,
+    OrgDb <span class="op">=</span> <span class="va">org.Hs.eg.db</span>,
+    ont <span class="op">=</span> <span class="st">"BP"</span>,
+    pAdjustMethod <span class="op">=</span> <span class="st">"BH"</span>,
+    pvalueCutoff <span class="op">=</span> <span class="fl">1</span>,
+    qvalueCutoff <span class="op">=</span> <span class="fl">1</span>,
+    readable <span class="op">=</span> <span class="cn">TRUE</span>
+<span class="op">)</span>
+
+<span class="va">goMF_Adj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/clusterProfiler/man/compareCluster.html">compareCluster</a></span><span class="op">(</span>
+    <span class="va">sigGeneList</span>,
+    fun <span class="op">=</span> <span class="st">"enrichGO"</span>,
+    universe <span class="op">=</span> <span class="va">geneUniverse</span>,
+    OrgDb <span class="op">=</span> <span class="va">org.Hs.eg.db</span>,
+    ont <span class="op">=</span> <span class="st">"MF"</span>,
+    pAdjustMethod <span class="op">=</span> <span class="st">"BH"</span>,
+    pvalueCutoff <span class="op">=</span> <span class="fl">1</span>,
+    qvalueCutoff <span class="op">=</span> <span class="fl">1</span>,
+    readable <span class="op">=</span> <span class="cn">TRUE</span>
+<span class="op">)</span>
+
+<span class="va">goCC_Adj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/clusterProfiler/man/compareCluster.html">compareCluster</a></span><span class="op">(</span>
+    <span class="va">sigGeneList</span>,
+    fun <span class="op">=</span> <span class="st">"enrichGO"</span>,
+    universe <span class="op">=</span> <span class="va">geneUniverse</span>,
+    OrgDb <span class="op">=</span> <span class="va">org.Hs.eg.db</span>,
+    ont <span class="op">=</span> <span class="st">"CC"</span>,
+    pAdjustMethod <span class="op">=</span> <span class="st">"BH"</span>,
+    pvalueCutoff <span class="op">=</span> <span class="fl">1</span>,
+    qvalueCutoff <span class="op">=</span> <span class="fl">1</span>,
+    readable <span class="op">=</span> <span class="cn">TRUE</span>
+<span class="op">)</span>
+
+<span class="va">kegg_Adj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/clusterProfiler/man/compareCluster.html">compareCluster</a></span><span class="op">(</span>
+    <span class="va">sigGeneList</span>,
+    fun <span class="op">=</span> <span class="st">"enrichKEGG"</span>,
+    universe <span class="op">=</span> <span class="va">geneUniverse</span>,
+    pAdjustMethod <span class="op">=</span> <span class="st">"BH"</span>,
+    pvalueCutoff <span class="op">=</span> <span class="fl">1</span>,
+    qvalueCutoff <span class="op">=</span> <span class="fl">1</span>
+<span class="op">)</span>
+
+<span class="co"># save(</span>
+<span class="co">#     goBP_Adj,</span>
+<span class="co">#     goCC_Adj,</span>
+<span class="co">#     goMF_Adj,</span>
+<span class="co">#     kegg_Adj,</span>
+<span class="co">#     file = here("DE_analysis", "rdas", "gene_set_objects_p005.rda")</span>
+<span class="co"># )</span>
+
+<span class="va">goList</span> <span class="op">&lt;-</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+        BP <span class="op">=</span> <span class="va">goBP_Adj</span>,
+        MF <span class="op">=</span> <span class="va">goMF_Adj</span>,
+        CC <span class="op">=</span> <span class="va">goCC_Adj</span>,
+        KEGG <span class="op">=</span> <span class="va">kegg_Adj</span>
+    <span class="op">)</span>
+<span class="va">goDf</span> <span class="op">&lt;-</span>
+    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">goList</span>, <span class="va">as.data.frame</span><span class="op">)</span>, .id <span class="op">=</span> <span class="st">"Ontology"</span><span class="op">)</span>
+<span class="va">goDf</span> <span class="op">&lt;-</span> <span class="va">goDf</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="va">goDf</span><span class="op">$</span><span class="va">pvalue</span><span class="op">)</span>, <span class="op">]</span>
+
+<span class="co"># write.csv(</span>
+<span class="co">#     goDf,</span>
+<span class="co">#     file = here("DE_analysis", "tables", "geneSet_output.csv"),</span>
+<span class="co">#     row.names = FALSE</span>
+<span class="co"># )</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">130</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">goDf</span><span class="op">[</span><span class="va">goDf</span><span class="op">$</span><span class="va">p.adjust</span> <span class="op">&lt;</span> <span class="fl">0.05</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fl">7</span><span class="op">)</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>
+<span class="co">#&gt;      Ontology Cluster         ID                                           Description GeneRatio       pvalue</span>
+<span class="co">#&gt; 696        BP       1 GO:0032611                         interleukin-1 beta production      6/73 2.152775e-06</span>
+<span class="co">#&gt; 697        BP       1 GO:0050865                         regulation of cell activation     12/73 2.709506e-06</span>
+<span class="co">#&gt; 698        BP       1 GO:0032612                              interleukin-1 production      6/73 3.747905e-06</span>
+<span class="co">#&gt; 699        BP       1 GO:0002694                    regulation of leukocyte activation     11/73 7.875320e-06</span>
+<span class="co">#&gt; 700        BP       1 GO:0002521                             leukocyte differentiation     11/73 8.260455e-06</span>
+<span class="co">#&gt; 701        BP       1 GO:1903977           positive regulation of glial cell migration      3/73 1.751400e-05</span>
+<span class="co">#&gt; 702        BP       1 GO:0032651           regulation of interleukin-1 beta production      5/73 2.175911e-05</span>
+<span class="co">#&gt; 703        BP       1 GO:0002687            positive regulation of leukocyte migration      6/73 2.728969e-05</span>
+<span class="co">#&gt; 704        BP       1 GO:0032652                regulation of interleukin-1 production      5/73 3.392997e-05</span>
+<span class="co">#&gt; 2505       MF       1 GO:0046935    1-phosphatidylinositol-3-kinase regulator activity      3/78 3.586132e-05</span>
+<span class="co">#&gt; 2403       MF      -1 GO:0070888                                         E-box binding      3/27 5.240514e-05</span>
+<span class="co">#&gt; 705        BP       1 GO:0042116                                 macrophage activation      5/73 5.417072e-05</span>
+<span class="co">#&gt; 706        BP       1 GO:1903975                    regulation of glial cell migration      3/73 6.513291e-05</span>
+<span class="co">#&gt; 707        BP       1 GO:0009617                                 response to bacterium     10/73 6.787695e-05</span>
+<span class="co">#&gt; 708        BP       1 GO:0050867                positive regulation of cell activation      8/73 7.145608e-05</span>
+<span class="co">#&gt; 709        BP       1 GO:0060216                                definitive hemopoiesis      3/73 7.985372e-05</span>
+<span class="co">#&gt; 2506       MF       1 GO:0035014      phosphatidylinositol 3-kinase regulator activity      3/78 8.982040e-05</span>
+<span class="co">#&gt; 710        BP       1 GO:0071346                 cellular response to interferon-gamma      6/73 9.340196e-05</span>
+<span class="co">#&gt; 711        BP       1 GO:0032640                      tumor necrosis factor production      5/73 1.034823e-04</span>
+<span class="co">#&gt; 712        BP       1 GO:0071706 tumor necrosis factor superfamily cytokine production      5/73 1.152814e-04</span></code></pre></div>
+<p>For some examples on how to visualize the gene ontology results, check <a href="http://research.libd.org/SPEAQeasy-example/bootcamp_intro#53_GO_enrichment_analyses">our longer guide in SPEAQeasy-example</a>.</p>
 </div>
 </div>
 <div id="acknowledgements" class="section level1">
@@ -709,6 +1171,8 @@
 <em><a href="https://bioconductor.org/packages/3.12/BiocStyle">BiocStyle</a></em> (Oleś, Morgan, and Huber, 2020)</li>
 <li>
 <em><a href="https://bioconductor.org/packages/3.12/clusterProfiler">clusterProfiler</a></em> (Yu, Wang, Han, and He, 2012)</li>
+<li>
+<em><a href="https://CRAN.R-project.org/package=dplyr">dplyr</a></em> (Wickham, François, Henry, and Müller, 2020)</li>
 <li><em><a href="https://bioconductor.org/packages/3.12/edgeR">edgeR</a></em></li>
 <li>
 <em><a href="https://CRAN.R-project.org/package=here">here</a></em> (Müller, 2020)</li>
@@ -742,7 +1206,7 @@
 </ul>
 <p>This package was developed using <em><a href="https://github.com/lcolladotor/biocthis">biocthis</a></em>.</p>
 <p>Code for creating the vignette</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Create the vignette</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/rstudio/rmarkdown">"rmarkdown"</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/rmarkdown/man/render.html">render</a></span><span class="op">(</span><span class="st">"SPEAQeasyWorkshop2020.Rmd"</span>, <span class="st">"BiocStyle::html_document"</span><span class="op">)</span><span class="op">)</span>
@@ -751,9 +1215,9 @@
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://yihui.org/knitr/">"knitr"</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/knit.html">knit</a></span><span class="op">(</span><span class="st">"SPEAQeasyWorkshop2020.Rmd"</span>, tangle <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p>Date the vignette was generated.</p>
-<pre><code>#&gt; [1] "2020-12-15 17:34:39 UTC"</code></pre>
+<pre><code>#&gt; [1] "2020-12-16 02:17:00 UTC"</code></pre>
 <p>Wallclock time spent generating the vignette.</p>
-<pre><code>#&gt; Time difference of 17.835 secs</code></pre>
+<pre><code>#&gt; Time difference of 3.397 mins</code></pre>
 <p><code>R</code> session information.</p>
 <pre><code>#&gt; ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
 #&gt;  setting  value                       
@@ -765,7 +1229,7 @@
 #&gt;  collate  en_US.UTF-8                 
 #&gt;  ctype    en_US.UTF-8                 
 #&gt;  tz       Etc/UTC                     
-#&gt;  date     2020-12-15                  
+#&gt;  date     2020-12-16                  
 #&gt; 
 #&gt; ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
 #&gt;  package              * version  date       lib source                                   
@@ -895,7 +1359,7 @@
 #&gt;  rentrez                1.2.3    2020-11-10 [1] RSPM (R 4.0.3)                           
 #&gt;  reshape2               1.4.4    2020-04-09 [1] RSPM (R 4.0.2)                           
 #&gt;  rlang                  0.4.9    2020-11-26 [2] RSPM (R 4.0.3)                           
-#&gt;  rmarkdown              2.5      2020-10-21 [1] RSPM (R 4.0.3)                           
+#&gt;  rmarkdown              2.6      2020-12-14 [1] RSPM (R 4.0.3)                           
 #&gt;  rngtools               1.5      2020-01-23 [1] RSPM (R 4.0.0)                           
 #&gt;  rpart                  4.1-15   2019-04-12 [3] CRAN (R 4.0.3)                           
 #&gt;  rprojroot              2.0.2    2020-11-15 [2] RSPM (R 4.0.3)                           
@@ -910,6 +1374,7 @@
 #&gt;  segmented              1.3-1    2020-12-10 [1] RSPM (R 4.0.3)                           
 #&gt;  sessioninfo          * 1.1.1    2018-11-05 [2] RSPM (R 4.0.0)                           
 #&gt;  shadowtext             0.0.7    2019-11-06 [1] RSPM (R 4.0.0)                           
+#&gt;  statmod                1.4.35   2020-10-19 [1] RSPM (R 4.0.3)                           
 #&gt;  stringi                1.5.3    2020-09-09 [2] RSPM (R 4.0.2)                           
 #&gt;  stringr                1.4.0    2019-02-10 [2] RSPM (R 4.0.0)                           
 #&gt;  SummarizedExperiment * 1.20.0   2020-10-27 [1] Bioconductor                             
@@ -943,7 +1408,7 @@
 <p>This vignette was generated using <em><a href="https://bioconductor.org/packages/3.12/BiocStyle">BiocStyle</a></em> (Oleś, Morgan, and Huber, 2020) with <em><a href="https://CRAN.R-project.org/package=knitr">knitr</a></em> (Xie, 2020) and <em><a href="https://CRAN.R-project.org/package=rmarkdown">rmarkdown</a></em> (Allaire, Xie, McPherson, et al., 2020) running behind the scenes.</p>
 <p>Citations made with <em><a href="https://CRAN.R-project.org/package=RefManageR">RefManageR</a></em> (McLean, 2017).</p>
 <p>
-<a id="bib-allaire2020rmarkdown"></a><a href="#cite-allaire2020rmarkdown">[1]</a><cite> J. Allaire, Y. Xie, J. McPherson, et al. <em>rmarkdown: Dynamic Documents for R</em>. R package version 2.5. 2020. URL: <a href="https://github.com/rstudio/rmarkdown">https://github.com/rstudio/rmarkdown</a>.</cite>
+<a id="bib-allaire2020rmarkdown"></a><a href="#cite-allaire2020rmarkdown">[1]</a><cite> J. Allaire, Y. Xie, J. McPherson, et al. <em>rmarkdown: Dynamic Documents for R</em>. R package version 2.6. 2020. URL: <a href="https://github.com/rstudio/rmarkdown">https://github.com/rstudio/rmarkdown</a>.</cite>
 </p>
 <p>
 <a id="bib-carlson2020genome"></a><a href="#cite-carlson2020genome">[2]</a><cite> M. Carlson. <em>org.Hs.eg.db: Genome wide annotation for Human</em>. R package version 3.12.0. 2020.</cite>
@@ -994,10 +1459,13 @@
 <a id="bib-wickham2020tidyr"></a><a href="#cite-wickham2020tidyr">[17]</a><cite> H. Wickham. <em>tidyr: Tidy Messy Data</em>. <a href="https://tidyr.tidyverse.org" class="uri">https://tidyr.tidyverse.org</a>, <a href="https://github.com/tidyverse/tidyr" class="uri">https://github.com/tidyverse/tidyr</a>. 2020.</cite>
 </p>
 <p>
-<a id="bib-xie2020knitr"></a><a href="#cite-xie2020knitr">[18]</a><cite> Y. Xie. <em>knitr: A General-Purpose Package for Dynamic Report Generation in R</em>. R package version 1.30. 2020. URL: <a href="https://yihui.org/knitr/">https://yihui.org/knitr/</a>.</cite>
+<a id="bib-wickham2020dplyr"></a><a href="#cite-wickham2020dplyr">[18]</a><cite> H. Wickham, R. François, L. Henry, et al. <em>dplyr: A Grammar of Data Manipulation</em>. <a href="https://dplyr.tidyverse.org" class="uri">https://dplyr.tidyverse.org</a>, <a href="https://github.com/tidyverse/dplyr" class="uri">https://github.com/tidyverse/dplyr</a>. 2020.</cite>
 </p>
 <p>
-<a id="bib-yu2012clusterprofiler"></a><a href="#cite-yu2012clusterprofiler">[19]</a><cite> G. Yu, L. Wang, Y. Han, et al. “clusterProfiler: an R package for comparing biological themes among gene clusters”. In: <em>OMICS: A Journal of Integrative Biology</em> 16.5 (2012), pp. 284-287. DOI: <a href="https://doi.org/10.1089/omi.2011.0118">10.1089/omi.2011.0118</a>.</cite>
+<a id="bib-xie2020knitr"></a><a href="#cite-xie2020knitr">[19]</a><cite> Y. Xie. <em>knitr: A General-Purpose Package for Dynamic Report Generation in R</em>. R package version 1.30. 2020. URL: <a href="https://yihui.org/knitr/">https://yihui.org/knitr/</a>.</cite>
+</p>
+<p>
+<a id="bib-yu2012clusterprofiler"></a><a href="#cite-yu2012clusterprofiler">[20]</a><cite> G. Yu, L. Wang, Y. Han, et al. “clusterProfiler: an R package for comparing biological themes among gene clusters”. In: <em>OMICS: A Journal of Integrative Biology</em> 16.5 (2012), pp. 284-287. DOI: <a href="https://doi.org/10.1089/omi.2011.0118">10.1089/omi.2011.0118</a>.</cite>
 </p>
 </div>
   </div>
