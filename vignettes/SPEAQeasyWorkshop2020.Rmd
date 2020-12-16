@@ -787,6 +787,9 @@ for (i in 1:nrow(sigGeneDupl)) {
 Here we visualize differentially expressed genes (DEGs) with a heatmap.
 
 ```{r heatmap, echo=TRUE}
+# Get significant genes by sign
+sigGene <- outGeneDupl[outGeneDupl$P.Value < 0.005, ]
+
 exprs_heatmap <- vGene$E[rownames(sigGene), ]
 
 df <-
@@ -801,10 +804,11 @@ ann_colors <- list()
 for (i in 1:ncol(df)) {
     col_name <- colnames(df)[i]
     n_uniq_colors <- length(unique(df[, col_name]))
-
+    
     #   Use a unique palette with the correct number of levels, named with
     #   those levels
-    ann_colors[[col_name]] <- brewer.pal(n_uniq_colors, palette_names[i])[1:n_uniq_colors]
+    ann_colors[[col_name]] <-
+        brewer.pal(n_uniq_colors, palette_names[i])[seq_len(n_uniq_colors)]
     names(ann_colors[[col_name]]) <- unique(df[, col_name])
 }
 
@@ -824,8 +828,6 @@ pheatmap(
 We will use `r BiocStyle::Biocpkg("clusterProfiler")` to check if the differentially expressed genes are enriched in certain gene ontology terms and KEGG pathways. Running this code takes a a couple of minutes, so please be patient.
 
 ```{r gene_ontology, echo=TRUE}
-# Get significant genes by sign
-sigGene <- outGeneDupl[outGeneDupl$P.Value < 0.005, ]
 sigGeneList <-
     split(as.character(sigGene$EntrezID), sign(sigGene$logFC))
 sigGeneList <- lapply(sigGeneList, function(x) {

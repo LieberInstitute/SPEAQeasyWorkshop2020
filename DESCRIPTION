@@ -52,5 +52,7 @@ Imports:
     sessioninfo,
     tidyr,
     VariantAnnotation,
-    dplyr
-remotes: LieberInstitute/jaffelab
+    dplyr,
+    statmod,
+    backports
+Remotes: LieberInstitute/jaffelab
