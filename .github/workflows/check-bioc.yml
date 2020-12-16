@@ -164,6 +164,7 @@ jobs:
 
           #remotes::install_cran("rmarkdown")
           BiocManager::install("LieberInstitute/jaffelab")
+          remotes::install_cran("statmod")
 
           ## Pass #1 at installing dependencies
           message(paste('****', Sys.time(), 'pass number 1 at installing dependencies: local dependencies ****'))
