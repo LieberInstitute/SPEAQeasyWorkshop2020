@@ -110,10 +110,10 @@ The workshop-specific files include example outputs from SPEAQeasy, for performi
 
 ```{r, "load_workshop_package", eval=FALSE}
 #  Install 'remotes' if needed, then the package for this workshop
-if (!requireNamespace('remotes')) {
-    install.packages('remotes')
+if (!requireNamespace('BiocManager')) {
+    install.packages('BiocManager')
 }
-remotes::install_github('LieberInstitute/SPEAQeasyWorkshop2020')
+BiocManager::install('LieberInstitute/SPEAQeasyWorkshop2020')
 
 #  You can load the package, which contains the example files for use later
 library('SPEAQeasyWorkshop2020')
