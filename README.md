@@ -8,7 +8,7 @@
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![R build
-status](https://github.com/LieberInstitute/SPEAQeasyWorkshop2020/workflows/R-CMD-check-bioc/badge.svg)](https://github.com/LieberInstitute/SPEAQeasyWorkshop2020/actions)
+status](https://github.com/LieberInstitute/SPEAQeasyWorkshop2020/actions/workflows/check-bioc.yml/badge.svg)](https://github.com/LieberInstitute/SPEAQeasyWorkshop2020/actions/workflows/check-bioc.yml)
 <!-- badges: end -->
 
 This workshop aims to describe the `SPEAQeasy` RNA-seq processing
